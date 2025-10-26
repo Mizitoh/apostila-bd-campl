@@ -1,6 +1,6 @@
 title: "Apostila de Banco de Dados"
 description: "Material de apoio para o curso de Banco de Dados"
-theme: none
+theme: minima
 markdown: kramdown
 exclude:
   - README.md
