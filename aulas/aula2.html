@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 2 - Iniciando no PostgreSQL</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Aula 2 - Primeiros passos no PostgreSQL</h1>
+
+        <p>
+          Nesta aula, instalaremos o PostgreSQL e o Dbeaver. Aprenderemos o que
+          é um gerenciador de banco de dados, tipos de dados, o que é CRUD, um
+          pouco mais sobre funcionamento do computador (endereços e portas),
+          criaremos nosso primeiro banco e nossa primeira tabela.
+        </p>
+
+        <hr />
+
+        <h2>Links importantes</h2>
+        <a
+          class="btn btn-outline-danger"
+          href="https://www.postgresql.org/download/"
+          >Download do PostgreSQL</a
+        >
+        <a
+          class="btn btn-outline-danger"
+          href="https://www-postgresql-org.translate.goog/docs/17/intro-whatis.html?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc"
+          >Documentação do PostgreSQL</a
+        >
+        <a class="btn btn-outline-danger" href="https://dbeaver.io/download/"
+          >Download do Dbeaver Community</a
+        >
+
+        <hr />
+
+        <h2>Intalandos as ferramentas</h2>
+
+        <hr />
+
+        <h3>Instalando PostgreSQL</h3>
+
+        <p>
+          Vamos usar a versão 17, por ser a ultima versão estável do PostgreSQL
+        </p>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/pg1.png" alt="Instalando pg passo 1" />
+        </div>
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/pg2.png" alt="Instalando pg passo 2" />
+        </div>
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/pg3.png" alt="Instalando pg passo 3" />
+        </div>
+
+        <p>
+          Aguarde até que o download seja finalizado, vá até a pasta de download
+          e inicie a instalação
+        </p>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/pg4.png" alt="Instalando pg passo 4" />
+        </div>
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/pg5.png" alt="Instalando pg passo 5" />
+        </div>
+        <p>Caso o Windows peça autorização, clique em sim.</p>
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/pg6.png" alt="Instalando pg passo 6" />
+        </div>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/pg8.png" alt="Instalando pg passo 7" />
+        </div>
+
+        <p>
+          Vamos clicar em next até quando pedir a senha (password). Vamos
+          digitar a senha.
+        </p>
+
+        <div class="alert alert-warning" role="alert">
+          ⚠️ <strong>Atenção:</strong> Lembre-se de não esquecer a senha e
+          escolher uma senha forte com números e caracteres!
+        </div>
+
+        <p>
+          Ao pedir o numero da porta (port) vamos deixar a padrão que ele já
+          sugere: 5432.
+        </p>
+        <p>Continue clicando em next até iniciar a instalação.</p>
+
+        <p>Se tudo correr bem você vai ver essa imagem:</p>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/pg7.png" alt="Instalando pg FIM" />
+        </div>
+
+        <p>
+          Desmarque a opção "stack builder" (que é como se fosse uma loja de
+          ferramentas para o postgreSQL), não vamos usar. Clique em finish.
+        </p>
+
+        <h3>Instalando DBeaver</h3>
+
+        <p>Vamos usar a versão community, é a versão gratuita do Dbeaver.</p>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db1.png" alt="Instalando db passo 1" />
+        </div>
+
+        <p>
+          Aguarde até que o download seja finalizado, vá até a pasta de download
+          e inicie a instalação. O processe é bem simples, basta ir clicando em
+          próximo até o fim.
+        </p>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db2.png" alt="Instalando db passo 2" />
+        </div>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db3.png" alt="Instalando db passo 3" />
+        </div>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db4.png" alt="Instalando db passo 4" />
+        </div>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db5.png" alt="Instalando db passo 5" />
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+          ⚠️ <strong>Atenção:</strong> Se estiver instalando no computador
+          pessoal, recomento a primeira opção, no campl talvez usaremos a
+          segunda por restrições da rede!
+        </div>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db6.png" alt="Instalando db passo 6" />
+        </div>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db7.png" alt="Instalando db passo 7" />
+        </div>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db8.png" alt="Instalando db passo 8" />
+        </div>
+
+        <div class="image-wrapper">
+          <img src="./../assets/imagens/db9.png" alt="Instalando db passo 9" />
+        </div>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/db10.png"
+            alt="Instalando db passo 10"
+          />
+        </div>
+
+        <hr />
+
+        <h2>O que é o PostgreSQL</h2>
+
+        <p>
+          Na ultima aula usamos um centro de distribuição como exemplo do que é
+          um banco de dados
+        </p>
+
+        <p>
+          O PostgreSQL é o Sistema Gerenciador de Banco de Dados em si. Pense
+          nele como um cofre super seguro, organizado e poderoso, que guarda
+          todas as informações importantes de um aplicativo ou site.
+        </p>
+
+        <p>O que ele faz:</p>
+        <ul>
+          <li>
+            Guarda os Dados: Ele armazena milhões de informações (como nomes de
+            usuários, notas, saldos bancários, listas de produtos) em tabelas
+            super organizadas.
+          </li>
+          <li>
+            Organiza as Regras (Relacional): Ele entende as conexões entre as
+            informações. Por exemplo: ele sabe que uma "nota fiscal" tem que
+            estar ligada a um "cliente" que realmente existe.
+          </li>
+          <li>
+            É o Mestre: Quando seu aplicativo precisa de alguma informação
+            (tipo: "Quais filmes o usuário X marcou como favorito?"), o
+            aplicativo faz a pergunta, e o PostgreSQL é quem vai lá dentro do
+            cofre, encontra a resposta e a devolve.
+          </li>
+          <li>
+            É Robusto e Gratuito: Ele é conhecido por ser extremamente confiável
+            (quase nunca falha) e é de código aberto (gratuito e desenvolvido
+            por uma comunidade de programadores).
+          </li>
+        </ul>
+        <blockquote>
+          💡 O PostgreSQL é o software que cria, armazena e administra a sua
+          "biblioteca" de dados. No exmplo do centro de destribuição: Se um
+          cliente quiser comprar 100 carros da FIAT numa concessionário,
+          provavelmente essa concessionário não vai ter os 100 carros. O
+          vendedor vai ter que ligar no centro de distribuição para saber se tem
+          os carros disponíveis lá. Pense que a pessoa com quem esse vendedor
+          vai conversar é o PostgreSQl, o gerente do centro de distribuição.
+        </blockquote>
+
+        <hr />
+
+        <h2>O que é o Dbeaver</h2>
+
+        <p>
+          Se o PostgreSQL é o cofre eo gerente do cofre, o DBeaver é a
+          ferramenta visual (o programa, A Chave Mestra do centro de
+          distribuição) que você usa no seu computador para abrir, ver e mexer
+          nesse cofre (BD).
+        </p>
+        <p>O que ele faz:</p>
+        <ul>
+          <li>
+            Interface Gráfica: Em vez de digitar comandos difíceis em uma tela
+            preta para ver seus dados, o DBeaver mostra tudo em tabelas
+            bonitinhas e organizadas, como uma planilha do Excel.
+          </li>
+          <li>
+            Ferramenta Universal: A maior vantagem dele é que ele não se conecta
+            só ao PostgreSQL. Ele pode se conectar a quase todos os tipos de
+            bancos de dados (como MySQL, Oracle, SQL Server, etc.). É como ter
+            uma chave mestra que abre vários cofres diferentes.
+          </li>
+          <li>
+            Seu Escritório de Trabalho: É o lugar onde você:
+            <ul>
+              <li>Escreve os comandos (SQL) de forma fácil.</li>
+              <li>Vê o resultado das suas buscas na hora.</li>
+              <li>
+                Cria e modifica as tabelas sem precisar digitar código
+                complicado (clicando e arrastando).
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <blockquote>
+          💡 O DBeaver é o aplicativo que facilita sua vida para você interagir
+          com o PostgreSQL e muitos outros bancos de dados.
+        </blockquote>
+
+        <hr />
+
+        <h2>Configurando o Dbeaver</h2>
+
+        <p>
+          Com tudo instalado, vamos configurar o DBeaver para se conectar com
+          nosso banco PostgreSQL que agora carinhosamente chamaremos de PG. Para
+          isso vamos clicar 2 vezes no atalho que foi criado na área de
+          trabalho, é um castorzinho.
+        </p>
+
+        <p>
+          Durante o processo alguns conceitos novos vão aparecer e serão
+          explicados conforme evoluímos.
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb1.png"
+            alt="Configurando db passo 1"
+          />
+        </div>
+        <p>
+          Escolha a segunda opção para que o Windows defender não influencie no
+          DBeaver.
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb2.png"
+            alt="Configurando db passo 2"
+          />
+        </div>
+        <p>
+          Clique nessa tomada para configurar o servidor do PG ou tecle CTRL +
+          SHIFT + N que é o atalho para essa função.
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb3.png"
+            alt="Configurando db passo 3"
+          />
+        </div>
+        <p>
+          Escolha o postgreSQL ou procure por ele na barra de pesquisa caso não
+          apareça, clique em avançar.
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb4.png"
+            alt="Configurando db passo 4"
+          />
+        </div>
+        <p>
+          Vamos colocar o endereço onde o banco está (Não assuste, o conceito de
+          host e porta que é o "endereço" será nosso próximo conceito), o nome
+          de usuário e a senha. No caso vamos usar o usuário padrão e a senha
+          que usamos na instalação. Marque a opção exibir todos os bancos de
+          dados e clique em testar conexão.
+        </p>
+
+        <div class="alert alert-warning" role="alert">
+          ⚠️ <strong>Atenção:</strong> Nesse momento o Dbeaver vai pedir para
+          baixar algumas bibliotecas (conjunto de códigos que chamamos de libs
+          na programação) que fazem a conexão com o banco. O Dbeaver é feito em
+          java e precisa dessas bibliotecas pra funcionar.
+        </div>
+
+        <p>Se a conexão for bem sucedida, essa tela será exibida:</p>
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb5.png"
+            alt="Configurando db passo 5"
+          />
+        </div>
+
+        <p>Clique em Ok e depois em Concluir.</p>
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb6.png"
+            alt="Configurando db passo 6"
+          />
+        </div>
+        <p>
+          Pronto! Podemos ver o nosso servidor postgres no canto esquerdo e o
+          banco de dados que é criado automaticamente. Nunca delete o banco
+          postgres, ele é a base do PG e o servidor é quem vai exibir todos os
+          bancos que criarmos e também é ele que vai nos passar as informações
+          quando pedirmos.
+        </p>
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb7.png"
+            alt="Configurando db passo 7"
+          />
+        </div>
+
+        <hr />
+
+        <h2>Host, Port, Server 🤯</h2>
+
+        <p class="text-break">
+          Durante o processo de instalação e configuração vimos as palavras
+          host, port e server. Traduzindo literalmente seriam hóspede, porta e
+          servidor. E o que é isso? 🤔
+        </p>
+
+        <p>
+          Vamos imaginar que toda a internet e os sistemas de computador são
+          como uma Cidade Gigante com vários prédios e apartamentos.
+        </p>
+        <p>
+          Quando seu aplicativo (ou você) quer uma informação, ele precisa saber
+          exatamente onde ir. Para isso, temos o Servidor, o Host e a Porta.
+        </p>
+
+        <ol>
+          <li>
+            <strong>Servidor (O Prédio)</strong>
+            <p>
+              O Servidor é um computador superpotente que fica ligado 24 horas
+              por dia, 7 dias por semana. A função dele é oferecer um serviço ou
+              guardar informações para os clientes (que somos nós, usando o
+              aplicativo ou o navegador).
+            </p>
+            <ul>
+              <li>
+                Analogia: O Servidor é o Prédio inteiro (por exemplo, o Prédio
+                da Netflix, ou o Prédio do seu banco). Ele abriga todos os
+                serviços e dados.
+              </li>
+              <li>
+                Exemplo: O Servidor do PostgreSQL é o "prédio" que abriga o seu
+                banco de dados.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Host (O Endereço da Rua)</strong>
+            <p>
+              O Host é o endereço (o nome ou o número IP) do prédio. É a
+              informação que diz onde o Servidor está localizado na cidade
+              gigante da internet.
+            </p>
+            <ul>
+              <li>
+                <strong>Analogia:</strong> O Host é o Endereço da Rua do prédio
+                (Ex: "Rua da Tecnologia, número 192.168.1.1")
+              </li>
+              <li><strong>Detalhe:</strong></li>
+
+              <ul>
+                <li>
+                  Se você estiver trabalhando no seu próprio computador (no
+                  local), o endereço mais comum é o localhost (que significa
+                  "este computador").
+                </li>
+                <li>
+                  Se for na internet, o Host é o endereço IP (uma sequência de
+                  números) ou um nome como google.com.
+                </li>
+              </ul>
+            </ul>
+          </li>
+          <li>
+            <strong>Porta (O Número do Apartamento)</strong>
+            <p>
+              Dentro do mesmo prédio (Servidor), pode haver vários serviços
+              funcionando ao mesmo tempo. A Porta é o que diferencia esses
+              serviços. Ela age como o número do apartamento dentro do prédio.
+            </p>
+            <ul>
+              <li>
+                <strong>Analogia:</strong> A Porta é o Número do Apartamento
+                onde o serviço específico que você quer está.
+              </li>
+              <li>
+                <strong>Exemplo:</strong>
+              </li>
+              <ul>
+                <li>
+                  No mesmo Servidor (Prédio), o serviço de Site pode estar na
+                  Porta 80.
+                </li>
+                <li>O serviço de E-mail pode estar na Porta 25.</li>
+                <li>
+                  E o seu banco de dados PostgreSQL, geralmente, está na Porta
+                  5432.
+                </li>
+              </ul>
+            </ul>
+          </li>
+        </ol>
+
+        <p><strong>Como funciona a comunicação?</strong></p>
+        <p>
+          Quando você envia uma mensagem (uma requisição) para o Servidor, você
+          usa a combinação completa:
+        </p>
+        <p class="badge text-bg-primary text-wrap" style="width: 100%">
+          Serviço que você quer = HOST (Endereço da Rua) + PORTA (Nº do
+          Apartamento)
+        </p>
+        <p>
+          Se você digitar o endereço errado, sua mensagem vai para a rua errada.
+          Se você usar a Porta errada, você vai bater na porta do vizinho (o
+          serviço de e-mail) em vez de ir para o seu banco de dados.
+        </p>
+
+        <hr />
+
+        <h2>Tipos de Bancos de Dados</h2>
+
+        <ul>
+          <li><strong>Relacionais (SQL):</strong> MySQL, PostgreSQL, Oracle</li>
+          <li>
+            <strong>Não-relacionais (NoSQL):</strong> MongoDB, Redis, Cassandra
+          </li>
+          <li><strong>Em Memória:</strong> Redis, Memcached</li>
+        </ul>
+
+        <h3>Banco Relacional (SQL)</h3>
+
+        <p>
+          Imagine uma <strong>planilha do Excel bem organizada</strong>, com
+          várias abas conectadas entre si.
+        </p>
+
+        <h4>Como funciona:</h4>
+        <ul>
+          <li>Os dados ficam em <strong>tabelas</strong> (linhas e colunas)</li>
+          <li>As tabelas se relacionam entre si</li>
+          <li>Tudo segue regras rígidas e bem definidas</li>
+        </ul>
+
+        <h5>Exemplo prático:</h5>
+        <pre>
+Tabela CLIENTES:
+ID | Nome      | Email
+1  | João      | joao@email.com
+2  | Maria     | maria@email.com
+
+Tabela PEDIDOS:
+ID | ClienteID | Produto
+1  | 1         | Notebook
+2  | 1         | Mouse
+    </pre
+        >
+
+        <p>
+          <strong>Vantagens:</strong> Organizado, confiável, bom para dados
+          estruturados
+        </p>
+        <p><strong>Exemplos:</strong> MySQL, PostgreSQL, SQL Server</p>
+
+        <hr />
+
+        <h3>Banco Não Relacional (NoSQL)</h3>
+
+        <p>
+          Imagine um <strong>armário de pastas</strong> onde você pode guardar
+          documentos de qualquer jeito, sem precisar seguir um padrão fixo.
+        </p>
+
+        <h4>Como funciona:</h4>
+        <ul>
+          <li>Os dados podem ter formatos diferentes</li>
+          <li>Mais flexível e menos rígido</li>
+          <li>Não precisa de tabelas fixas</li>
+        </ul>
+
+        <h5>Exemplo prático:</h5>
+        <pre>
+Documento 1:
+{
+  nome: "João",
+  idade: 30,
+  hobbies: ["futebol", "leitura"]
+}
+
+Documento 2:
+{
+  nome: "Maria",
+  cidade: "São Paulo",
+  telefone: "11-99999-9999"
+}
+    </pre
+        >
+
+        <p>
+          <strong>Vantagens:</strong> Flexível, rápido, bom para grandes volumes
+        </p>
+        <p><strong>Exemplos:</strong> MongoDB, Redis, Cassandra</p>
+
+        <hr />
+
+        <h3>Quando usar cada um?</h3>
+
+        <p>
+          <strong>Relacional:</strong> Sistema bancário, e-commerce, RH (dados
+          consistentes e relacionados)
+        </p>
+
+        <p>
+          <strong>Não Relacional:</strong> Redes sociais, chat, big data (dados
+          variados e em grande volume)
+        </p>
+
+        <blockquote>
+          💡 Um banco de dados é uma coleção organizada de dados que podem ser
+          facilmente acessados, gerenciados e atualizados.
+        </blockquote>
+
+        <p>
+          Bancos de dados são utilizados em diversos contextos, desde aplicações
+          web até sistemas empresariais complexos.
+        </p>
+
+        <h3>Banco em Memória (In-Memory)</h3>
+
+        <p>
+          É um banco de dados que guarda tudo na <strong>memória RAM</strong> do
+          computador, ao invés de salvar no disco rígido.
+        </p>
+
+        <h3>Características:</h3>
+        <ul>
+          <li>
+            <strong>Muito rápido:</strong> acessar dados na RAM é milhares de
+            vezes mais rápido que no disco
+          </li>
+          <li>
+            <strong>Temporário:</strong> se desligar o computador ou parar o
+            programa, os dados são apagados
+          </li>
+          <li>Pode ser relacional ou não relacional</li>
+        </ul>
+
+        <p>
+          <strong>Quando usar:</strong> Cache, sessões de usuário, dados
+          temporários que precisam de acesso muito rápido
+        </p>
+
+        <p>
+          <strong>Exemplos:</strong> Redis, Memcached, SQLite (modo :memory:)
+        </p>
+
+        <hr />
+
+        <h2>Tipagem de dados</h2>
+
+        <p>
+          Tipagem é a forma como uma linguagem de programação trata os
+          <strong>tipos de dados</strong> (números, textos, verdadeiro/falso,
+          etc.).
+        </p>
+
+        <div class="alert alert-warning" role="alert">
+          ⚠️ <strong>Atenção:</strong> Essa parte será aprofundada em outras
+          matérias. É só uma base.
+        </div>
+
+        <h3>Tipagem Estática</h3>
+
+        <p>
+          Você precisa <strong>declarar o tipo</strong> da variável antes de
+          usar, e ele não muda.
+        </p>
+
+        <p>O que é uma Variável?</p>
+
+        <ul>
+          <p>
+            Pense em uma variável como uma caixa com um nome que você usa para
+            guardar informações no computador.
+          </p>
+          <li>
+            O Nome da Caixa: É o nome que você dá à variável (ex: idadeUsuario,
+            totalMoedas).
+          </li>
+          <li>
+            O Conteúdo da Caixa: É o valor que está dentro dela (ex: o número
+            25, a palavra "Pedro"). O valor pode mudar com o tempo (por isso é
+            variável).
+          </li>
+        </ul>
+
+        <h3>Exemplo (Java):</h3>
+        <pre>
+int idade = 25;           // só aceita números inteiros
+String nome = "João";     // só aceita texto
+idade = "vinte";          // ❌ ERRO! não pode mudar o tipo
+</pre
+        >
+
+        <p>
+          <strong>Vantagens:</strong> Mais seguro, erros são detectados antes de
+          rodar o programa
+        </p>
+        <p><strong>Exemplos:</strong> Java, C, C++, TypeScript</p>
+
+        <hr />
+
+        <h3>Tipagem Dinâmica</h3>
+
+        <p>
+          Você <strong>não precisa declarar o tipo</strong>, a linguagem
+          descobre sozinha e pode mudar durante a execução.
+        </p>
+
+        <h3>Exemplo (Python):</h3>
+        <pre>
+idade = 25                # é um número
+idade = "vinte e cinco"   # ✅ OK! agora é texto
+idade = True              # ✅ OK! agora é booleano
+</pre
+        >
+
+        <p>
+          <strong>Vantagens:</strong> Mais rápido para programar, mais flexível
+        </p>
+        <p>
+          <strong>Desvantagens:</strong> Erros podem aparecer só quando o
+          programa está rodando
+        </p>
+        <p><strong>Exemplos:</strong> Python, JavaScript, PHP, Ruby</p>
+
+        <hr />
+
+        <h5>Resumindo</h5>
+
+        <p>
+          <strong>Estática:</strong> Declare o tipo, mais seguro, menos flexível
+        </p>
+        <p>
+          <strong>Dinâmica:</strong> Não precisa declarar, mais flexível, menos
+          seguro
+        </p>
+
+        <hr />
+
+        <h2>Tipos de Dados no PostgreSQL</h2>
+
+        <h3>Tipos Numéricos</h3>
+        <ul>
+          <li>
+            <strong>INTEGER</strong> ou <strong>INT</strong> - Números inteiros
+            (-2 bilhões a +2 bilhões)
+          </li>
+          <li>
+            <strong>BIGINT</strong> - Números inteiros grandes (até 9
+            quintilhões)
+          </li>
+          <li>
+            <strong>SMALLINT</strong> - Números inteiros pequenos (-32.768 a
+            +32.767)
+          </li>
+          <li>
+            <strong>DECIMAL</strong> ou <strong>NUMERIC</strong> - Números com
+            casas decimais exatas (dinheiro, preços)
+          </li>
+          <li><strong>REAL</strong> - Números decimais com precisão simples</li>
+          <li>
+            <strong>DOUBLE PRECISION</strong> - Números decimais com precisão
+            dupla
+          </li>
+          <li>
+            <strong>SERIAL</strong> - Número inteiro que aumenta automaticamente
+            (ideal para IDs)
+          </li>
+        </ul>
+
+        <h3>Tipos de Texto</h3>
+        <ul>
+          <li>
+            <strong>VARCHAR(n)</strong> - Texto com tamanho máximo definido (ex:
+            VARCHAR(100))
+          </li>
+          <li>
+            <strong>CHAR(n)</strong> - Texto com tamanho fixo (completa com
+            espaços)
+          </li>
+          <li><strong>TEXT</strong> - Texto sem limite de tamanho</li>
+        </ul>
+
+        <h3>Tipos de Data e Hora</h3>
+        <ul>
+          <li><strong>DATE</strong> - Apenas data (ex: 2025-10-26)</li>
+          <li><strong>TIME</strong> - Apenas hora (ex: 14:30:00)</li>
+          <li><strong>TIMESTAMP</strong> - Data e hora juntos</li>
+          <li>
+            <strong>INTERVAL</strong> - Período de tempo (ex: 5 dias, 3 horas)
+          </li>
+        </ul>
+
+        <h3>Tipos Lógicos</h3>
+        <ul>
+          <li><strong>BOOLEAN</strong> - Verdadeiro (TRUE) ou Falso (FALSE)</li>
+        </ul>
+
+        <h3>Tipos Especiais</h3>
+        <ul>
+          <li>
+            <strong>JSON</strong> / <strong>JSONB</strong> - Armazena dados no
+            formato JSON
+          </li>
+          <li><strong>UUID</strong> - Identificador único universal</li>
+          <li><strong>ARRAY</strong> - Lista de valores do mesmo tipo</li>
+          <li><strong>BYTEA</strong> - Dados binários (arquivos, imagens)</li>
+        </ul>
+
+        <hr />
+
+        <h2>Criando nosso primeiro banco de dados</h2>
+
+        <pre>
+        CREATE DATABASE escola;
+        </pre>
+
+        <p>A missão desse curso é garantir que vocês consigam montar um CRUD</p>
+
+        <h3>O que é CRUD?</h3>
+
+        <p>
+          <strong>CRUD</strong> é uma sigla em inglês que representa as 4
+          operações básicas que fazemos em um banco de dados:
+        </p>
+
+        <ul>
+          <li><strong>C</strong>reate (Criar) - Inserir novos dados</li>
+          <li><strong>R</strong>ead (Ler) - Consultar/visualizar dados</li>
+          <li>
+            <strong>U</strong>pdate (Atualizar) - Modificar dados existentes
+          </li>
+          <li><strong>D</strong>elete (Deletar) - Remover dados</li>
+        </ul>
+
+        <p>
+          Praticamente todo sistema usa CRUD: cadastro de clientes, produtos,
+          usuários, posts em redes sociais, etc.
+        </p>
+
+        <hr />
+
+        <h5>Exemplo: Tabela de Alunos</h5>
+
+        <h5>CREATE - Criando a tabela:</h5>
+        <br />
+        <pre>
+          CREATE TABLE alunos (
+              id SERIAL PRIMARY KEY,
+              nome VARCHAR(100) NOT NULL,
+              email VARCHAR(100) UNIQUE NOT NULL,
+              data_nascimento DATE,
+              nota DECIMAL(4,2),
+              ativo BOOLEAN DEFAULT TRUE,
+              data_matricula TIMESTAMP DEFAULT NOW()
+          );
+          </pre
+        >
+
+        <h5>CREATE - Inserindo dados (Create):</h5>
+        <pre>
+        INSERT INTO alunos (nome, email, data_nascimento, nota) 
+        VALUES ('João Silva', 'joao@email.com', '2005-03-15', 8.5);
+
+        INSERT INTO alunos (nome, email, data_nascimento, nota) 
+        VALUES ('Maria Santos', 'maria@email.com', '2004-07-22', 9.2);
+        </pre>
+
+        <hr />
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <!-- <a href="./aula3.html" class="btn btn-primary">Próxima aula →</a> -->
+          <a href="./../index.html" class="btn btn-outline-secondary"
+            >← Voltar ao Início</a
+          >
+          <a href="./../aulas.html" class="btn btn-outline-secondary"
+            >← Voltar às aulas por data</a
+          >
+        </div>
+      </main>
+    </div>
+
+    <script src="./../assets/js/sidebar.js"></script>
+    <script src="./../assets/js/table-of-contents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

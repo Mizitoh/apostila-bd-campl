@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 3 - Linguagens de Banco de Dados (SQL)</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Aula 3 - Linguagens de Banco de Dados (SQL)</h1>
+
+        <h2>O que é SQL?</h2>
+
+        <p>
+          <strong>SQL</strong> significa
+          <em>Structured Query Language</em> (Linguagem de Consulta
+          Estruturada).
+        </p>
+
+        <p>
+          É a <strong>linguagem padrão</strong> usada para se comunicar com
+          bancos de dados relacionais. Com SQL você pode criar bancos, tabelas,
+          inserir dados, fazer consultas, atualizar e deletar informações.
+        </p>
+
+        <h3>Para que serve?</h3>
+        <ul>
+          <li>Criar e organizar bancos de dados</li>
+          <li>Inserir, consultar, atualizar e deletar dados</li>
+          <li>Controlar quem pode acessar os dados</li>
+          <li>Fazer relatórios e análises</li>
+        </ul>
+
+        <h5>Exemplo simples:</h5>
+        <pre>
+-- Consultar todos os alunos
+SELECT * FROM alunos;
+
+-- Buscar alunos com nota acima de 7
+SELECT nome, nota FROM alunos WHERE nota > 7;
+</pre
+        >
+
+        <h3>Onde é usado?</h3>
+        <p>
+          Praticamente todos os bancos de dados relacionais usam SQL:
+          <strong>PostgreSQL, MySQL, SQL Server, Oracle, SQLite</strong>, etc.
+        </p>
+
+        <p>
+          SQL é a linguagem que usamos para "conversar" com bancos de dados
+          relacionais! 💾
+        </p>
+
+        <h2>Comandos SQL</h2>
+
+        <p>
+          Os comandos SQL são divididos em categorias, cada uma com uma função
+          específica:
+        </p>
+
+        <h2>
+          DDL - Data Definition Language (Linguagem de Definição de Dados)
+        </h2>
+        <p>
+          Comandos para <strong>criar e modificar a estrutura</strong> do banco
+          de dados.
+        </p>
+
+        <ul>
+          <li><strong>CREATE</strong> - Criar banco, tabelas, índices</li>
+          <li><strong>ALTER</strong> - Modificar estrutura de tabelas</li>
+          <li><strong>DROP</strong> - Deletar banco, tabelas</li>
+          <li>
+            <strong>TRUNCATE</strong> - Limpar todos os dados de uma tabela
+          </li>
+        </ul>
+
+        <h3>Exemplos:</h3>
+        <pre>
+CREATE DATABASE escola;
+CREATE TABLE alunos (...);
+ALTER TABLE alunos ADD COLUMN telefone VARCHAR(15);
+DROP TABLE alunos;
+</pre
+        >
+
+        <hr />
+
+        <h2>
+          DML - Data Manipulation Language (Linguagem de Manipulação de Dados)
+        </h2>
+        <p>
+          Comandos para <strong>manipular os dados</strong> dentro das tabelas
+          (o famoso CRUD).
+        </p>
+
+        <ul>
+          <li><strong>INSERT</strong> - Inserir dados</li>
+          <li><strong>SELECT</strong> - Consultar dados</li>
+          <li><strong>UPDATE</strong> - Atualizar dados</li>
+          <li><strong>DELETE</strong> - Deletar dados</li>
+        </ul>
+
+        <h3>Exemplos:</h3>
+        <pre>
+INSERT INTO alunos (nome, email) VALUES ('João', 'joao@email.com');
+SELECT * FROM alunos;
+UPDATE alunos SET nota = 10 WHERE id = 1;
+DELETE FROM alunos WHERE id = 1;
+</pre
+        >
+
+        <hr />
+
+        <h2>DCL - Data Control Language (Linguagem de Controle de Dados)</h2>
+        <p>
+          Comandos para <strong>controlar permissões</strong> e acesso ao banco.
+        </p>
+
+        <ul>
+          <li><strong>GRANT</strong> - Conceder permissões</li>
+          <li><strong>REVOKE</strong> - Remover permissões</li>
+        </ul>
+
+        <h3>Exemplos:</h3>
+        <pre>
+GRANT SELECT ON alunos TO usuario1;
+REVOKE DELETE ON alunos FROM usuario1;
+</pre
+        >
+
+        <hr />
+
+        <h2>
+          TCL - Transaction Control Language (Linguagem de Controle de
+          Transações)
+        </h2>
+        <p>Comandos para <strong>gerenciar transações</strong> no banco.</p>
+
+        <ul>
+          <li>
+            <strong>BEGIN</strong> ou <strong>START TRANSACTION</strong> -
+            Iniciar transação
+          </li>
+          <li><strong>COMMIT</strong> - Confirmar alterações</li>
+          <li><strong>ROLLBACK</strong> - Desfazer alterações</li>
+        </ul>
+
+        <h3>Exemplos:</h3>
+        <pre>
+BEGIN;
+UPDATE alunos SET nota = 10 WHERE id = 1;
+COMMIT;
+</pre
+        >
+
+        <hr />
+
+        <h2>Resumo Rápido</h2>
+        <ul>
+          <li>
+            <strong>DDL:</strong> Criar/modificar estrutura (CREATE, ALTER,
+            DROP)
+          </li>
+          <li>
+            <strong>DML:</strong> Manipular dados (INSERT, SELECT, UPDATE,
+            DELETE)
+          </li>
+          <li><strong>DCL:</strong> Controlar permissões (GRANT, REVOKE)</li>
+          <li><strong>TCL:</strong> Gerenciar transações (COMMIT, ROLLBACK)</li>
+        </ul>
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <!-- <a href="./aula2.html" class="btn btn-primary">Próxima aula →</a> -->
+          <a href="./../index.html" class="btn btn-outline-secondary"
+            >← Voltar ao Início</a
+          >
+          <a href="./../aulas.html" class="btn btn-outline-secondary"
+            >← Voltar às aulas por data</a
+          >
+        </div>
+      </main>
+    </div>
+
+    <script src="./../assets/js/sidebar.js"></script>
+    <script src="./../assets/js/table-of-contents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
