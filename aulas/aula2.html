@@ -356,6 +356,44 @@
           />
         </div>
 
+        <div class="alert alert-warning" role="alert">
+          ⚠️ <strong>Atenção:</strong> Essa configuração não é obrigatória, mas
+          por padrão para executar os comando SQL o Dbeaver usa CTRL+Enter. A
+          maioria dos outros softwares usam F5, vamos configurar para ficar
+          igual
+        </div>
+
+        <p>Clique em janela, depois preferências.</p>
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb8.png"
+            alt="Configurando db passo 8"
+          />
+        </div>
+
+        <p>
+          Na barra de pesquisa digite a palavra "key" e depois clique em chaves
+        </p>
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb9.png"
+            alt="Configurando db passo 9"
+          />
+        </div>
+
+        <p>
+          Procure por "Executar instrução SQL", clique nela e na tela abixo onde
+          está escrito ligação, vai estar com a chave "CTRL+Enter" clique e
+          aperte a tecla F5, vai trocar como na imagem. Se tudo der certo,
+          clique em aplicar e fechar
+        </p>
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/configdb10.png"
+            alt="Configurando db passo 10"
+          />
+        </div>
+
         <hr />
 
         <h2>Host, Port, Server 🤯</h2>
@@ -774,11 +812,40 @@ idade = True              # ✅ OK! agora é booleano
 
         <h2>Criando nosso primeiro banco de dados</h2>
 
+        <p>
+          No Dbeaver, com o botão direito do mouse, clique sobre o servidor que
+          configuramos (postgres), depois passe sobre "editor sql" e clique em
+          "Novo script sql". Você também pode clicar no servidor e usar o atalho
+          "CTRL+["
+        </p>
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/usandodb1.png"
+            alt="Usando db passo 1"
+          />
+        </div>
+
+        <p>
+          Na janela que abriu, digite o comando abaixo e aperte F5, caso tenha
+          feito a ultima configuração do DBeaver, se não use o padrão
+          "CTRL+Enter"
+        </p>
+
         <pre>
         CREATE DATABASE escola;
         </pre>
 
-        <p>A missão desse curso é garantir que vocês consigam montar um CRUD</p>
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/usandodb2.png"
+            alt="Usando db passo 2"
+          />
+        </div>
+
+        <p>
+          Criamos nosso primeiro banco de dados, mas a missão desse curso é
+          garantir que vocês consigam montar um CRUD
+        </p>
 
         <h3>O que é CRUD?</h3>
 
@@ -807,6 +874,14 @@ idade = True              # ✅ OK! agora é booleano
 
         <h5>CREATE - Criando a tabela:</h5>
         <br />
+
+        <p>
+          Novamente no Dbeaver vamos abrir uma nova janela, antes clicamos no
+          servidor pra isso, agora vamos usar o banco que criamos "esola": botão
+          direito sobre escola, depois passe sobre "editor sql" e clique em
+          "Novo script sql" para rodar os comandos abaixo:
+        </p>
+
         <pre>
           CREATE TABLE alunos (
               id SERIAL PRIMARY KEY,
@@ -828,6 +903,13 @@ idade = True              # ✅ OK! agora é booleano
         INSERT INTO alunos (nome, email, data_nascimento, nota) 
         VALUES ('Maria Santos', 'maria@email.com', '2004-07-22', 9.2);
         </pre>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/usandodb3.png"
+            alt="Usando db passo 3"
+          />
+        </div>
 
         <hr />
 
