@@ -1,6 +1,12 @@
 // assets/js/sidebar.js
 document.addEventListener("DOMContentLoaded", function () {
-  const isInSubfolder = window.location.pathname.includes("/aulas/");
+  let isInSubfolder = window.location.pathname.includes("/aulas/");
+  const isInSubfolderAdm = window.location.pathname.includes("/adm/");
+
+  if (isInSubfolderAdm) {
+    isInSubfolder = true;
+  }
+
   const prefix = isInSubfolder ? "../" : "./";
 
   const sidebarHTML = `
@@ -10,14 +16,14 @@ document.addEventListener("DOMContentLoaded", function () {
         <ul>
           <li><a href="${prefix}index.html">📘 Início</a></li>
           <li><a href="${prefix}aulas.html">📚 Aulas por data</a></li>
+          <li><a href="${prefix}cola.html">🎓🤫 Colinha</a></li>
           <li><a href="${prefix}aulas/aula1.html">1️⃣ Introdução a Banco de Dados</a></li>
-          <li><a href="${prefix}aulas/aula2.html">2️⃣ Primeiros passos no PostgreSQL</a></li>          
+          <li><a href="${prefix}aulas/aula2.html">2️⃣ Primeiros passos no PostgreSQL</a></li>
+          <li><a href="${prefix}aulas/aula3.html">3️⃣ SQL - Primeiros comandos</a></li>          
         </ul>
       </nav>
     </aside>
   `;
-
-  //<li><a href="${prefix}aulas/aula3.html">3️⃣ Primeiros passos no PostgreSQL</a></li>
 
   // Encontra o container e insere o sidebar
   const container = document.querySelector(".container");

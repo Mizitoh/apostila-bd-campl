@@ -269,3 +269,61 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+/* --- Estilo Específico da Tabela CORRIGIDO --- */
+
+/* Cor de fundo e borda geral da tabela */
+.content .table {
+  /* Garante que o texto da tabela inteira seja a variável --text */
+  --bs-table-color: var(--text);
+  --bs-table-bg: var(--bg); /* Fundo base da tabela */
+
+  border: 1px solid var(--border);
+  border-radius: 8px; /* Arredondamento nas bordas */
+  overflow: hidden; /* Garante que o arredondamento funcione */
+}
+
+/* Estilo do cabeçalho da tabela (thead) */
+.content .table thead {
+  /* Usando a cor de fundo da sidebar para o cabeçalho */
+  --bs-table-bg: var(--sidebar-bg);
+}
+
+.content .table th {
+  color: var(--text);
+  /* Borda inferior do cabeçalho */
+  border-bottom: 2px solid var(--accent);
+  font-weight: 700;
+}
+
+/* Garante que todas as células usem a cor de texto correta */
+.content .table td,
+.content .table th {
+  color: var(--text); /* Linhas internas herdam a cor de texto global */
+  border-color: var(--border);
+  vertical-align: middle;
+}
+
+/* Estilo das linhas alternadas (striped) */
+.content .table-striped > tbody > tr:nth-of-type(odd) > * {
+  /* Define um fundo um pouco mais escuro/claro para as linhas ímpares */
+  background-color: var(--sidebar-bg);
+}
+
+/* Estilo ao passar o mouse (hover) */
+.content .table-hover > tbody > tr:hover > * {
+  /* Destaca a linha usando a cor de acento com leve transparência */
+  /* Para usar o RGB, garantimos que as variáveis estão definidas (ver abaixo) */
+  background-color: rgba(var(--accent-rgb), 0.1) !important;
+}
+
+/* Ajuste para que o Bootstrap use as variáveis (necessário para table-hover) */
+:root {
+  /* Define o RGB da cor de acento para uso com transparência */
+  --accent-rgb: 13, 110, 253; /* Padrão (light) #0d6efd */
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent-rgb: 77, 171, 247; /* Padrão (dark) #4dabf7 */
+  }
+}

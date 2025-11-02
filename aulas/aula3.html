@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aula 3 - Linguagens de Banco de Dados (SQL)</title>
+    <link rel="icon" type="image/png" href="./../assets/imagens/caderno.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -36,16 +45,15 @@
           <li>Controlar quem pode acessar os dados</li>
           <li>Fazer relatórios e análises</li>
         </ul>
-
-        <h5>Exemplo simples:</h5>
-        <pre>
+        <br />
+        <h3>Exemplo simples:</h3>
+        <pre><code class="language-sql">
 -- Consultar todos os alunos
 SELECT * FROM alunos;
 
 -- Buscar alunos com nota acima de 7
 SELECT nome, nota FROM alunos WHERE nota > 7;
-</pre
-        >
+</code></pre>
 
         <h3>Onde é usado?</h3>
         <p>
@@ -59,6 +67,21 @@ SELECT nome, nota FROM alunos WHERE nota > 7;
         </p>
 
         <h2>Comandos SQL</h2>
+
+        <div class="alert alert-info mt-4" role="alert">
+          💡 <strong>Dica:</strong> Essa parte teórica é muito cobrada em
+          concursos públicos!
+          <p>
+            Os comandos mais utilizados e a breve explicação deles está na
+            página
+            <a
+              href="./../cola.html"
+              class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+              >colinha</a
+            >
+            para caso queira algo mais prático.
+          </p>
+        </div>
 
         <p>
           Os comandos SQL são divididos em categorias, cada uma com uma função
@@ -81,15 +104,14 @@ SELECT nome, nota FROM alunos WHERE nota > 7;
             <strong>TRUNCATE</strong> - Limpar todos os dados de uma tabela
           </li>
         </ul>
-
+        <br />
         <h3>Exemplos:</h3>
-        <pre>
+        <pre><code class="language-sql">
 CREATE DATABASE escola;
 CREATE TABLE alunos (...);
 ALTER TABLE alunos ADD COLUMN telefone VARCHAR(15);
 DROP TABLE alunos;
-</pre
-        >
+</code></pre>
 
         <hr />
 
@@ -107,15 +129,14 @@ DROP TABLE alunos;
           <li><strong>UPDATE</strong> - Atualizar dados</li>
           <li><strong>DELETE</strong> - Deletar dados</li>
         </ul>
-
+        <br />
         <h3>Exemplos:</h3>
-        <pre>
+        <pre><code class="language-sql">
 INSERT INTO alunos (nome, email) VALUES ('João', 'joao@email.com');
 SELECT * FROM alunos;
 UPDATE alunos SET nota = 10 WHERE id = 1;
 DELETE FROM alunos WHERE id = 1;
-</pre
-        >
+</code></pre>
 
         <hr />
 
@@ -128,13 +149,12 @@ DELETE FROM alunos WHERE id = 1;
           <li><strong>GRANT</strong> - Conceder permissões</li>
           <li><strong>REVOKE</strong> - Remover permissões</li>
         </ul>
-
+        <br />
         <h3>Exemplos:</h3>
-        <pre>
+        <pre><code class="language-sql">
 GRANT SELECT ON alunos TO usuario1;
 REVOKE DELETE ON alunos FROM usuario1;
-</pre
-        >
+</code></pre>
 
         <hr />
 
@@ -152,14 +172,13 @@ REVOKE DELETE ON alunos FROM usuario1;
           <li><strong>COMMIT</strong> - Confirmar alterações</li>
           <li><strong>ROLLBACK</strong> - Desfazer alterações</li>
         </ul>
-
+        <br />
         <h3>Exemplos:</h3>
-        <pre>
+        <pre><code class="language-sql">
 BEGIN;
 UPDATE alunos SET nota = 10 WHERE id = 1;
 COMMIT;
-</pre
-        >
+</code></pre>
 
         <hr />
 
@@ -177,11 +196,526 @@ COMMIT;
           <li><strong>TCL:</strong> Gerenciar transações (COMMIT, ROLLBACK)</li>
         </ul>
 
-        <!-- Falar de normalização criar outras taelas e inserções falar sobre chaves -->
+        <hr />
+
+        <h2>Modelagem de Dados</h2>
+        <p>
+          Nós já criamos um banco de dados e uma tabela, mas bancos são bem
+          maiores e mais complexos que o que fizemos até agora.
+        </p>
+        <p>
+          Antes de iniciar um projeto é necessário pensar em todos os cenários e
+          tabelas que o banco precisará para atender as necessidades daquele
+          sistema. É necessário modelar o banco.
+        </p>
+        <p>
+          O que é a Modelagem de dados? É o processo de criar um modelo que
+          represente como os dados serão armazenados e relacionados no banco de
+          dados. É como fazer uma "planta" antes de construir uma casa -
+          primeiro planejamos a estrutura, pensamos em como as informações se
+          conectam e só depois criamos as tabelas. Uma boa modelagem evita
+          redundância de dados, facilita a manutenção e garante a integridade
+          das informações. É a base para um banco de dados eficiente e
+          organizado! 🏗️
+        </p>
+        <p>
+          Na modelagem desenhamos essas tabelas e marcamos o tipo de dado
+          existente nela e o nome do seu atributo, os tipos e o nome é o que
+          chamamos de metadados:
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/modelagem1.png"
+            alt="Modelo de tabela não normalizada"
+          />
+        </div>
+
+        <hr />
+
+        <h2>Exercício</h2>
+        <div class="alert alert-warning" role="alert">
+          📝 <strong>Atividade:</strong> Vamos criar uma tabela "não
+          normalizada" e depois entender por que precisamos normalizar. A parte
+          teórica de normalização e relacionamento será feita na próxima aula.
+        </div>
+
+        <hr />
+
+        <div class="mb-5">
+          <h2>Atividade Prática: Modelando o Banco</h2>
+
+          <p>
+            O objetivo desta atividade é que você visualize e desenhe o processo
+            de normalização do esquema inicial que apresentava problemas de
+            redundância e flexibilidade. A teoria mais aprofundada vem na
+            próxima aula.
+          </p>
+
+          <h3>Esquema Inicial (Não Normalizado)</h3>
+
+          <div class="alert alert-info mt-4" role="alert">
+            💡 <strong>Aproveitando Talentos:</strong>
+            Para os alunos que já viram normalização na faculdade, pulem a etapa
+            de criação da tabela "aluno" e vão direto para o desenho da
+            modelagem das tabelas normalizadas. Façam numa folha sulfite e
+            entreguem para o professor na próxima aula.
+          </div>
+
+          <p>
+            Vamos apagar os bancos que criamos até agora, vamos criar (ou
+            recriar) um banco chamado escola:
+          </p>
+
+          <pre><code class="language-sql">
+CREATE DATABASE escola;
+        </code></pre>
+
+          <p>Crie a tabela aluno:</p>
+
+          <pre><code class="language-sql">
+CREATE TABLE aluno (
+matricula INT PRIMARY KEY,
+nome VARCHAR(100),
+sexo CHAR(1),
+telefone1 VARCHAR(15),
+telefone2 VARCHAR(15),
+endereco VARCHAR(200),
+curso1 VARCHAR(50),
+curso2 VARCHAR(50),
+professor_curso1 VARCHAR(100),
+professor_curso2 VARCHAR(100),
+nota_curso1 DECIMAL(4,2),
+nota_curso2 DECIMAL(4,2)
+);
+        </code></pre>
+
+          <p>
+            Faça 5 inserções de dados nessa tabela, segue dois exemplos, faça
+            mais 3:
+          </p>
+
+          <pre><code class="language-sql">
+-- Inserção 1
+INSERT INTO aluno_original (
+    matricula, 
+    nome, 
+    sexo,
+    telefone1, 
+    telefone2, 
+    endereco, 
+    curso1, 
+    curso2, 
+    professor_curso1, 
+    professor_curso2, 
+    nota_curso1, 
+    nota_curso2
+) 
+VALUES (
+    1001,
+    'Alice Silva',
+    'F',
+    '(11) 98765-4321',
+    '(11) 3333-2222',
+    'Rua das Flores, 150 - São Paulo',
+    'PostgreSQL Essencial',
+    'Python para Dados',
+    'Prof. Carlos Eduardo',
+    'Profa. Juliana Santos',
+    9.50,
+    8.80
+);
+
+-- Inserção 2
+INSERT INTO aluno_original (
+    matricula, 
+    nome,
+    sexo, 
+    telefone1, 
+    telefone2, 
+    endereco, 
+    curso1, 
+    curso2, 
+    professor_curso1, 
+    professor_curso2, 
+    nota_curso1, 
+    nota_curso2
+) 
+VALUES (
+    1002,
+    'Bruno Mendes',
+    'M',
+    '(21) 99999-1111',
+    NULL, -- Aluno tem apenas 1 telefone
+    'Av. Central, 500 - Rio de Janeiro',
+    'PostgreSQL Essencial',
+    NULL, -- Aluno tem apenas 1 curso
+    'Prof. Carlos Eduardo',
+    NULL,
+    7.00,
+    NULL
+);
+        </code></pre>
+
+          <p>
+            Percebe quem durante a inserção precisamos repetir dados como sexo
+            do aluno, telefones, cursos e professores? Isso é um problema de
+            normalização.
+          </p>
+          <p>Como podemos melhorar essa tabela?</p>
+          <h3>🤔 Vamos Pensar Juntos...</h3>
+
+          <p>
+            Olhe atentamente para os dados que você acabou de inserir. Perceba
+            alguns problemas:
+          </p>
+
+          <ul>
+            <li>
+              <strong>Repetição:</strong> O curso "PostgreSQL Essencial" aparece
+              em vários alunos. Se o nome do curso mudar, você teria que alterar
+              em TODOS os registros!
+            </li>
+            <li>
+              <strong>Professor repetido:</strong> "Prof. Carlos Eduardo"
+              aparece múltiplas vezes. E se ele mudar de nome ou você precisar
+              adicionar o e-mail dele?
+            </li>
+            <li>
+              <strong>Desperdício:</strong> As colunas `telefone2`, `curso2`,
+              `professor_curso2` ficam vazias (NULL) quando o aluno tem apenas
+              um telefone ou um curso.
+            </li>
+            <li>
+              <strong>Limitação:</strong> E se um aluno quiser fazer 3 cursos?
+              Ou ter 3 telefones? Vamos criar `curso3`, `curso4`...
+              infinitamente?
+            </li>
+          </ul>
+
+          <div class="alert alert-warning" role="alert">
+            💭 <strong>Desafio de Raciocínio:</strong><br />
+            Pense: se você tivesse que organizar esses dados em sua casa, como
+            faria?<br /><br />
+
+            Talvez você usasse:
+            <ul>
+              <li>
+                Uma <strong>lista separada</strong> com todos os cursos
+                disponíveis?
+              </li>
+              <li>
+                Uma <strong>agenda de telefones</strong> à parte, onde cada
+                pessoa pode ter vários números?
+              </li>
+              <li>Um <strong>cadastro de professores</strong> independente?</li>
+            </ul>
+          </div>
+
+          <p>
+            É exatamente isso que vamos fazer! Em vez de uma única tabela
+            gigante com tudo misturado, vamos
+            <strong
+              >separar as informações em tabelas menores e organizadas</strong
+            >, onde:
+          </p>
+
+          <ul>
+            <li>Cada dado aparece <strong>apenas uma vez</strong></li>
+            <li>Não há desperdício de espaço com colunas vazias</li>
+            <li>
+              Não há limite de quantos telefones, cursos ou endereços cada aluno
+              pode ter
+            </li>
+            <li>Atualizar informações fica muito mais fácil</li>
+          </ul>
+
+          <p>
+            <strong>Sua missão agora:</strong> Desenhe em uma folha como você
+            dividiria essa tabela única em
+            <strong>várias tabelas menores</strong>. Pense em quais informações
+            "fazem sentido juntas" e quais deveriam ficar separadas.
+          </p>
+
+          <p>
+            Dica: Comece identificando os "grupos de informações" que se repetem
+            ou que poderiam existir independentemente do aluno (como cursos e
+            professores).
+          </p>
+
+          <pre><code class="sql">
+CREATE TABLE aluno_original (
+    matricula INT PRIMARY KEY,
+    nome VARCHAR(100),
+    sexo CHAR(1), -- Desatualizada com novos tratamentos e repetição (Problema: 1FN)
+    telefone1 VARCHAR(15), -- Repetição (Problema: 1FN)
+    telefone2 VARCHAR(15), -- Repetição (Problema: 1FN)
+    endereco VARCHAR(200),
+    curso1 VARCHAR(50), -- Repetição (Problema: 1FN)
+    curso2 VARCHAR(50), -- Repetição (Problema: 1FN)
+    professor_curso1 VARCHAR(100), -- Dependência Transitiva/Parcial (Problema: 2FN/3FN)
+    professor_curso2 VARCHAR(100), -- Dependência Transitiva/Parcial (Problema: 2FN/3FN)
+    nota_curso1 DECIMAL(4,2), -- Depende da combinação (Matrícula + Curso) (Problema: 2FN)
+    nota_curso2 DECIMAL(4,2)  -- Depende da combinação (Matrícula + Curso) (Problema: 2FN)
+);
+    </code></pre>
+
+          <div class="alert alert-warning" role="alert">
+            🚨 <strong>Atenção! Questão Sexo e Outros Temas Sensíveis</strong>
+            <p>
+              Enquanto programador não nos interessa a política, questões
+              sexuais ou qualquer outro tema polêmico. Acompanhamos a sociedade
+              e o dono do sistema;
+            </p>
+            <p>
+              Se a sociedade, ou a lei, demandam uma mudança, precisamos fazer,
+              gostando ou não.
+            </p>
+            <p>
+              Se o cliente não quiser se adequar, tenha cláusulas de contrato
+              para te proteger ou proteger sua empresa e, em ambos os casos,
+              alterações no sistema custam dinheiro!
+            </p>
+            <p>
+              Dica: Nínguem fica rico discutindo ideias, ganhamos dinheiro
+              fazendo código.
+            </p>
+          </div>
+
+          <h3 class="mt-5">Resultado do Professor</h3>
+
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseGabarito"
+            aria-expanded="false"
+            aria-controls="collapseGabarito"
+          >
+            Mostrar Resultado do Professor
+          </button>
+
+          <div class="collapse mt-3" id="collapseGabarito">
+            <div
+              class="card card-body"
+              style="
+                background-color: var(--sidebar-bg);
+                border-color: var(--border);
+              "
+            >
+              <pre><code class="sql">
+-- ========================================
+-- TABELAS NORMALIZADAS DO EXERCÍCIO
+-- ========================================
+
+-- 1. TABELA DE SEXOS (inclusão e diversidade)
+CREATE TABLE sexos (
+    id SERIAL PRIMARY KEY,
+    codigo CHAR(1) UNIQUE NOT NULL,
+    descricao VARCHAR(20) NOT NULL,
+    pronome VARCHAR(10)
+);
+
+-- 2. TABELA DE ALUNOS (dados principais)
+CREATE TABLE alunos (
+    matricula INT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    sexo_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (sexo_id) REFERENCES sexos(id) ON DELETE RESTRICT
+);
+
+-- 3. TABELA DE ENDEREÇOS
+CREATE TABLE enderecos (
+    id SERIAL PRIMARY KEY,
+    matricula INT NOT NULL,
+    endereco_completo VARCHAR(200) NOT NULL,
+    FOREIGN KEY (matricula) REFERENCES alunos(matricula) ON DELETE CASCADE
+);
+
+-- 4. TABELA DE TELEFONES
+CREATE TABLE telefones (
+    id SERIAL PRIMARY KEY,
+    matricula INT NOT NULL,
+    numero VARCHAR(15) NOT NULL,
+    FOREIGN KEY (matricula) REFERENCES alunos(matricula) ON DELETE CASCADE
+);
+
+-- 5. TABELA DE PROFESSORES
+CREATE TABLE professores (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- 6. TABELA DE CURSOS
+CREATE TABLE cursos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL UNIQUE,
+    professor_id INT NOT NULL,
+    FOREIGN KEY (professor_id) REFERENCES professores(id) ON DELETE RESTRICT
+);
+
+-- 7. TABELA DE MATRÍCULAS (relacionamento N para N entre alunos e cursos)
+CREATE TABLE matriculas (
+    id SERIAL PRIMARY KEY,
+    matricula INT NOT NULL,
+    curso_id INT NOT NULL,
+    nota DECIMAL(4,2),
+    data_matricula DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (matricula) REFERENCES alunos(matricula) ON DELETE CASCADE,
+    FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE,
+    UNIQUE(matricula, curso_id) -- Evita matrícula duplicada no mesmo curso
+);
+
+-- ========================================
+-- INSERINDO OS DADOS NORMALIZADOS
+-- ========================================
+
+-- Passo 1: Inserir Sexos (inclusão e diversidade)
+INSERT INTO sexos (codigo, descricao, pronome) VALUES
+('M', 'Masculino', 'ele/dele'),
+('F', 'Feminino', 'ela/dela'),
+('N', 'Não-binário', 'elu/delu'),
+('O', 'Outro', 'elu/delu'),
+('P', 'Prefiro não dizer', NULL);
+
+-- Passo 2: Inserir Professores
+INSERT INTO professores (nome) VALUES
+('Prof. Carlos Eduardo'),
+('Profa. Juliana Santos');
+
+-- Passo 3: Inserir Cursos (com os professores)
+INSERT INTO cursos (nome, professor_id) VALUES
+('PostgreSQL Essencial', 1),  -- Professor Carlos Eduardo (id 1)
+('Python para Dados', 2);     -- Professora Juliana Santos (id 2)
+
+-- Passo 4: Inserir Alunos (agora com sexo_id)
+INSERT INTO alunos (matricula, nome, sexo_id) VALUES
+(1001, 'Alice Silva', 2),      -- Feminino
+(1002, 'Bruno Mendes', 1),     -- Masculino
+(1003, 'Sam Oliveira', 3),     -- Não-binário
+(1004, 'Jordan Santos', 5),    -- Prefiro não dizer
+(1005, 'Taylor Lima', 3);      -- Não-binário
+
+-- Passo 5: Inserir Endereços
+INSERT INTO enderecos (matricula, endereco_completo) VALUES
+(1001, 'Rua das Flores, 150 - São Paulo'),
+(1002, 'Av. Central, 500 - Rio de Janeiro'),
+(1003, 'Rua Augusta, 200 - São Paulo'),
+(1004, 'Av. Paulista, 1000 - São Paulo'),
+(1005, 'Rua Oscar Freire, 300 - São Paulo');
+
+-- Passo 6: Inserir Telefones
+INSERT INTO telefones (matricula, numero) VALUES
+(1001, '(11) 98765-4321'),
+(1001, '(11) 3333-2222'),  -- Alice tem 2 telefones
+(1002, '(21) 99999-1111'),
+(1003, '(11) 97777-5555'),
+(1003, '(11) 96666-4444'),
+(1004, '(11) 95555-3333'),
+(1005, '(11) 94444-2222'),
+(1005, '(11) 93333-1111'),
+(1005, '(11) 92222-0000'); -- Taylor tem 3 telefones
+
+-- Passo 7: Inserir Matrículas (com notas)
+INSERT INTO matriculas (matricula, curso_id, nota) VALUES
+(1001, 1, 9.50),  -- Alice em PostgreSQL
+(1001, 2, 8.80),  -- Alice em Python
+(1002, 1, 7.00),  -- Bruno em PostgreSQL
+(1003, 2, 9.20),  -- Sam em Python
+(1004, 1, 8.50),  -- Jordan em PostgreSQL
+(1004, 2, 7.80),  -- Jordan em Python
+(1005, 1, 9.00);  -- Taylor em PostgreSQL
+
+-- ========================================
+-- CONSULTAS ÚTEIS
+-- ========================================
+
+-- Ver todos os dados de um aluno (igual à tabela original, mas com sexo por extenso)
+SELECT 
+    a.matricula,
+    a.nome,
+    s.descricao as sexo,
+    s.pronome,
+    e.endereco_completo,
+    STRING_AGG(DISTINCT t.numero, ', ') as telefones,
+    STRING_AGG(DISTINCT c.nome, ', ') as cursos,
+    STRING_AGG(DISTINCT p.nome, ', ') as professores,
+    AVG(m.nota) as media_notas
+FROM alunos a
+LEFT JOIN sexos s ON a.sexo_id = s.id
+LEFT JOIN enderecos e ON a.matricula = e.matricula
+LEFT JOIN telefones t ON a.matricula = t.matricula
+LEFT JOIN matriculas m ON a.matricula = m.matricula
+LEFT JOIN cursos c ON m.curso_id = c.id
+LEFT JOIN professores p ON c.professor_id = p.id
+WHERE a.matricula = 1001
+GROUP BY a.matricula, a.nome, s.descricao, s.pronome, e.endereco_completo;
+
+-- Ver cursos de um aluno com notas e professores
+SELECT 
+    a.nome as aluno,
+    s.descricao as sexo,
+    s.pronome,
+    c.nome as curso,
+    p.nome as professor,
+    m.nota
+FROM alunos a
+JOIN sexos s ON a.sexo_id = s.id
+JOIN matriculas m ON a.matricula = m.matricula
+JOIN cursos c ON m.curso_id = c.id
+JOIN professores p ON c.professor_id = p.id
+WHERE a.matricula = 1003;  -- Sam (não-binário)
+
+-- Ver todos os alunos de um curso com diversidade
+SELECT 
+    c.nome as curso,
+    p.nome as professor,
+    a.nome as aluno,
+    s.descricao as sexo,
+    m.nota
+FROM cursos c
+JOIN professores p ON c.professor_id = p.id
+JOIN matriculas m ON c.id = m.curso_id
+JOIN alunos a ON m.matricula = a.matricula
+JOIN sexos s ON a.sexo_id = s.id
+WHERE c.nome = 'PostgreSQL Essencial'
+ORDER BY m.nota DESC;
+
+-- Ver alunos e seus telefones
+SELECT 
+    a.nome as aluno,
+    s.descricao as sexo,
+    s.pronome,
+    t.numero as telefone
+FROM alunos a
+JOIN sexos s ON a.sexo_id = s.id
+JOIN telefones t ON a.matricula = t.matricula
+ORDER BY a.nome;
+
+-- Estatísticas de diversidade nos cursos
+SELECT 
+    c.nome as curso,
+    s.descricao as sexo,
+    COUNT(*) as quantidade_alunos,
+    ROUND(AVG(m.nota), 2) as media_notas
+FROM cursos c
+JOIN matriculas m ON c.id = m.curso_id
+JOIN alunos a ON m.matricula = a.matricula
+JOIN sexos s ON a.sexo_id = s.id
+GROUP BY c.nome, s.descricao
+ORDER BY c.nome, quantidade_alunos DESC;
+
+-- Ver todos os sexos cadastrados (para referência)
+SELECT * FROM sexos ORDER BY id;
+    </code></pre>
+            </div>
+          </div>
+        </div>
 
         <h2>Menu</h2>
         <div class="mt-4">
-          <!-- <a href="./aula2.html" class="btn btn-primary">Próxima aula →</a> -->
+          <!-- <a href="./aula4.html" class="btn btn-primary">Próxima aula →</a> -->
           <a href="./../index.html" class="btn btn-outline-secondary"
             >← Voltar ao Início</a
           >
@@ -195,5 +729,9 @@ COMMIT;
     <script src="./../assets/js/sidebar.js"></script>
     <script src="./../assets/js/table-of-contents.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
   </body>
 </html>

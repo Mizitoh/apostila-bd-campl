@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Colinha</title>
+    <link rel="icon" type="image/png" href="./assets/imagens/caderno.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Quem não cola, não sai da escola!</h1>
+
+        <h2>Comandos SQL do PostgreSQL mais usados:</h2>
+
+        <div class="mb-5">
+          <h3>1. Definição de Dados (DDL) - Estrutura</h3>
+          <p>
+            Comandos usados para **criar, modificar e remover** objetos de banco
+            de dados (tabelas, bancos, índices, etc.).
+          </p>
+
+          <h4>Criar Banco de Dados</h4>
+          <pre><code class="sql">
+CREATE DATABASE nome_do_banco;
+        </code></pre>
+
+          <h4>Criar Tabela</h4>
+          <pre><code class="sql">
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY, -- Chave primária auto-incrementável
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10, 2) DEFAULT 0.00,
+    estoque INTEGER CHECK (estoque >= 0)
+);
+        </code></pre>
+
+          <h4>Alterar Tabela (Adicionar Coluna)</h4>
+          <pre><code class="sql">
+ALTER TABLE produtos
+ADD COLUMN descricao TEXT;
+        </code></pre>
+
+          <h4>Excluir Tabela</h4>
+          <pre><code class="sql">
+DROP TABLE produtos;
+-- DROP TABLE IF EXISTS produtos CASCADE; -- Forma mais segura
+        </code></pre>
+        </div>
+
+        <hr />
+
+        <div class="mb-5">
+          <h3>2. Manipulação de Dados (DML) - Registros</h3>
+          <p>
+            Comandos usados para **inserir, selecionar, atualizar e remover**
+            dados dentro das tabelas.
+          </p>
+
+          <h4>Inserir Dados (C - Create)</h4>
+          <pre><code class="sql">
+INSERT INTO produtos (nome, preco, estoque)
+VALUES ('Notebook Gamer', 5500.00, 10);
+        </code></pre>
+
+          <h4>Selecionar Dados (R - Read)</h4>
+          <pre><code class="sql">
+-- Seleciona todas as colunas de todos os registros
+SELECT * FROM produtos;
+
+-- Seleciona colunas específicas com filtro
+SELECT nome, preco FROM produtos
+WHERE preco > 5000.00
+ORDER BY preco DESC;
+
+-- Contagem de registros (muito comum)
+SELECT COUNT(*) FROM produtos;
+        </code></pre>
+
+          <h4>Atualizar Dados (U - Update)</h4>
+          <pre><code class="sql">
+UPDATE produtos
+SET preco = 6000.00, estoque = 5
+WHERE id = 1;
+        </code></pre>
+
+          <h4>Remover Dados (D - Delete)</h4>
+          <pre><code class="sql">
+-- ATENÇÃO: Se não usar WHERE, apaga TUDO na tabela!
+DELETE FROM produtos
+WHERE estoque = 0;
+        </code></pre>
+        </div>
+
+        <hr />
+
+        <div class="mb-5">
+          <h3>3. Funções para Manipulação de Strings (Texto) 📝</h3>
+          <p>
+            O PostgreSQL oferece diversas funções para trabalhar com textos,
+            extraindo informações ou formatando dados.
+          </p>
+
+          <h4>Converter para Maiúsculas e Minúsculas</h4>
+          <pre><code class="sql">
+SELECT UPPER('texto em maiúsculas'),
+       LOWER('TEXTO EM minúsculas');
+        </code></pre>
+
+          <h4>Concatenar Strings (Juntar Textos)</h4>
+          <pre><code class="sql">
+-- O operador "||" é o mais usado no PostgreSQL
+SELECT 'Produto: ' || nome AS nome_completo_produto
+FROM produtos
+WHERE id = 1;
+        </code></pre>
+
+          <h4>Extrair Substring e Comprimento</h4>
+          <pre><code class="sql">
+SELECT SUBSTRING('PostgreSQL' FROM 5 FOR 4), -- Retorna 'greS'
+       LENGTH('PostgreSQL') AS tamanho_string;  -- Retorna 10
+        </code></pre>
+        </div>
+
+        <hr />
+
+        <div class="mb-5">
+          <h3>4. Funções para Cálculos e Agregações (Números) 🔢</h3>
+          <p>
+            Funções essenciais para realizar operações matemáticas e sumarizar
+            (agregar) dados numéricos.
+          </p>
+
+          <h4>Funções de Agregação (Média, Soma, Mínimo, Máximo)</h4>
+          <p>Geralmente usadas para calcular valores de um grupo de linhas.</p>
+          <pre><code class="sql">
+SELECT AVG(preco) AS preco_medio,
+       SUM(estoque) AS estoque_total,
+       MAX(preco) AS preco_mais_alto
+FROM produtos;
+        </code></pre>
+
+          <h4>Cálculos Matemáticos Básicos</h4>
+          <p>
+            Cálculos podem ser feitos diretamente nas colunas (ex: calcular 10%
+            de desconto).
+          </p>
+          <pre><code class="sql">
+SELECT nome,
+       preco * 0.90 AS preco_com_desconto,  -- 10% de desconto
+       ROUND(SQRT(16), 0) AS raiz_quadrada;  -- Raiz quadrada de 16, arredondado
+FROM produtos;
+        </code></pre>
+          <hr />
+
+          <div class="mb-5">
+            <h3>5. Funções Condicionais</h3>
+            <h4>Estrutura Condicional (CASE WHEN)</h4>
+            <p>
+              O <code>CASE WHEN</code> é usado para implementar lógica
+              condicional (se/então) em consultas, criando novas colunas com
+              base no valor de outras.
+            </p>
+            <pre><code class="sql">
+-- Classifica os produtos com base no preço
+SELECT 
+    nome, 
+    preco,
+    CASE 
+        WHEN preco > 5000.00 THEN 'Alto Valor'
+        WHEN preco > 1000.00 THEN 'Valor Médio'
+        ELSE 'Básico'
+    END AS classificacao_preco
+FROM 
+    produtos;
+        </code></pre>
+          </div>
+        </div>
+
+        <hr />
+
+        <h2>Tradução e breve explicação dos comandos:</h2>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Comando SQL</th>
+              <th>Explicação/Uso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>**CREATE**</td>
+              <td>
+                Cria um novo objeto (banco de dados, tabela, índice, etc.).
+              </td>
+            </tr>
+            <tr>
+              <td>**ALTER**</td>
+              <td>
+                Modifica a estrutura de um objeto existente (ex: adicionar uma
+                coluna à tabela).
+              </td>
+            </tr>
+            <tr>
+              <td>**DROP**</td>
+              <td>
+                Exclui permanentemente um objeto (tabela, banco de dados, etc.).
+              </td>
+            </tr>
+            <tr>
+              <td>**SELECT**</td>
+              <td>
+                Recupera (consulta) dados de uma ou mais tabelas. É o comando de
+                leitura (Read).
+              </td>
+            </tr>
+            <tr>
+              <td>**INSERT INTO**</td>
+              <td>
+                Adiciona novos registros (linhas) em uma tabela. É o comando de
+                criação (Create).
+              </td>
+            </tr>
+            <tr>
+              <td>**UPDATE**</td>
+              <td>
+                Modifica dados existentes em uma tabela. É o comando de
+                atualização (Update).
+              </td>
+            </tr>
+            <tr>
+              <td>**DELETE FROM**</td>
+              <td>
+                Remove registros (linhas) de uma tabela. É o comando de exclusão
+                (Delete).
+              </td>
+            </tr>
+            <tr>
+              <td>**WHERE**</td>
+              <td>
+                Usado com <code>SELECT</code>, <code>UPDATE</code> ou
+                <code>DELETE</code> para aplicar **filtros** e especificar quais
+                linhas serão afetadas.
+              </td>
+            </tr>
+            <tr>
+              <td>**ORDER BY**</td>
+              <td>
+                Classifica o resultado de uma consulta <code>SELECT</code> (ex:
+                `ASC` para ascendente, `DESC` para descendente).
+              </td>
+            </tr>
+            <tr>
+              <td>**JOIN**</td>
+              <td>
+                Combina linhas de duas ou mais tabelas com base em uma coluna
+                relacionada entre elas (essencial para bancos relacionais).
+              </td>
+            </tr>
+            <tr>
+              <td>**UPPER / LOWER**</td>
+              <td>
+                Funções de **String**: Converte o texto para **MAIÚSCULAS** ou
+                **minúsculas**.
+              </td>
+            </tr>
+            <tr>
+              <td>**|| (Concatenador)**</td>
+              <td>
+                Operador de **String**: Junta (concatena) duas ou mais strings
+                de texto.
+              </td>
+            </tr>
+            <tr>
+              <td>**SUBSTRING / LENGTH**</td>
+              <td>
+                Funções de **String**: **Extrai** parte de um texto ou retorna
+                seu **comprimento** (número de caracteres).
+              </td>
+            </tr>
+            <tr>
+              <td>**SUM / AVG / MAX / MIN**</td>
+              <td>
+                Funções de **Agregação**: Calcula a **Soma**, **Média**, valor
+                **Máximo** e **Mínimo** de um conjunto de valores.
+              </td>
+            </tr>
+            <tr>
+              <td>**ROUND / SQRT**</td>
+              <td>
+                Funções de **Cálculo**: **Arredonda** um número ou calcula sua
+                **Raiz Quadrada**.
+              </td>
+            </tr>
+            <tr>
+              <td>**CASE WHEN**</td>
+              <td>
+                Estrutura **Condicional**: Permite aplicar lógica **"se/então"**
+                para retornar diferentes valores com base em condições.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr />
+
+        <h2>Tipos de Dados no PostgreSQL</h2>
+
+        <h5>Tipos Numéricos</h5>
+        <ul>
+          <li>
+            <strong>INTEGER</strong> ou <strong>INT</strong> - Números inteiros
+            (-2 bilhões a +2 bilhões)
+          </li>
+          <li>
+            <strong>BIGINT</strong> - Números inteiros grandes (até 9
+            quintilhões)
+          </li>
+          <li>
+            <strong>SMALLINT</strong> - Números inteiros pequenos (-32.768 a
+            +32.767)
+          </li>
+          <li>
+            <strong>DECIMAL</strong> ou <strong>NUMERIC</strong> - Números com
+            casas decimais exatas (dinheiro, preços)
+          </li>
+          <li><strong>REAL</strong> - Números decimais com precisão simples</li>
+          <li>
+            <strong>DOUBLE PRECISION</strong> - Números decimais com precisão
+            dupla
+          </li>
+          <li>
+            <strong>SERIAL</strong> - Número inteiro que aumenta automaticamente
+            (ideal para IDs)
+          </li>
+        </ul>
+
+        <h5>Tipos de Texto</h5>
+        <ul>
+          <li>
+            <strong>VARCHAR(n)</strong> - Texto com tamanho máximo definido (ex:
+            VARCHAR(100))
+          </li>
+          <li>
+            <strong>CHAR(n)</strong> - Texto com tamanho fixo (completa com
+            espaços)
+          </li>
+          <li><strong>TEXT</strong> - Texto sem limite de tamanho</li>
+        </ul>
+
+        <h5>Tipos de Data e Hora</h5>
+        <ul>
+          <li><strong>DATE</strong> - Apenas data (ex: 2025-10-26)</li>
+          <li><strong>TIME</strong> - Apenas hora (ex: 14:30:00)</li>
+          <li><strong>TIMESTAMP</strong> - Data e hora juntos</li>
+          <li>
+            <strong>INTERVAL</strong> - Período de tempo (ex: 5 dias, 3 horas)
+          </li>
+        </ul>
+
+        <h5>Tipos Lógicos</h5>
+        <ul>
+          <li><strong>BOOLEAN</strong> - Verdadeiro (TRUE) ou Falso (FALSE)</li>
+        </ul>
+
+        <h5>Tipos Especiais</h5>
+        <ul>
+          <li>
+            <strong>JSON</strong> / <strong>JSONB</strong> - Armazena dados no
+            formato JSON
+          </li>
+          <li><strong>UUID</strong> - Identificador único universal</li>
+          <li><strong>ARRAY</strong> - Lista de valores do mesmo tipo</li>
+          <li><strong>BYTEA</strong> - Dados binários (arquivos, imagens)</li>
+        </ul>
+
+        <hr />
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <a href="./index.html" class="btn btn-outline-secondary"
+            >← Voltar ao Início</a
+          >
+          <a href="./aulas.html" class="btn btn-outline-secondary"
+            >← Voltar às aulas por data</a
+          >
+        </div>
+      </main>
+    </div>
+
+    <script src="./assets/js/sidebar.js"></script>
+    <script src="./assets/js/table-of-contents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

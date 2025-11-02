@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 3 - Linguagens de Banco de Dados (SQL)</title>
+    <link rel="icon" type="image/png" href="./../assets/imagens/caderno.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Aula 4 - Normalização de dados</h1>
+
+        <h2>Normalização de Banco de Dados</h2>
+
+        <p>
+          Normalização é o processo de organizar os dados em um banco de dados
+          para reduzir redundâncias e melhorar a integridade dos dados.
+        </p>
+
+        <blockquote>
+          💡 A normalização foi criada por <strong>Edgar F. Codd</strong> em
+          1970, cientista da computação britânico que também inventou o modelo
+          relacional de banco de dados.
+        </blockquote>
+
+        <h3>Tabela NÃO Normalizada - Exemplo Ruim ❌</h3>
+
+        <p>
+          Vamos começar criando uma tabela de alunos
+          <strong>sem normalização</strong>, onde colocamos todas as informações
+          em uma única tabela:
+        </p>
+
+        <pre><code class="language-sql">
+CREATE TABLE alunos_nao_normalizado (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    email VARCHAR(100),
+    data_nascimento DATE,
+    
+    -- Dados de endereço misturados
+    rua VARCHAR(100),
+    numero VARCHAR(10),
+    bairro VARCHAR(50),
+    cidade VARCHAR(50),
+    estado VARCHAR(2),
+    cep VARCHAR(9),
+    
+    -- Múltiplos telefones em colunas separadas
+    telefone1 VARCHAR(15),
+    telefone2 VARCHAR(15),
+    telefone3 VARCHAR(15),
+    
+    -- Múltiplos cursos em uma mesma coluna (pior ainda!)
+    cursos TEXT,  -- Ex: "Python, Java, SQL"
+    
+    -- Notas dos cursos misturadas
+    notas TEXT    -- Ex: "8.5, 9.0, 7.5"
+);
+        </code></pre>
+
+        <h3>Inserindo dados na tabela não normalizada:</h3>
+
+        <pre><code class="language-sql">
+INSERT INTO alunos_nao_normalizado 
+(nome, email, data_nascimento, rua, numero, bairro, cidade, estado, cep, 
+ telefone1, telefone2, telefone3, cursos, notas) 
+VALUES 
+('João Silva', 'joao@email.com', '2000-05-15', 
+ 'Rua das Flores', '123', 'Centro', 'São Paulo', 'SP', '01234-567',
+ '11-98888-1111', '11-97777-2222', NULL,
+ 'Python, Java, SQL', '8.5, 9.0, 7.5'),
+ 
+('Maria Santos', 'maria@email.com', '1999-08-20',
+ 'Av. Paulista', '1000', 'Bela Vista', 'São Paulo', 'SP', '01310-100',
+ '11-96666-3333', NULL, NULL,
+ 'Python, JavaScript', '9.5, 8.0');
+        </code></pre>
+
+        <div class="alert alert-danger" role="alert">
+          ⚠️ <strong>Problemas desta tabela:</strong>
+          <ul>
+            <li>Dados repetidos (cidade, estado aparecem em cada aluno)</li>
+            <li>
+              Desperdício de espaço (telefone2 e telefone3 às vezes vazios)
+            </li>
+            <li>
+              Difícil fazer consultas (como buscar alunos do curso "Python"?)
+            </li>
+            <li>
+              Difícil atualizar (se mudar o nome do curso, precisa alterar em
+              todos)
+            </li>
+            <li>Limitação (e se o aluno tiver 4 telefones?)</li>
+          </ul>
+        </div>
+
+        <hr />
+
+        <h3>As Três Formas Normais</h3>
+
+        <p>
+          Edgar F. Codd definiu as formas normais para eliminar esses problemas.
+          Vamos entender cada uma:
+        </p>
+
+        <h3>1ª Forma Normal (1FN) - Atomicidade</h3>
+
+        <p>
+          <strong>Regra:</strong> Cada campo deve conter apenas
+          <strong>um valor atômico</strong> (indivisível).
+        </p>
+
+        <div class="alert alert-warning" role="alert">
+          ❌ <strong>Errado:</strong> cursos = "Python, Java, SQL" (vários
+          valores)<br />
+          ✅ <strong>Certo:</strong> Uma linha para cada curso do aluno
+        </div>
+
+        <h3>2ª Forma Normal (2FN) - Dependência Total</h3>
+
+        <p>
+          <strong>Regra:</strong> Deve estar na 1FN + todos os campos não-chave
+          devem depender <strong>totalmente</strong> da chave primária.
+        </p>
+
+        <div class="alert alert-warning" role="alert">
+          ❌ <strong>Errado:</strong> Nome do curso depende do ID do curso, não
+          do aluno<br />
+          ✅ <strong>Certo:</strong> Criar tabela separada para cursos
+        </div>
+
+        <h3>3ª Forma Normal (3FN) - Sem Dependência Transitiva</h3>
+
+        <p>
+          <strong>Regra:</strong> Deve estar na 2FN + nenhum campo não-chave
+          pode depender de outro campo não-chave.
+        </p>
+
+        <div class="alert alert-warning" role="alert">
+          ❌ <strong>Errado:</strong> Cidade depende do CEP (não do ID do
+          aluno)<br />
+          ✅ <strong>Certo:</strong> Criar tabela separada para endereços
+        </div>
+
+        <hr />
+
+        <h3>Tabelas Normalizadas - Exemplo Correto ✅</h3>
+
+        <p>Agora vamos criar as tabelas seguindo as três formas normais:</p>
+
+        <h3>1. Tabela de Alunos (dados principais)</h3>
+
+        <pre><code class="language-sql">
+CREATE TABLE alunos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    data_nascimento DATE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+        </code></pre>
+
+        <h3>2. Tabela de Endereços</h3>
+
+        <pre><code class="language-sql">
+CREATE TABLE enderecos (
+    id SERIAL PRIMARY KEY,
+    aluno_id INTEGER NOT NULL,
+    rua VARCHAR(100) NOT NULL,
+    numero VARCHAR(10),
+    complemento VARCHAR(50),
+    bairro VARCHAR(50) NOT NULL,
+    cidade VARCHAR(50) NOT NULL,
+    estado VARCHAR(2) NOT NULL,
+    cep VARCHAR(9) NOT NULL,
+    tipo VARCHAR(20) DEFAULT 'residencial', -- residencial, comercial
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
+);
+        </code></pre>
+
+        <h3>3. Tabela de Telefones</h3>
+
+        <pre><code class="language-sql">
+CREATE TABLE telefones (
+    id SERIAL PRIMARY KEY,
+    aluno_id INTEGER NOT NULL,
+    numero VARCHAR(15) NOT NULL,
+    tipo VARCHAR(20) DEFAULT 'celular', -- celular, residencial, comercial
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
+);
+        </code></pre>
+
+        <h3>4. Tabela de Cursos</h3>
+
+        <pre><code class="language-sql">
+CREATE TABLE cursos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE,
+    carga_horaria INTEGER,
+    descricao TEXT
+);
+        </code></pre>
+
+        <h3>5. Tabela de Matrículas (relacionamento N para N)</h3>
+
+        <pre><code class="language-sql">
+CREATE TABLE matriculas (
+    id SERIAL PRIMARY KEY,
+    aluno_id INTEGER NOT NULL,
+    curso_id INTEGER NOT NULL,
+    nota DECIMAL(4,2),
+    data_matricula DATE DEFAULT CURRENT_DATE,
+    status VARCHAR(20) DEFAULT 'cursando', -- cursando, concluido, trancado
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE,
+    FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE,
+    UNIQUE(aluno_id, curso_id) -- Um aluno não pode se matricular duas vezes no mesmo curso
+);
+        </code></pre>
+
+        <hr />
+
+        <h3>Inserindo Dados nas Tabelas Normalizadas</h3>
+
+        <h3>Passo 1: Inserir Alunos</h3>
+
+        <pre><code class="language-sql">
+INSERT INTO alunos (nome, email, data_nascimento) VALUES
+('João Silva', 'joao@email.com', '2000-05-15'),
+('Maria Santos', 'maria@email.com', '1999-08-20'),
+('Pedro Oliveira', 'pedro@email.com', '2001-03-10');
+        </code></pre>
+
+        <h3>Passo 2: Inserir Endereços</h3>
+
+        <pre><code class="language-sql">
+INSERT INTO enderecos (aluno_id, rua, numero, bairro, cidade, estado, cep) VALUES
+(1, 'Rua das Flores', '123', 'Centro', 'São Paulo', 'SP', '01234-567'),
+(2, 'Av. Paulista', '1000', 'Bela Vista', 'São Paulo', 'SP', '01310-100'),
+(3, 'Rua Augusta', '500', 'Consolação', 'São Paulo', 'SP', '01305-000');
+        </code></pre>
+
+        <h3>Passo 3: Inserir Telefones</h3>
+
+        <pre><code class="language-sql">
+INSERT INTO telefones (aluno_id, numero, tipo) VALUES
+(1, '11-98888-1111', 'celular'),
+(1, '11-97777-2222', 'residencial'),
+(2, '11-96666-3333', 'celular'),
+(3, '11-95555-4444', 'celular'),
+(3, '11-3333-5555', 'comercial');
+        </code></pre>
+
+        <h3>Passo 4: Inserir Cursos</h3>
+
+        <pre><code class="language-sql">
+INSERT INTO cursos (nome, carga_horaria, descricao) VALUES
+('Python Básico', 40, 'Introdução à programação com Python'),
+('Java Avançado', 60, 'Programação orientada a objetos com Java'),
+('SQL Essencial', 30, 'Fundamentos de banco de dados relacionais'),
+('JavaScript Moderno', 50, 'Desenvolvimento web com JavaScript ES6+');
+        </code></pre>
+
+        <h3>Passo 5: Fazer Matrículas</h3>
+
+        <pre><code class="language-sql">
+INSERT INTO matriculas (aluno_id, curso_id, nota, status) VALUES
+(1, 1, 8.5, 'concluido'),  -- João em Python
+(1, 2, 9.0, 'concluido'),  -- João em Java
+(1, 3, 7.5, 'cursando'),   -- João em SQL
+(2, 1, 9.5, 'concluido'),  -- Maria em Python
+(2, 4, 8.0, 'cursando'),   -- Maria em JavaScript
+(3, 3, NULL, 'cursando');  -- Pedro em SQL (sem nota ainda)
+        </code></pre>
+
+        <hr />
+
+        <h3>Consultando os Dados Normalizados</h3>
+
+        <h3>Ver todos os dados de um aluno (JOIN):</h3>
+
+        <pre><code class="language-sql">
+-- Dados completos do João
+SELECT 
+    a.nome,
+    a.email,
+    e.rua,
+    e.cidade,
+    e.estado,
+    t.numero as telefone,
+    t.tipo as tipo_telefone
+FROM alunos a
+LEFT JOIN enderecos e ON a.id = e.aluno_id
+LEFT JOIN telefones t ON a.id = t.aluno_id
+WHERE a.nome = 'João Silva';
+        </code></pre>
+
+        <h3>Ver cursos de um aluno com notas:</h3>
+
+        <pre><code class="language-sql">
+SELECT 
+    a.nome as aluno,
+    c.nome as curso,
+    m.nota,
+    m.status
+FROM alunos a
+JOIN matriculas m ON a.id = m.aluno_id
+JOIN cursos c ON m.curso_id = c.id
+WHERE a.nome = 'João Silva';
+        </code></pre>
+
+        <h3>Ver todos os alunos de um curso:</h3>
+
+        <pre><code class="language-sql">
+SELECT 
+    c.nome as curso,
+    a.nome as aluno,
+    m.nota,
+    m.status
+FROM cursos c
+JOIN matriculas m ON c.id = m.curso_id
+JOIN alunos a ON m.aluno_id = a.id
+WHERE c.nome = 'Python Básico';
+        </code></pre>
+
+        <hr />
+
+        <h3>Vantagens da Normalização</h3>
+
+        <div class="alert alert-success" role="alert">
+          <strong>✅ Benefícios:</strong>
+          <ul>
+            <li><strong>Menos redundância:</strong> Dados não se repetem</li>
+            <li>
+              <strong>Integridade:</strong> Alterações são feitas em um só lugar
+            </li>
+            <li>
+              <strong>Flexibilidade:</strong> Fácil adicionar novos telefones,
+              cursos, etc.
+            </li>
+            <li>
+              <strong>Consultas poderosas:</strong> JOINs permitem combinar
+              dados de várias formas
+            </li>
+            <li>
+              <strong>Manutenção:</strong> Mais fácil atualizar e corrigir dados
+            </li>
+          </ul>
+        </div>
+
+        <h3>Diagrama de Relacionamentos</h3>
+
+        <pre>
+┌─────────────┐
+│   ALUNOS    │
+├─────────────┤
+│ id (PK)     │───┐
+│ nome        │   │
+│ email       │   │
+│ data_nasc   │   │
+└─────────────┘   │
+                  │
+        ┌─────────┼─────────┬─────────────┐
+        │         │         │             │
+        ▼         ▼         ▼             ▼
+┌─────────────┐ ┌──────────┐  ┌─────────────────┐
+│  ENDEREÇOS  │ │TELEFONES │  │   MATRÍCULAS    │
+├─────────────┤ ├──────────┤  ├─────────────────┤
+│ id (PK)     │ │ id (PK)  │  │ id (PK)         │
+│ aluno_id(FK)│ │aluno_id  │  │ aluno_id (FK)   │
+│ rua         │ │  (FK)    │  │ curso_id (FK)   │
+│ cidade      │ │ numero   │  │ nota            │
+│ estado      │ │ tipo     │  │ status          │
+└─────────────┘ └──────────┘  └─────────────────┘
+                                       │
+                                       │
+                                       ▼
+                              ┌─────────────┐
+                              │   CURSOS    │
+                              ├─────────────┤
+                              │ id (PK)     │
+                              │ nome        │
+                              │ carga_hor.  │
+                              └─────────────┘
+        </pre>
+
+        <blockquote>
+          💡 <strong>Dica Final:</strong> A normalização nem sempre precisa
+          chegar até a 3FN. Em alguns casos, um pouco de redundância pode
+          melhorar a performance. Isso se chama
+          <strong>desnormalização controlada</strong>, mas só faça isso depois
+          de dominar a normalização!
+        </blockquote>
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <a href="./../index.html" class="btn btn-outline-secondary"
+            >← Voltar ao Início</a
+          >
+          <a href="./../aulas.html" class="btn btn-outline-secondary"
+            >← Voltar às aulas por data</a
+          >
+        </div>
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <!-- <a href="./aula2.html" class="btn btn-primary">Próxima aula →</a> -->
+          <a href="./../index.html" class="btn btn-outline-secondary"
+            >← Voltar ao Início</a
+          >
+          <a href="./../aulas.html" class="btn btn-outline-secondary"
+            >← Voltar às aulas por data</a
+          >
+        </div>
+      </main>
+    </div>
+
+    <script src="./../assets/js/sidebar.js"></script>
+    <script src="./../assets/js/table-of-contents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
