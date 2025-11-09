@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aula 3 - Linguagens de Banco de Dados (SQL)</title>
+    <title>Aula 4 - Relacionamentos e Normalização de dados</title>
     <link rel="icon" type="image/png" href="./../assets/imagens/caderno.png" />
     <link
       rel="stylesheet"
@@ -22,7 +22,185 @@
   <body>
     <div class="container">
       <main class="content">
-        <h1>Aula 4 - Normalização de dados</h1>
+        <h1>Aula 4 - Relacionamentos e Normalização de dados</h1>
+
+        <h2>Relacionamentos entre Tabelas</h2>
+
+        <p>
+          Relacionamentos são conexões lógicas entre tabelas. É como se fossem
+          "pontes" que ligam os dados de uma tabela com outra. Vamos entender na
+          prática usando nosso exemplo de escola:
+        </p>
+
+        <h3>Tipos de Relacionamentos</h3>
+
+        <h4>1. Um para Um (1:1)</h4>
+        <p>
+          Cada registro em uma tabela se relaciona com
+          <strong>apenas um</strong> registro em outra tabela.
+        </p>
+        <pre><code class="language-sql">
+-- Exemplo: Um aluno tem um único endereço principal
+ALUNOS (1) ────── (1) ENDEREÇOS
+
+aluno_id | nome          endereço_id | rua
+1        | João          1           | Rua A
+2        | Maria         2           | Rua B</code></pre>
+
+        <h4>2. Um para Muitos (1:N)</h4>
+        <p>
+          Um registro em uma tabela pode se relacionar com
+          <strong>vários</strong> registros em outra tabela.
+        </p>
+        <pre><code class="language-sql">
+-- Exemplo: Um aluno pode ter vários telefones
+ALUNOS (1) ────── (N) TELEFONES
+
+aluno_id | nome          aluno_id | telefone
+1        | João          1        | 99999-1111
+                        1        | 99999-2222
+2        | Maria         2        | 99999-3333</code></pre>
+
+        <h4>3. Muitos para Muitos (N:N)</h4>
+        <p>
+          Vários registros em uma tabela podem se relacionar com vários
+          registros em outra tabela. Precisamos de uma tabela intermediária!
+        </p>
+        <pre><code class="language-sql">
+-- Exemplo: Alunos podem fazer vários cursos e cursos podem ter vários alunos
+ALUNOS (N) ────── MATRÍCULAS ────── (N) CURSOS
+
+aluno_id | nome     matricula_id | aluno_id | curso_id     curso_id | nome
+1        | João     1            | 1        | 1            1        | Python
+2        | Maria    2            | 1        | 2            2        | SQL
+                    3            | 2        | 1</code></pre>
+
+        <div class="alert alert-info" role="alert">
+          🔄 <strong>Paralelo com Teoria dos Conjuntos:</strong>
+          <ul>
+            <li>
+              1:1 é como uma <strong>função bijetora</strong> - cada elemento do
+              conjunto A corresponde a exatamente um elemento do conjunto B, e
+              vice-versa
+            </li>
+            <li>
+              1:N é como uma <strong>função sobrejetora</strong> - cada elemento
+              do conjunto B está associado a pelo menos um elemento do conjunto
+              A
+            </li>
+            <li>
+              N:N é como uma <strong>relação</strong> entre conjuntos -
+              elementos podem se relacionar livremente entre si
+            </li>
+          </ul>
+        </div>
+
+        <h2>🧸 Simplificando 🚀</h2>
+
+        <p>
+          Vamos usar um exemplo bem divertido para entender como as coisas se
+          conectam na matemática. Imagine que você tem dois conjuntos:
+        </p>
+
+        <div class="conjuntos">
+          <ul>
+            <li>
+              <strong>Conjunto A:</strong> Seus Brinquedos (A de "Amigos")
+            </li>
+            <li>
+              <strong>Conjunto B:</strong> Seus Amigos (B de "Brincadeiras")
+            </li>
+          </ul>
+        </div>
+
+        <hr />
+
+        <h3>1️⃣ Relação Um para Um (1:1) - O Par Perfeito!</h3>
+
+        <ul>
+          <li>
+            <strong>No mundo da matemática:</strong> É como uma
+            <strong>Função Bijetora</strong>.
+          </li>
+          <li>
+            <strong>Como funciona?</strong> É uma troca justa e perfeita.
+            <ul>
+              <li>
+                Cada <strong>Amigo</strong> (de A) pega
+                <strong>apenas um Brinquedo</strong> (de B).
+              </li>
+              <li>
+                Cada <strong>Brinquedo</strong> (de B) é pego por
+                <strong>apenas um Amigo</strong> (de A).
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="regra">
+          <strong>A Regra:</strong> Ninguém fica sem brinquedo, e nenhum
+          brinquedo é dividido ou ignorado. (Um Aluno -> Um Endereço)
+        </div>
+
+        <hr />
+
+        <h3>2️⃣ Relação Um para Muitos (1:N) - O Dono e Seus Brinquedos!</h3>
+
+        <ul>
+          <li>
+            <strong>No mundo da matemática:</strong> É como uma
+            <strong>Função Injetora</strong> (lida ao contrário).
+          </li>
+          <li>
+            <strong>Como funciona?</strong> Pense em quem é o dono:
+            <ul>
+              <li>
+                Um <strong>Amigo</strong> (de A) pode ter
+                <strong>vários Brinquedos</strong> (de B).
+              </li>
+              <li>
+                Mas, o mais importante, cada <strong>Brinquedo</strong> (de B)
+                pertence a <strong>apenas um Amigo</strong> (de A).
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="regra">
+          <strong>A Regra:</strong> Os brinquedos não podem ter dois donos! (Um
+          Aluno -> Vários Telefones)
+        </div>
+
+        <hr />
+
+        <h3>3️⃣ Relação Muitos para Muitos (N:N) - A Bagunça Divertida!</h3>
+
+        <ul>
+          <li>
+            <strong>No mundo da matemática:</strong> É apenas uma
+            <strong>Relação (Geral)</strong>.
+          </li>
+          <li>
+            <strong>Como funciona?</strong> É a brincadeira mais livre:
+            <ul>
+              <li>
+                Um <strong>Amigo</strong> (de A) pode brincar com
+                <strong>vários Brinquedos</strong> (de B).
+              </li>
+              <li>
+                Um <strong>Brinquedo</strong> (de B) pode ser usado por
+                <strong>vários Amigos</strong> (de A).
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="regra">
+          <strong>A Regra:</strong> Vale tudo! É só diversão, sem regras de quem
+          é o dono ou quem pode usar. Imagine que agora é uma festa de
+          aniversário com muitas pessoas na casa do amigo (A) ou seja muitos
+          amigos (A) para os brinquedos (B), a festa é a tabela do meio (Varios
+          Alunos -> Vários Cursos via Matrículas)
+        </div>
+
+        <hr />
 
         <h2>Normalização de Banco de Dados</h2>
 
@@ -406,19 +584,11 @@ WHERE c.nome = 'Python Básico';
           de dominar a normalização!
         </blockquote>
 
-        <h2>Menu</h2>
-        <div class="mt-4">
-          <a href="./../index.html" class="btn btn-outline-secondary"
-            >← Voltar ao Início</a
-          >
-          <a href="./../aulas.html" class="btn btn-outline-secondary"
-            >← Voltar às aulas por data</a
-          >
-        </div>
+        <hr />
 
         <h2>Menu</h2>
         <div class="mt-4">
-          <!-- <a href="./aula2.html" class="btn btn-primary">Próxima aula →</a> -->
+          <!-- <a href="./aula5.html" class="btn btn-primary">Próxima aula →</a> -->
           <a href="./../index.html" class="btn btn-outline-secondary"
             >← Voltar ao Início</a
           >

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercícios</title>
+    <link rel="icon" type="image/png" href="./assets/imagens/caderno.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Exercícios!</h1>
+
+        <h2>Modelagem de dados</h2>
+
+        <div class="mb-5">
+          <p>
+            Na última aula, iniciamos o estudo de modelagem de dados e
+            identificamos que uma única tabela pode apresentar diversos
+            problemas, como redundância de informações e inconsistência nos
+            dados.
+          </p>
+
+          <p>
+            Para entender melhor, fizemos uma analogia com a organização de uma
+            cozinha: assim como separamos os utensílios em grupos lógicos
+            (talheres em uma gaveta, eletrodomésticos em armários específicos,
+            alimentos perecíveis na geladeira), também devemos organizar nossos
+            dados em tabelas específicas.
+          </p>
+
+          <p>
+            Aplicando esse conceito à nossa tabela <code>aluno</code>, vamos
+            identificar quais informações realmente pertencem ao aluno e quais
+            deveriam estar em tabelas separadas. Por exemplo: dados dos
+            professores merecem sua própria tabela. Essa organização vai nos
+            ajudar a ter um banco de dados mais eficiente e fácil de manter!
+          </p>
+
+          <pre><code class="language-sql">
+CREATE TABLE aluno (
+matricula INT PRIMARY KEY,
+nome VARCHAR(100),
+sexo CHAR(1),
+telefone1 VARCHAR(15),
+telefone2 VARCHAR(15),
+endereco VARCHAR(200),
+curso1 VARCHAR(50),
+curso2 VARCHAR(50),
+professor_curso1 VARCHAR(100),
+professor_curso2 VARCHAR(100),
+nota_curso1 DECIMAL(4,2),
+nota_curso2 DECIMAL(4,2)
+);
+        </code></pre>
+
+          <h4>
+            Tarefa: Desenhar as tabelas e levar na folha sulfite para a próxima
+            aula 22/11
+          </h4>
+
+          <pre>
+┌────────────────────┐
+│       Exemplo      │
+├────────────────────┤
+│ tipo| nome do dado |    
+└────────────────────┘
+
+┌────────────────────┐
+│      Professor     │
+├────────────────────┤
+│ varchar| nome      |   
+└────────────────────┘
+        </pre
+          >
+
+          <blockquote>
+            💡 É o mesmo exercício da aula:
+            <a href="./aulas/aula3.html">"SQL - Primeiros comandos"</a>.
+          </blockquote>
+        </div>
+        <hr />
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <a href="./index.html" class="btn btn-outline-secondary"
+            >← Voltar ao Início</a
+          >
+          <a href="./aulas.html" class="btn btn-outline-secondary"
+            >← Voltar às aulas por data</a
+          >
+        </div>
+      </main>
+    </div>
+
+    <script src="./assets/js/sidebar.js"></script>
+    <script src="./assets/js/table-of-contents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

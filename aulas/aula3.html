@@ -297,7 +297,7 @@ nota_curso2 DECIMAL(4,2)
 
           <pre><code class="language-sql">
 -- Inserção 1
-INSERT INTO aluno_original (
+INSERT INTO aluno (
     matricula, 
     nome, 
     sexo,
@@ -327,7 +327,7 @@ VALUES (
 );
 
 -- Inserção 2
-INSERT INTO aluno_original (
+INSERT INTO aluno (
     matricula, 
     nome,
     sexo, 
@@ -444,7 +444,7 @@ VALUES (
           </p>
 
           <pre><code class="sql">
-CREATE TABLE aluno_original (
+CREATE TABLE aluno (
     matricula INT PRIMARY KEY,
     nome VARCHAR(100),
     sexo CHAR(1), -- Desatualizada com novos tratamentos e repetição (Problema: 1FN)
@@ -715,7 +715,7 @@ SELECT * FROM sexos ORDER BY id;
 
         <h2>Menu</h2>
         <div class="mt-4">
-          <!-- <a href="./aula4.html" class="btn btn-primary">Próxima aula →</a> -->
+          <a href="./aula4.html" class="btn btn-primary">Próxima aula →</a>
           <a href="./../index.html" class="btn btn-outline-secondary"
             >← Voltar ao Início</a
           >
