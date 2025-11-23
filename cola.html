@@ -29,8 +29,8 @@
         <div class="mb-5">
           <h3>1. Definição de Dados (DDL) - Estrutura</h3>
           <p>
-            Comandos usados para **criar, modificar e remover** objetos de banco
-            de dados (tabelas, bancos, índices, etc.).
+            Comandos usados para <strong>criar, modificar e remover</strong>
+            objetos de banco de dados (tabelas, bancos, índices, etc.).
           </p>
 
           <h4>Criar Banco de Dados</h4>
@@ -54,6 +54,58 @@ ALTER TABLE produtos
 ADD COLUMN descricao TEXT;
         </code></pre>
 
+          <h4>Alterar Tabela (constraints)</h4>
+          <pre><code class="sql">
+-- Tornar uma coluna NOT NULL
+ALTER TABLE produtos
+ALTER COLUMN descricao SET NOT NULL;
+
+-- Remover NOT NULL
+ALTER TABLE produtos
+ALTER COLUMN descricao DROP NOT NULL;
+
+-- Adicionar UNIQUE (constraint nomeada)
+ALTER TABLE produtos
+ADD CONSTRAINT uq_produtos_nome UNIQUE (nome);
+
+-- Remover UNIQUE
+ALTER TABLE produtos
+DROP CONSTRAINT uq_produtos_nome;
+
+-- Adicionar CHECK
+ALTER TABLE produtos
+ADD CONSTRAINT chk_estoque_nonneg CHECK (estoque >= 0);
+
+-- Remover CHECK
+ALTER TABLE produtos
+DROP CONSTRAINT chk_estoque_nonneg;
+
+-- Definir DEFAULT
+ALTER TABLE produtos
+ALTER COLUMN preco SET DEFAULT 0.00;
+
+-- Remover DEFAULT
+ALTER TABLE produtos
+ALTER COLUMN preco DROP DEFAULT;
+
+-- Adicionar FOREIGN KEY (constraint nomeada)
+ALTER TABLE cursos
+ADD CONSTRAINT fk_cursos_professor FOREIGN KEY (professor_id)
+REFERENCES professores(id) ON DELETE RESTRICT;
+
+-- Remover FOREIGN KEY
+ALTER TABLE cursos
+DROP CONSTRAINT fk_cursos_professor;
+
+-- Adicionar PRIMARY KEY (quando necessário)
+ALTER TABLE produtos
+ADD CONSTRAINT pk_produtos PRIMARY KEY (id);
+
+-- Remover PRIMARY KEY
+ALTER TABLE produtos
+DROP CONSTRAINT pk_produtos;
+          </code></pre>
+
           <h4>Excluir Tabela</h4>
           <pre><code class="sql">
 DROP TABLE produtos;
@@ -66,8 +118,9 @@ DROP TABLE produtos;
         <div class="mb-5">
           <h3>2. Manipulação de Dados (DML) - Registros</h3>
           <p>
-            Comandos usados para **inserir, selecionar, atualizar e remover**
-            dados dentro das tabelas.
+            Comandos usados para
+            <strong>inserir, selecionar, atualizar e remover</strong> dados
+            dentro das tabelas.
           </p>
 
           <h4>Inserir Dados (C - Create)</h4>
@@ -203,113 +256,118 @@ FROM
           </thead>
           <tbody>
             <tr>
-              <td>**CREATE**</td>
+              <td><strong>CREATE</strong></td>
               <td>
                 Cria um novo objeto (banco de dados, tabela, índice, etc.).
               </td>
             </tr>
             <tr>
-              <td>**ALTER**</td>
+              <td><strong>ALTER</strong></td>
               <td>
                 Modifica a estrutura de um objeto existente (ex: adicionar uma
                 coluna à tabela).
               </td>
             </tr>
             <tr>
-              <td>**DROP**</td>
+              <td><strong>DROP</strong></td>
               <td>
                 Exclui permanentemente um objeto (tabela, banco de dados, etc.).
               </td>
             </tr>
             <tr>
-              <td>**SELECT**</td>
+              <td><strong>SELECT</strong></td>
               <td>
                 Recupera (consulta) dados de uma ou mais tabelas. É o comando de
                 leitura (Read).
               </td>
             </tr>
             <tr>
-              <td>**INSERT INTO**</td>
+              <td><strong>INSERT INTO</strong></td>
               <td>
                 Adiciona novos registros (linhas) em uma tabela. É o comando de
                 criação (Create).
               </td>
             </tr>
             <tr>
-              <td>**UPDATE**</td>
+              <td><strong>UPDATE</strong></td>
               <td>
                 Modifica dados existentes em uma tabela. É o comando de
                 atualização (Update).
               </td>
             </tr>
             <tr>
-              <td>**DELETE FROM**</td>
+              <td><strong>DELETE FROM</strong></td>
               <td>
                 Remove registros (linhas) de uma tabela. É o comando de exclusão
                 (Delete).
               </td>
             </tr>
             <tr>
-              <td>**WHERE**</td>
+              <td><strong>WHERE</strong></td>
               <td>
                 Usado com <code>SELECT</code>, <code>UPDATE</code> ou
-                <code>DELETE</code> para aplicar **filtros** e especificar quais
-                linhas serão afetadas.
+                <code>DELETE</code> para aplicar <strong>filtros</strong> e
+                especificar quais linhas serão afetadas.
               </td>
             </tr>
             <tr>
-              <td>**ORDER BY**</td>
+              <td><strong>ORDER BY</strong></td>
               <td>
                 Classifica o resultado de uma consulta <code>SELECT</code> (ex:
                 `ASC` para ascendente, `DESC` para descendente).
               </td>
             </tr>
             <tr>
-              <td>**JOIN**</td>
+              <td><strong>JOIN</strong></td>
               <td>
                 Combina linhas de duas ou mais tabelas com base em uma coluna
                 relacionada entre elas (essencial para bancos relacionais).
               </td>
             </tr>
             <tr>
-              <td>**UPPER / LOWER**</td>
+              <td><strong>UPPER / LOWER</strong></td>
               <td>
-                Funções de **String**: Converte o texto para **MAIÚSCULAS** ou
-                **minúsculas**.
+                Funções de <strong>String</strong>: Converte o texto para
+                <strong>MAIÚSCULAS</strong> ou <strong>minúsculas</strong>.
               </td>
             </tr>
             <tr>
-              <td>**|| (Concatenador)**</td>
+              <td><strong>|| (Concatenador)</strong></td>
               <td>
-                Operador de **String**: Junta (concatena) duas ou mais strings
-                de texto.
+                Operador de <strong>String</strong>: Junta (concatena) duas ou
+                mais strings de texto.
               </td>
             </tr>
             <tr>
-              <td>**SUBSTRING / LENGTH**</td>
+              <td><strong>SUBSTRING / LENGTH</strong></td>
               <td>
-                Funções de **String**: **Extrai** parte de um texto ou retorna
-                seu **comprimento** (número de caracteres).
+                Funções de <strong>String</strong>:
+                <strong>Extrai</strong> parte de um texto ou retorna seu
+                <strong>comprimento</strong> (número de caracteres).
               </td>
             </tr>
             <tr>
-              <td>**SUM / AVG / MAX / MIN**</td>
+              <td><strong>SUM / AVG / MAX / MIN</strong></td>
               <td>
-                Funções de **Agregação**: Calcula a **Soma**, **Média**, valor
-                **Máximo** e **Mínimo** de um conjunto de valores.
+                Funções de <strong>Agregação</strong>: Calcula a
+                <strong>Soma</strong>, <strong>Média</strong>, valor
+                <strong>Máximo</strong> e <strong>Mínimo</strong> de um conjunto
+                de valores.
               </td>
             </tr>
             <tr>
-              <td>**ROUND / SQRT**</td>
+              <td><strong>ROUND / SQRT</strong></td>
               <td>
-                Funções de **Cálculo**: **Arredonda** um número ou calcula sua
-                **Raiz Quadrada**.
+                Funções de <strong>Cálculo</strong>:
+                <strong>Arredonda</strong> um número ou calcula sua
+                <strong>Raiz Quadrada</strong>.
               </td>
             </tr>
             <tr>
-              <td>**CASE WHEN**</td>
+              <td><strong>CASE WHEN</strong></td>
               <td>
-                Estrutura **Condicional**: Permite aplicar lógica **"se/então"**
+                Estrutura <strong>Condicional</strong>: Permite aplicar lógica
+                <strong>"se/então"</strong>
                 para retornar diferentes valores com base em condições.
               </td>
             </tr>

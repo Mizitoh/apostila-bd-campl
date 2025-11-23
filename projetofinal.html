@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projeto Final</title>
+    <link rel="icon" type="image/png" href="./assets/imagens/caderno.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Projeto Final Primeira Turma</h1>
+
+        <h2>Banco de dados Hospital</h2>
+
+        <p>
+          <strong>Contexto:</strong><br />
+          Você foi contratado para modelar um pequeno sistema de cadastro de
+          consultas para um hospital. Seu banco vai ser testado no programa
+          criado pelo professor, se funciona, além de aprovado, recebe o prêmio
+          combinado.
+        </p>
+
+        <ol>
+          <li>Crie o banco de dados com seu nome.</li>
+          <li>Criar as tabelas.</li>
+          <li>
+            Fornecer ao menos <strong>5 comandos INSERT</strong> para cada
+            tabela.
+          </li>
+          <li>
+            Fornecer as seguintes análises de dados (SELECT):
+            <ul>
+              <li>Quantidade de consultas por médico.</li>
+              <li>Quantidade de pacientes atendidos por especialidade.</li>
+              <li>Faixa etária dos pacientes atendidos.</li>
+              <li>Número de pacientes com convênio vs sem convênio.</li>
+              <li>Médicos mais generalistas (com mais especialidades).</li>
+              <li>Médicos que não possuem consultas registradas.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <div class="image-wrapper">
+          <img src="./assets/imagens/hospital.png" alt="Execício Hospital" />
+        </div>
+
+        <p>Exemplo:</p>
+        <pre><code class="language-sql">
+-- Crie o banco de dados com seu nome
+CREATE DATABASE nome_aluno;
+
+-- Tabela 
+CREATE TABLE ...
+
+--Inserts
+INSERT INTO ...
+
+--selects
+SELECT ...
+
+</code></pre>
+
+        <p>
+          Envie por escrito (word, txt ou no corpo do e-mail) os comandos SQL no
+          seguinte endereço:
+        </p>
+        <h3><u>mizitoh@hotimail.com</u></h3>
+        <br />
+        <h4>Prazo pra entrega é até o ultimo dia de aula</h4>
+
+        <hr />
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <a href="./index.html" class="btn btn-outline-secondary"
+            >← Voltar ao Início</a
+          >
+          <a href="./aulas.html" class="btn btn-outline-secondary"
+            >← Voltar às aulas por data</a
+          >
+        </div>
+      </main>
+    </div>
+
+    <script src="./assets/js/sidebar.js"></script>
+    <script src="./assets/js/table-of-contents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
