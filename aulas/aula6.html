@@ -56,6 +56,76 @@ JOIN sexos s ON a.sexo_id = s.id;
 
         <hr />
 
+        <h2>Conceitos Fundamentais de Consultas SQL</h2>
+
+        <h3>JOIN - Combinando dados de múltiplas tabelas</h3>
+        <p>
+          JOINs conectam dados de duas ou mais tabelas usando chaves
+          estrangeiras. Existem diferentes tipos:
+        </p>
+        <ul>
+          <li>
+            <strong>INNER JOIN:</strong> Retorna apenas registros que existem em
+            ambas as tabelas
+          </li>
+          <li>
+            <strong>LEFT JOIN:</strong> Retorna todos os registros da tabela
+            esquerda, mesmo que não tenham correspondência na direita
+          </li>
+          <li>
+            <strong>RIGHT JOIN:</strong> Retorna todos os registros da tabela
+            direita, mesmo que não tenham correspondência na esquerda
+          </li>
+          <li>
+            <strong>FULL OUTER JOIN:</strong> Retorna registros de ambas as
+            tabelas, preenchendo com NULL onde não há correspondência
+          </li>
+        </ul>
+
+        <h3>WHERE - Filtrando registros</h3>
+        <p>
+          A cláusula WHERE filtra resultados com base em condições específicas.
+          Pode usar operadores como =, &gt;, &lt;, &gt;=, &lt;=, !=, AND, OR,
+          IN, BETWEEN, LIKE.
+        </p>
+
+        <h3>GROUP BY - Agrupando dados</h3>
+        <p>
+          GROUP BY agrupa registros por uma ou mais colunas e é frequentemente
+          usado com funções de agregação como COUNT(), SUM(), AVG(), MAX(),
+          MIN(). Usado para gerar resumos e estatísticas.
+        </p>
+
+        <h3>HAVING - Filtrando grupos</h3>
+        <p>
+          HAVING é similar ao WHERE, mas filtra grupos criados pelo GROUP BY,
+          não registros individuais. Geralmente é usado com funções de
+          agregação.
+        </p>
+
+        <h3>ORDER BY - Ordenando resultados</h3>
+        <p>
+          ORDER BY ordena os resultados em ordem crescente (ASC) ou decrescente
+          (DESC). Pode ordenar por múltiplas colunas.
+        </p>
+
+        <h3>CASE WHEN - Lógica condicional</h3>
+        <p>
+          CASE WHEN permite criar condições lógicas dentro de uma consulta,
+          retornando diferentes valores baseado em critérios específicos.
+        </p>
+
+        <h3>Funções de Agregação</h3>
+        <ul>
+          <li><strong>COUNT():</strong> Conta quantidade de registros</li>
+          <li><strong>SUM():</strong> Soma valores numéricos</li>
+          <li><strong>AVG():</strong> Calcula média aritmética</li>
+          <li><strong>MAX():</strong> Retorna valor máximo</li>
+          <li><strong>MIN():</strong> Retorna valor mínimo</li>
+        </ul>
+
+        <hr />
+
         <h2>Consultas SELECT Avançadas</h2>
         <p>Exemplos de consultas usando recursos avançados do SQL:</p>
         <pre><code class="language-sql">

@@ -21,15 +21,15 @@ document.addEventListener("DOMContentLoaded", function () {
           <li><a href="${prefix}projetofinal.html">🏥 Projeto Final Turma 1</a></li>
           <li><a href="${prefix}aulas/aula1.html">1️⃣ Introdução a Banco de Dados</a></li>
           <li><a href="${prefix}aulas/aula2.html">2️⃣ Primeiros passos no PostgreSQL</a></li>
-          <li><a href="${prefix}aulas/aula3.html">3️⃣ SQL - Primeiros comandos</a></li>
+          <li><a href="${prefix}aulas/aula3.html">3️⃣ SQL - Primeiros comandos e modelagem</a></li>
           <li><a href="${prefix}aulas/aula4.html">4️⃣ Relacionamentos e Normalização de dados</a></li>
-          <li><a href="${prefix}aulas/aula5.html">5️⃣ Padronizando Banco</a></li>          
+          <li><a href="${prefix}aulas/aula5.html">5️⃣ PK, FK e Padronização do banco</a></li>
+          <li><a href="${prefix}aulas/aula6.html">6️⃣ Leitura de dados</a></li>
         </ul>
       </nav>
     </aside>
   `;
 
-  // <li><a href="${prefix}aulas/aula6.html">6️⃣ Select</a></li>
   // <li><a href="${prefix}aulas/aula7.html">7️⃣ Select com funções e somas</a></li>
   // <li><a href="${prefix}aulas/aula8.html">8️⃣ Scripts avançados e Projeto final</a></li>
   // <li><a href="${prefix}aulas/aula9.html">9️⃣ Prova</a></li>
