@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <ul>
           <li><a href="${prefix}index.html">📘 Início</a></li>
           <li><a href="${prefix}aulas.html">📚 Aulas por data</a></li>
+          <li><a href="${prefix}parquinho.html">🔥 Parquinho 🛝</a></li>
           <li><a href="${prefix}cola.html">🎓🤫 Colinha</a></li>
           <li><a href="${prefix}exercicios.html">⛹️‍♀️🏋️‍♂️ Exercícios</a></li>
           <li><a href="${prefix}projetofinal.html">🏥 Projeto Final Turma 1</a></li>
@@ -30,9 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
     </aside>
   `;
 
-  // <li><a href="${prefix}aulas/aula7.html">7️⃣ Select com funções e somas</a></li>
-  // <li><a href="${prefix}aulas/aula8.html">8️⃣ Scripts avançados e Projeto final</a></li>
-  // <li><a href="${prefix}aulas/aula9.html">9️⃣ Prova</a></li>
+  // <li><a href="${prefix}aulas/aula7.html">7️⃣ Select com manipulações de strings e cálculos</a></li>
+  // <li><a href="${prefix}aulas/aula8.html">8️⃣ Backups</a></li>
+  // <li><a href="${prefix}aulas/aula9.html">9️⃣ Projeto final</a></li>
 
   // Encontra o container e insere o sidebar
   const container = document.querySelector(".container");

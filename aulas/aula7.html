@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aula 6 - Leitura de dados</title>
+    <title>Aula 7 - Leitura com manipulações de strings e cálculos</title>
     <link rel="icon" type="image/png" href="./../assets/imagens/caderno.png" />
     <link
       rel="stylesheet"
@@ -25,10 +25,191 @@
         <h1>Aula 7 - Cálculos e manipulação de strings</h1>
 
         <h2>Consultas SELECT com data e hora</h2>
+        <p>Funções para trabalhar com datas e timestamps:</p>
+        <pre><code class="language-sql">
+-- Obtém data e hora atual
+SELECT NOW() as data_hora_atual;
+SELECT CURRENT_DATE as data_atual;
+SELECT CURRENT_TIME as hora_atual;
+
+-- Calcular idade do aluno (exemplo com data de nascimento)
+SELECT 
+    nome,
+    created_at,
+    AGE(NOW(), created_at) as tempo_cadastrado,
+    EXTRACT(YEAR FROM NOW()) - EXTRACT(YEAR FROM created_at) as anos
+FROM alunos;
+
+-- Formatar datas
+-- OBS tem maneiras melhores de formatar datas, esse exemplo é pra treinar case when
+SELECT
+    nome,
+    TO_CHAR(created_at, 'DD/MM/YYYY') as data_cadastro_formatada,
+    TO_CHAR(created_at, 'DD') || ' de ' || 
+    CASE TO_CHAR(created_at, 'MM')
+        WHEN '01' THEN 'Janeiro'
+        WHEN '02' THEN 'Fevereiro'
+        WHEN '03' THEN 'Março'
+        WHEN '11' THEN 'Novembro'
+        -- adicione os outros meses
+    END || ' de ' || 
+    TO_CHAR(created_at, 'YYYY') as data_por_extenso
+FROM alunos;
+
+-- Adicionar dias à uma data
+SELECT 
+    nome,
+    created_at,
+    created_at + INTERVAL '30 days' as data_30_dias_depois
+FROM alunos;
+
+-- Alunos cadastrados nos últimos 30 dias
+SELECT nome, created_at
+FROM alunos
+WHERE created_at >= NOW() - INTERVAL '30 days'
+ORDER BY created_at DESC;
+
+-- Data da matrícula formatada
+SELECT 
+    a.nome as aluno,
+    c.nome as curso,
+    TO_CHAR(m.data_matricula, 'DD/MM/YYYY') as data_matricula
+FROM alunos a
+JOIN matriculas m ON m.matricula_id_aluno = a.id
+JOIN cursos c ON c.id = m.curso_id
+ORDER BY m.data_matricula DESC;
+        </code></pre>
 
         <h2>Consultas SELECT com manipulação de String</h2>
+        <p>Funções para manipular texto:</p>
+        <pre><code class="language-sql">
+-- Converter para maiúsculas e minúsculas
+SELECT 
+    UPPER(nome) as nome_maiusculo,
+    LOWER(nome) as nome_minusculo,
+    nome
+FROM alunos;
+
+-- Concatenar strings
+SELECT 
+    nome || ' (' || cpf || ')' as aluno_com_cpf,
+    'Email: aluno@escola.com' as email_exemplo
+FROM alunos;
+
+-- Comprimento da string
+SELECT 
+    nome,
+    LENGTH(nome) as quantidade_caracteres
+FROM alunos
+WHERE LENGTH(nome) > 10;
+
+-- SUBSTRING - extrair parte da string
+SELECT 
+    nome,
+    SUBSTRING(nome, 1, 5) as primeiros_5_caracteres,
+    SUBSTRING(nome FROM POSITION(' ' IN nome) + 1) as sobrenome
+FROM alunos;
+
+-- TRIM - remover espaços em branco
+SELECT 
+    TRIM(nome) as nome_limpo,
+    nome as nome_original
+FROM alunos;
+
+-- REPLACE - substituir texto
+SELECT 
+    nome,
+    REPLACE(nome, ' ', '_') as nome_com_underscore
+FROM alunos;
+
+-- Buscar alunos por padrão de nome (LIKE)
+SELECT nome FROM alunos
+WHERE nome LIKE '%Silva%' OR nome LIKE '%Santos%';
+
+-- Concatenar dados com STRING_AGG (agregar strings)
+SELECT 
+    a.nome as aluno,
+    STRING_AGG(c.nome, ', ') as cursos_matriculado
+FROM alunos a
+LEFT JOIN matriculas m ON m.matricula_id_aluno = a.id
+LEFT JOIN cursos c ON c.id = m.curso_id
+GROUP BY a.id, a.nome;
+        </code></pre>
 
         <h2>Consultas SELECT com Cálculos</h2>
+        <p>Operações matemáticas e funções numéricas:</p>
+        <pre><code class="language-sql">
+-- Operações básicas
+SELECT 
+    nome,
+    10 + 5 as soma,
+    10 - 5 as subtracao,
+    10 * 5 as multiplicacao,
+    10 / 5 as divisao,
+    10 % 3 as resto_divisao
+FROM alunos LIMIT 1;
+
+-- Arredondar notas
+SELECT 
+    a.nome as aluno,
+    c.nome as curso,
+    m.nota as nota_original,
+    ROUND(m.nota, 1) as nota_arredondada,
+    CEIL(m.nota) as nota_arredonda_cima,
+    FLOOR(m.nota) as nota_arredonda_baixo
+FROM alunos a
+JOIN matriculas m ON m.matricula_id_aluno = a.id
+JOIN cursos c ON c.id = m.curso_id;
+
+-- Cálculos com agregação
+SELECT 
+    c.nome as curso,
+    COUNT(m.id) as total_alunos,
+    AVG(m.nota) as media_notas,
+    MAX(m.nota) as maior_nota,
+    MIN(m.nota) as menor_nota,
+    SUM(m.nota) as soma_notas
+FROM cursos c
+LEFT JOIN matriculas m ON m.curso_id = c.id
+GROUP BY c.id, c.nome;
+
+-- Cálculo de desconto e valor final
+SELECT 
+    a.nome,
+    m.nota,
+    CASE 
+        WHEN m.nota >= 9 THEN 100 * 0.80  -- 20% desconto
+        WHEN m.nota >= 8 THEN 100 * 0.90  -- 10% desconto
+        ELSE 100
+    END as valor_mensalidade
+FROM alunos a
+JOIN matriculas m ON m.matricula_id_aluno = a.id;
+
+-- Porcentagem de alunos aprovados por curso
+SELECT 
+    c.nome as curso,
+    COUNT(*) as total_alunos,
+    SUM(CASE WHEN m.nota >= 7 THEN 1 ELSE 0 END) as aprovados,
+    ROUND(
+        (SUM(CASE WHEN m.nota >= 7 THEN 1 ELSE 0 END) * 100.0) / COUNT(*),
+        2
+    ) as percentual_aprovacao
+FROM cursos c
+LEFT JOIN matriculas m ON m.curso_id = c.id
+GROUP BY c.id, c.nome;
+
+-- Valor absoluto (ABS)
+SELECT 
+    nome,
+    ABS(-5.5) as valor_absoluto
+FROM alunos LIMIT 1;
+
+-- Raiz quadrada (SQRT)
+SELECT 
+    nome,
+    SQRT(16) as raiz_quadrada
+FROM alunos LIMIT 1;
+        </code></pre>
         <hr />
 
         <h2>Menu</h2>
