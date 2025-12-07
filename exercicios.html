@@ -94,7 +94,7 @@ nota_curso2 DECIMAL(4,2)
         </div>
         <hr /> -->
 
-        <h2>Exercício prático: Modelagem e comandos SQL (Tema: Animais)</h2>
+        <!-- <h2>Exercício prático: Modelagem e comandos SQL (Tema: Animais)</h2>
 
         <p>
           <strong>Contexto:</strong><br />
@@ -142,7 +142,55 @@ INSERT INTO ...
         <h1>
           Entregue os comandos SQL por escrito numa folha de caderno ou sulfite
           até o dia 06/12
-        </h1>
+        </h1> -->
+
+        <h2>Exercício prático: Fogo no Parquinho</h2>
+
+        <p>Crie na nossa tela "Parquinho" as seguintes tabelas:</p>
+
+        <div class="image-wrapper">
+          <img
+            src="./assets/imagens/crime.png"
+            alt="Crianças criminosas no parquinho"
+          />
+        </div>
+
+        <p>
+          Insira 5 regristros diferentes na tabela crime e marque a coluna
+          "foi_hediondo" como verdadeiro ou falso. Exemplo:
+        </p>
+        <pre><code class="language-sql">
+insert
+	into
+	crime(crime, foi_hediondo)
+values ('puxou o cabelo do amigo',
+false)
+
+insert
+	into
+	crime(crime, foi_hediondo)
+values ('assassinou o amigo na gangorra',
+true)
+        </code></pre>
+
+        <ul>
+          <li>
+            Insira 5 regristros diferentes na tabela crianças e os id dos crimes
+            que elas cometeram
+          </li>
+          <li>Faça um select na tabela de crimes</li>
+          <li>Faça um select na tabela de crianças</li>
+          <li>
+            Faça um select com join trazendo o nome da criança e o crime que
+            cometeu
+          </li>
+          <li>
+            Por ultimo um select com join trazendo tudo mas filtrando por crime
+            hediondo.
+          </li>
+        </ul>
+
+        <p>Quando terminar, avise o professor pelo whatsapp que terminou..</p>
 
         <hr />
 
