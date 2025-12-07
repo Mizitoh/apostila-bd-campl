@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercícios SQL Interativos</title>
+    <link rel="icon" type="image/png" href="./assets/imagens/caderno.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <style>
+      .question-card {
+        background-color: var(--sidebar-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .option {
+        margin-bottom: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .option label {
+        cursor: pointer;
+        padding: 0.75rem;
+        border-radius: 6px;
+        display: block;
+        margin-bottom: 0;
+      }
+
+      .option input[type="radio"] {
+        margin-right: 0.5rem;
+      }
+
+      .option:hover label {
+        background-color: var(--border);
+      }
+
+      .option.correct label {
+        background-color: #d4edda;
+        border: 1px solid #28a745;
+        color: #155724;
+      }
+
+      .option.incorrect label {
+        background-color: #f8d7da;
+        border: 1px solid #dc3545;
+        color: #721c24;
+      }
+
+      .feedback {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 6px;
+        display: none;
+      }
+
+      .feedback.show {
+        display: block;
+      }
+
+      .feedback.success {
+        background-color: #d4edda;
+        border: 1px solid #28a745;
+        color: #155724;
+      }
+
+      .feedback.error {
+        background-color: #f8d7da;
+        border: 1px solid #dc3545;
+        color: #721c24;
+      }
+
+      .progress-bar-custom {
+        height: 30px;
+        line-height: 30px;
+        font-weight: 600;
+      }
+
+      .score-box {
+        background-color: var(--accent);
+        color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .score-box h3 {
+        margin: 0 0 1rem 0;
+      }
+
+      .score-box .score {
+        font-size: 3rem;
+        font-weight: 700;
+      }
+
+      code {
+        background-color: var(--sidebar-bg);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-family: "Fira Code", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Exercícios SQL Interativos</h1>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <label for="email-quiz" class="form-label">Seu e-mail</label>
+            <input
+              id="email-quiz"
+              type="email"
+              class="form-control"
+              placeholder="seu@exemplo.com"
+            />
+          </div>
+        </div>
+
+        <div class="score-box">
+          <h3>Pontuação</h3>
+          <div class="score" id="score">0/50</div>
+          <div class="progress" style="height: 10px">
+            <div
+              id="progress-bar"
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              style="width: 0%"
+            ></div>
+          </div>
+        </div>
+
+        <form id="quiz-form">
+          <!-- Questão 1 -->
+          <div class="question-card">
+            <h4>Questão 1: Qual é o comando para criar uma tabela?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q1" value="insert" />
+                  INSERT
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q1"
+                    value="create"
+                    data-correct="true"
+                  />
+                  CREATE TABLE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q1" value="select" />
+                  SELECT
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q1" value="delete" />
+                  DELETE
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q1"></div>
+            </div>
+          </div>
+
+          <!-- Questão 2 -->
+          <div class="question-card">
+            <h4>Questão 2: Qual comando insere dados em uma tabela?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q2" value="update" />
+                  UPDATE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q2"
+                    value="insert"
+                    data-correct="true"
+                  />
+                  INSERT INTO
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q2" value="create" />
+                  CREATE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q2" value="alter" />
+                  ALTER
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q2"></div>
+            </div>
+          </div>
+
+          <!-- Questão 3 -->
+          <div class="question-card">
+            <h4>Questão 3: O que significa PRIMARY KEY?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q3" value="chave_estrangeira" />
+                  Chave estrangeira que liga tabelas
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q3"
+                    value="identificador_unico"
+                    data-correct="true"
+                  />
+                  Identificador único de cada registro
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q3" value="chave_temporaria" />
+                  Chave temporária
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q3" value="chave_secundaria" />
+                  Chave secundária
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q3"></div>
+            </div>
+          </div>
+
+          <!-- Questão 4 -->
+          <div class="question-card">
+            <h4>Questão 4: Qual constraint impede valores nulos?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q4" value="unique" />
+                  UNIQUE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q4" value="check" />
+                  CHECK
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q4"
+                    value="not_null"
+                    data-correct="true"
+                  />
+                  NOT NULL
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q4" value="foreign_key" />
+                  FOREIGN KEY
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q4"></div>
+            </div>
+          </div>
+
+          <!-- Questão 5 -->
+          <div class="question-card">
+            <h4>Questão 5: O que faz um INNER JOIN?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q5" value="todos_esquerda" />
+                  Retorna todos os registros da tabela esquerda
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q5"
+                    value="compatibilidade"
+                    data-correct="true"
+                  />
+                  Retorna apenas registros que existem em ambas as tabelas
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q5" value="todos" />
+                  Retorna todos os registros de ambas
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q5" value="nulos" />
+                  Retorna apenas registros com NULL
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q5"></div>
+            </div>
+          </div>
+
+          <!-- Questão 6 -->
+          <div class="question-card">
+            <h4>Questão 6: Qual comando remove um registro?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q6" value="drop" />
+                  DROP TABLE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q6" value="truncate" />
+                  TRUNCATE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q6"
+                    value="delete"
+                    data-correct="true"
+                  />
+                  DELETE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q6" value="update" />
+                  UPDATE
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q6"></div>
+            </div>
+          </div>
+
+          <!-- Questão 7 -->
+          <div class="question-card">
+            <h4>Questão 7: O que significa GROUP BY?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q7" value="ordenar" />
+                  Ordena os resultados
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q7"
+                    value="agrupar"
+                    data-correct="true"
+                  />
+                  Agrupa registros por uma ou mais colunas
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q7" value="filtrar_grupos" />
+                  Filtra grupos (usa-se HAVING)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q7" value="limitar" />
+                  Limita quantidade de resultados
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q7"></div>
+            </div>
+          </div>
+
+          <!-- Questão 8 -->
+          <div class="question-card">
+            <h4>Questão 8: Qual função retorna a quantidade de registros?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q8" value="sum" />
+                  SUM()
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q8"
+                    value="count"
+                    data-correct="true"
+                  />
+                  COUNT()
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q8" value="avg" />
+                  AVG()
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q8" value="max" />
+                  MAX()
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q8"></div>
+            </div>
+          </div>
+
+          <!-- Questão 9 -->
+          <div class="question-card">
+            <h4>Questão 9: O que faz a cláusula WHERE?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q9" value="agrupar" />
+                  Agrupa resultados
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q9" value="ordenar" />
+                  Ordena resultados
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q9"
+                    value="filtrar"
+                    data-correct="true"
+                  />
+                  Filtra registros com base em condições
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q9" value="juntar" />
+                  Junta tabelas
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q9"></div>
+            </div>
+          </div>
+
+          <!-- Questão 10 -->
+          <div class="question-card">
+            <h4>Questão 10: FOREIGN KEY é usada para:</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q10" value="unicidade" />
+                  Garantir unicidade de valores
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q10"
+                    value="relacionamento"
+                    data-correct="true"
+                  />
+                  Estabelecer relacionamento entre tabelas
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q10" value="restricao_tipo" />
+                  Restringir tipo de dado
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q10" value="indexacao" />
+                  Indexar a tabela
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q10"></div>
+            </div>
+          </div>
+
+          <!-- Questão 11 -->
+          <div class="question-card">
+            <h4>
+              Questão 11: Como selecionar todas as colunas da tabela "clientes"?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q11"
+                    value="select_all_star"
+                    data-correct="true"
+                  />
+                  SELECT * FROM clientes;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q11" value="select_all" />
+                  SELECT ALL FROM clientes;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q11" value="show_table" />
+                  SHOW TABLE clientes;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q11" value="get_clients" />
+                  GET * FROM clientes;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q11"></div>
+            </div>
+          </div>
+
+          <!-- Questão 12 -->
+          <div class="question-card">
+            <h4>
+              Questão 12: Modelagem MER - Qual é o relacionamento correto?
+            </h4>
+            <p class="mb-3">
+              <strong>Cenário:</strong> Uma tabela de <code>clientes</code> pode
+              ter vários <code>pedidos</code>, e cada pedido pertence a um
+              cliente. Qual é o tipo de relacionamento?
+            </p>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q12" value="um_para_um" />
+                  Um para Um (1:1)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q12"
+                    value="um_para_muitos"
+                    data-correct="true"
+                  />
+                  Um para Muitos (1:N)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q12" value="muitos_para_muitos" />
+                  Muitos para Muitos (N:M)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q12" value="sem_relacionamento" />
+                  Sem relacionamento direto
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q12"></div>
+            </div>
+          </div>
+
+          <!-- Questão 13 -->
+          <div class="question-card">
+            <h4>Questão 13: Metáfora do Centro de Distribuição</h4>
+            <p class="mb-3">
+              <strong>Contexto:</strong> Nas metáforas discutidas em sala,
+              comparamos um banco de dados com um centro de distribuição. Se as
+              <strong>tabelas são os departamentos</strong>,
+              <strong>os registros são as caixas</strong>, e as
+              <strong>colunas são os atributos de cada caixa</strong>, qual
+              seria o papel do <strong>PostgreSQL</strong> (o SGBD) nessa
+              analogia?
+            </p>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q13" value="entregador" />
+                  O entregador (quem leva as caixas)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q13"
+                    value="gerente"
+                    data-correct="true"
+                  />
+                  O gerente (quem organiza e controla tudo)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q13" value="clientes" />
+                  Os clientes (que solicitam as caixas)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q13" value="estoque" />
+                  O estoque físico (onde as caixas ficam)
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q13"></div>
+            </div>
+          </div>
+
+          <!-- Questão 14 -->
+          <div class="question-card">
+            <h4>
+              Questão 14: Como alterar (adicionar) uma coluna "idade"
+              inteiramente em uma tabela?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q14"
+                    value="add_column"
+                    data-correct="true"
+                  />
+                  ALTER TABLE pessoas ADD COLUMN idade INT;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q14" value="update_table" />
+                  UPDATE TABLE pessoas ADD idade INT;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q14" value="modify_table" />
+                  MODIFY TABLE pessoas ADD idade INT;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q14" value="create_column" />
+                  CREATE COLUMN idade ON pessoas INT;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q14"></div>
+            </div>
+          </div>
+
+          <!-- Questão 15 -->
+          <div class="question-card">
+            <h4>
+              Questão 15: Qual cláusula filtra padrões (contendo) em texto?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q15" value="ilike" />
+                  ILIKE '%abc%'
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q15"
+                    value="like"
+                    data-correct="true"
+                  />
+                  WHERE nome LIKE '%silva%'
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q15" value="contains" />
+                  WHERE nome CONTAINS 'silva'
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q15" value="match" />
+                  WHERE MATCH(nome) AGAINST('silva')
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q15"></div>
+            </div>
+          </div>
+
+          <!-- Questão 16 -->
+          <div class="question-card">
+            <h4>Questão 16: Qual comando deleta uma tabela?</h4>
+            <p class="mb-3">
+              <strong>Contexto:</strong> Você quer remover completamente a
+              tabela <code>produtos</code> do banco de dados.
+            </p>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q16" value="delete_from" />
+                  DELETE FROM produtos;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q16" value="truncate_table" />
+                  TRUNCATE TABLE produtos;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q16"
+                    value="drop_table_cuidado"
+                    data-correct="true"
+                  />
+                  DROP TABLE produtos; (NÃO pode desfazer, use com transação:
+                  BEGIN; ... ROLLBACK;)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q16" value="remove_table" />
+                  REMOVE TABLE produtos;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q16"></div>
+            </div>
+          </div>
+
+          <!-- Questão 17 -->
+          <div class="question-card">
+            <h4>
+              Questão 17: Para evitar duplicados em uma coluna, qual constraint
+              usar?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q17" value="not_null" />
+                  NOT NULL
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q17"
+                    value="unique"
+                    data-correct="true"
+                  />
+                  UNIQUE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q17" value="check" />
+                  CHECK
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q17" value="primary" />
+                  PRIMARY KEY
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q17"></div>
+            </div>
+          </div>
+
+          <!-- Questão 18 -->
+          <div class="question-card">
+            <h4>
+              Questão 18: Como renomear uma tabela (SQL padrão em muitos SGBDs)?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q18"
+                    value="rename_table"
+                    data-correct="true"
+                  />
+                  ALTER TABLE clientes RENAME TO clientes_novo;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q18" value="rename_using_rename" />
+                  RENAME TABLE clientes TO clientes_novo;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q18" value="update_name" />
+                  UPDATE TABLE clientes SET name = 'clientes_novo';
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q18" value="alter_rename_column" />
+                  ALTER TABLE clientes RENAME COLUMN clientes_novo;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q18"></div>
+            </div>
+          </div>
+
+          <!-- Questão 19 -->
+          <div class="question-card">
+            <h4>Questão 19: Qual comando remove uma tabela?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q19"
+                    value="drop_table"
+                    data-correct="true"
+                  />
+                  DROP TABLE produtos;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q19" value="delete_table" />
+                  DELETE TABLE produtos;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q19" value="truncate_table" />
+                  TRUNCATE TABLE produtos;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q19" value="remove_table" />
+                  REMOVE TABLE produtos;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q19"></div>
+            </div>
+          </div>
+
+          <!-- Questão 20 -->
+          <div class="question-card">
+            <h4>
+              Questão 20: Como atualizar o campo "salario" para 5000 onde id=1?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q20"
+                    value="update_set"
+                    data-correct="true"
+                  />
+                  UPDATE funcionarios SET salario = 5000 WHERE id = 1;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q20" value="set_update" />
+                  SET salario = 5000 FROM funcionarios WHERE id = 1;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q20" value="alter_update" />
+                  ALTER funcionarios SET salario = 5000 WHERE id = 1;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q20" value="insert_update" />
+                  INSERT INTO funcionarios (salario) VALUES (5000) WHERE id = 1;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q20"></div>
+            </div>
+          </div>
+
+          <!-- Questão 21 -->
+          <div class="question-card">
+            <h4>
+              Questão 21: O que acontece ao fazer UPDATE sem cláusula WHERE?
+            </h4>
+            <p class="mb-3">
+              <strong>Contexto:</strong> Um desenvolvedor executa:
+              <code>UPDATE funcionarios SET salario = 5000;</code> (sem WHERE)
+            </p>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q21" value="apenas_um" />
+                  Atualiza apenas o primeiro registro
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q21"
+                    value="todos_registros"
+                    data-correct="true"
+                  />
+                  Atualiza TODOS os registros da tabela
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q21" value="erro_syntax" />
+                  Retorna erro de sintaxe
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q21" value="nao_atualiza" />
+                  Não atualiza nada (comando ignorado)
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q21"></div>
+            </div>
+          </div>
+
+          <!-- Questão 22 -->
+          <div class="question-card">
+            <h4>
+              Questão 22: Como remover registros duplicados exibindo apenas
+              valores distintos?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q22" value="uniq" />
+                  SELECT UNIQ nome FROM tabela;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q22"
+                    value="distinct"
+                    data-correct="true"
+                  />
+                  SELECT DISTINCT nome FROM tabela;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q22" value="group_by_distinct" />
+                  SELECT nome GROUP BY DISTINCT nome FROM tabela;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q22" value="unique_key" />
+                  SELECT nome FROM tabela WHERE UNIQUE(nome);
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q22"></div>
+            </div>
+          </div>
+
+          <!-- Questão 23 -->
+          <div class="question-card">
+            <h4>Questão 23: Qual agregação retorna a média?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q23" value="sum" />
+                  SUM()
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q23"
+                    value="avg"
+                    data-correct="true"
+                  />
+                  AVG()
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q23" value="median" />
+                  MEDIAN()
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q23" value="mode" />
+                  MODE()
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q23"></div>
+            </div>
+          </div>
+
+          <!-- Questão 24 -->
+          <div class="question-card">
+            <h4>Questão 24: Como filtrar registros entre duas datas?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q24"
+                    value="between"
+                    data-correct="true"
+                  />
+                  WHERE data BETWEEN '2025-01-01' AND '2025-12-31'
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q24" value="and_dates" />
+                  WHERE data >= '2025-01-01' AND < '2025-12-31'
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q24" value="in_dates" />
+                  WHERE data IN ('2025-01-01', '2025-12-31')
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q24" value="date_range" />
+                  WHERE RANGE(data) = '2025-01-01' TO '2025-12-31'
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q24"></div>
+            </div>
+          </div>
+
+          <!-- Questão 25 -->
+          <div class="question-card">
+            <h4>
+              Questão 25: Qual o operador para verificar se valor está em um
+              conjunto ?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q25" value="contains" />
+                  CONTAINS (1,2,3)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q25"
+                    value="in"
+                    data-correct="true"
+                  />
+                  WHERE id IN (1,2,3)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q25" value="any" />
+                  WHERE id ANY (1,2,3)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q25" value="equals_any" />
+                  WHERE id = ANY (1,2,3)
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q25"></div>
+            </div>
+          </div>
+
+          <!-- Questão 26 -->
+          <div class="question-card">
+            <h4>Questão 26: O que faz a cláusula HAVING?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q26" value="filter_rows" />
+                  Filtra linhas antes do GROUP BY
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q26"
+                    value="filter_groups"
+                    data-correct="true"
+                  />
+                  Filtra grupos após aplicação do GROUP BY
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q26" value="order_results" />
+                  Ordena os resultados
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q26" value="limit_groups" />
+                  Limita número de grupos
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q26"></div>
+            </div>
+          </div>
+
+          <!-- Questão 27 -->
+          <div class="question-card">
+            <h4>
+              Questão 27: Como verificar existência de linhas em subconsulta?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q27"
+                    value="exists"
+                    data-correct="true"
+                  />
+                  WHERE EXISTS (SELECT 1 FROM pedidos WHERE cliente_id = c.id)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q27" value="in_sub" />
+                  WHERE id IN (SELECT cliente_id FROM pedidos)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q27" value="has_rows" />
+                  WHERE HAS_ROWS (SELECT * FROM pedidos)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q27" value="count_sub" />
+                  WHERE (SELECT COUNT(*) FROM pedidos) > 0
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q27"></div>
+            </div>
+          </div>
+
+          <!-- Questão 28 -->
+          <div class="question-card">
+            <h4>
+              Questão 28: Como combinar resultados de duas consultas mantesndo
+              inclusive dados duplicados?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q28" value="union_distinct" />
+                  SELECT a FROM t1 UNION SELECT a FROM t2;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q28"
+                    value="union_all"
+                    data-correct="true"
+                  />
+                  SELECT a FROM t1 UNION ALL SELECT a FROM t2;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q28" value="join_union" />
+                  SELECT a FROM t1 JOIN t2;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q28" value="concat_queries" />
+                  CONCAT(SELECT a FROM t1, SELECT a FROM t2)
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q28"></div>
+            </div>
+          </div>
+
+          <!-- Questão 29 -->
+          <div class="question-card">
+            <h4>Questão 29: Como checar valor nulo?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q29"
+                    value="is_null"
+                    data-correct="true"
+                  />
+                  WHERE apelido IS NULL
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q29" value="=null" />
+                  WHERE apelido = NULL
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q29" value="empty_string" />
+                  WHERE apelido = ''
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q29" value="not_null" />
+                  WHERE apelido IS NOT NULL
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q29"></div>
+            </div>
+          </div>
+
+          <!-- Questão 30 -->
+          <div class="question-card">
+            <h4>
+              Questão 30: Posso deletar bancos e tabelas sempre e à vontade?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q30"
+                    value="nao_pode_deletar"
+                    data-correct="true"
+                  />
+                  Não, deletar bancos ou tabelas elimina todos os dados. Só pode
+                  ser feito com autorização e de preferencia quando houver
+                  backup.
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q30" value="Sim" />
+                  Sim, sempre!
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q30" value="de_vez_em_quando" />
+                  De vez em quando, mas só em horários comerciais.
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q30" value="mesma_coisa" />
+                  Sim, deletar e atualizar é a mesma coisa.
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q30"></div>
+            </div>
+          </div>
+
+          <!-- Questão 31 -->
+          <div class="question-card">
+            <h4>Questão 31: O que é CRUD?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q31"
+                    value="anagrama"
+                    data-correct="true"
+                  />
+                  Um anagrama em inglês para as operações básicas de banco de
+                  dados: Create (Criar), Read (Ler), Update (Atualizar) e Delete
+                  (Deletar).
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q31" value="cruj" />
+                  Programa de TV dos anos 90.
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q31" value="comando_sql" />
+                  Comando SQL de criação de tabelas.
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q31" value="savepoint" />
+                  SAVEPOINT;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q31"></div>
+            </div>
+          </div>
+
+          <!-- Questão 32 -->
+          <div class="question-card">
+            <h4>Questão 32: O que é SQL?</h4>
+            <p class="mb-3">
+              <strong>Contexto:</strong> SQL é fundamental para trabalhar com
+              bancos de dados.
+            </p>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q32" value="linguagem_prog" />
+                  Uma linguagem de programação como Python ou Java
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q32"
+                    value="sql_correto"
+                    data-correct="true"
+                  />
+                  Structured Query Language - Linguagem padrão para consultar e
+                  manipular dados em bancos de dados relacionais
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q32" value="sgbd" />
+                  Um Sistema de Gerenciamento de Banco de Dados (como
+                  PostgreSQL)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q32" value="tipo_dado" />
+                  Um tipo de dado para armazenar texto
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q32"></div>
+            </div>
+          </div>
+
+          <!-- Questão 33 -->
+          <div class="question-card">
+            <h4>
+              Questão 33: Qual palavra-chave cria uma chave estrangeira ao criar
+              tabela?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q33"
+                    value="foreign_key"
+                    data-correct="true"
+                  />
+                  FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q33" value="ref" />
+                  REF cliente_id TO clientes(id)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q33" value="link" />
+                  LINK cliente_id -> clientes(id)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q33" value="constraint_none" />
+                  CONSTRAINT FK_cliente NOT REQUIRED
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q33"></div>
+            </div>
+          </div>
+
+          <!-- Questão 34 -->
+          <div class="question-card">
+            <h4>Questão 34: Como criar chave primária em coluna "id"?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q34"
+                    value="pk_definition"
+                    data-correct="true"
+                  />
+                  id INT PRIMARY KEY
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q34" value="pk_after" />
+                  id INT; PRIMARY KEY(id)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q34" value="unique_pk" />
+                  id INT UNIQUE PRIMARY
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q34" value="auto_pk" />
+                  id SERIAL PRIMARY AUTO;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q34"></div>
+            </div>
+          </div>
+
+          <!-- Questão 35 -->
+          <div class="question-card">
+            <h4>Questão 35: Como definir valor padrão para uma coluna?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q35"
+                    value="default"
+                    data-correct="true"
+                  />
+                  ALTER TABLE t ADD COLUMN ativo BOOLEAN DEFAULT TRUE;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q35" value="set_default" />
+                  ALTER TABLE t SET DEFAULT ativo = TRUE;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q35" value="update_default" />
+                  UPDATE COLUMN ativo DEFAULT TRUE;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q35" value="create_default" />
+                  CREATE DEFAULT FOR ativo TRUE;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q35"></div>
+            </div>
+          </div>
+
+          <!-- Questão 36 -->
+          <div class="question-card">
+            <h4>Questão 36: Como criar coluna auto-increment em Postgres?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q36"
+                    value="serial"
+                    data-correct="true"
+                  />
+                  id SERIAL PRIMARY KEY
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q36" value="auto_increment_mysql" />
+                  id INT AUTO_INCREMENT PRIMARY KEY
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q36" value="identity" />
+                  id INT GENERATED ALWAYS AS IDENTITY
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q36" value="sequence" />
+                  SEQUENCE id_seq; id INT;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q36"></div>
+            </div>
+          </div>
+
+          <!-- Questão 37 -->
+          <div class="question-card">
+            <h4>
+              Questão 37: Como concatenar colunas "nome" e "sobrenome" em SQL
+              padrão?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q37"
+                    value="concat_function"
+                    data-correct="true"
+                  />
+                  SELECT CONCAT(nome, ' ', sobrenome) FROM pessoas;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q37" value="plus_concat" />
+                  SELECT nome + ' ' + sobrenome FROM pessoas;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q37" value="double_pipe" />
+                  SELECT nome || ' ' || sobrenome FROM pessoas;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q37" value="concat_ws" />
+                  SELECT CONCAT_WS(' ', nome, sobrenome) FROM pessoas;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q37"></div>
+            </div>
+          </div>
+
+          <!-- Questão 38 -->
+          <div class="question-card">
+            <h4>Questão 38: Em Postgres, qual operador concatena strings?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q38"
+                    value="double_pipe"
+                    data-correct="true"
+                  />
+                  nome || sobrenome
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q38" value="concat_fun" />
+                  CONCAT(nome, sobrenome)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q38" value="plus_operator" />
+                  nome + sobrenome
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q38" value="ampersand" />
+                  nome & sobrenome
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q38"></div>
+            </div>
+          </div>
+
+          <!-- Questão 39 -->
+          <div class="question-card">
+            <h4>Questão 39: Como obter quantidade de pedidos por cliente?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q39"
+                    value="group_count"
+                    data-correct="true"
+                  />
+                  SELECT cliente_id, COUNT(*) FROM pedidos GROUP BY cliente_id;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q39" value="count_all" />
+                  SELECT COUNT(*) FROM pedidos GROUP BY cliente_id;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q39" value="group_by_count_order" />
+                  SELECT COUNT(*), cliente_id FROM pedidos;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q39" value="orderby_count" />
+                  SELECT cliente_id FROM pedidos ORDER BY COUNT(*);
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q39"></div>
+            </div>
+          </div>
+
+          <!-- Questão 40 -->
+          <div class="question-card">
+            <h4>Questão 36: O que é Primeira Forma Normal (1FN)?</h4>
+            <p class="mb-3">
+              <strong>Contexto:</strong> Um aluno em sua tabela tinha
+              informações como
+              <code>telefones: '1111-1111, 2222-2222, 3333-3333'</code> na mesma
+              célula. Qual seria o primeiro passo para normalizar?
+            </p>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q36"
+                    value="1fn_atomicidade"
+                    data-correct="true"
+                  />
+                  Garantir que cada célula contenha apenas um valor atômico
+                  (indivisível)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q36" value="1fn_pk" />
+                  Garantir que toda tabela tenha uma chave primária
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q36" value="1fn_redundancia" />
+                  Remover redundâncias completamente
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q36" value="1fn_dependencias" />
+                  Garantir que todos os atributos dependam da chave primária
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q36"></div>
+            </div>
+          </div>
+
+          <!-- Questão 41 -->
+          <div class="question-card">
+            <h4>Questão 41: Como calcular soma de coluna "valor"?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q41"
+                    value="sum"
+                    data-correct="true"
+                  />
+                  SELECT SUM(valor) FROM vendas;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q41" value="total" />
+                  SELECT TOTAL(valor) FROM vendas;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q41" value="add" />
+                  SELECT ADD(valor) FROM vendas;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q41" value="aggregate_sum" />
+                  SELECT AGG_SUM(valor) FROM vendas;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q41"></div>
+            </div>
+          </div>
+
+          <!-- Questão 42 -->
+          <div class="question-card">
+            <h4>Questão 42: Qual sintaxe para subconsulta no SELECT?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q42"
+                    value="sub_select"
+                    data-correct="true"
+                  />
+                  SELECT (SELECT MAX(preco) FROM produtos) as max_preco;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q42" value="join_sub" />
+                  SELECT MAX(preco) FROM produtos JOIN SELECT ...
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q42" value="from_sub" />
+                  SELECT * FROM (SELECT * FROM produtos);
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q42" value="where_sub" />
+                  SELECT * FROM produtos WHERE (SELECT ...);
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q42"></div>
+            </div>
+          </div>
+
+          <!-- Questão 43 -->
+          <div class="question-card">
+            <h4>Questão 43: Como ordenar por "data" decrescente?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q43"
+                    value="order_desc"
+                    data-correct="true"
+                  />
+                  SELECT * FROM pedidos ORDER BY data DESC;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q43" value="order_desc2" />
+                  SELECT * FROM pedidos ORDER BY DESC data;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q43" value="sort_desc" />
+                  SELECT * FROM pedidos SORT BY data DESC;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q43" value="group_desc" />
+                  SELECT * FROM pedidos GROUP BY data DESC;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q43"></div>
+            </div>
+          </div>
+
+          <!-- Questão 44 -->
+          <div class="question-card">
+            <h4>
+              Questão 44: Qual é o relacionamento entre "alunos" e
+              "disciplinas"?
+            </h4>
+            <p class="mb-3">
+              <strong>Cenário:</strong> Um aluno pode estar matriculado em
+              várias disciplinas, e cada disciplina pode ter vários alunos. Qual
+              é esse tipo de relacionamento?
+            </p>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q44" value="um_para_um" />
+                  Um para Um (1:1)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q44" value="um_para_muitos" />
+                  Um para Muitos (1:N)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q44"
+                    value="muitos_para_muitos"
+                    data-correct="true"
+                  />
+                  Muitos para Muitos (N:M)
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q44" value="sem_relacionamento" />
+                  Sem relacionamento direto
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q44"></div>
+            </div>
+          </div>
+
+          <!-- Questão 45 -->
+          <div class="question-card">
+            <h4>
+              Questão 45: Em joins, qual retorna todos da esquerda e
+              correspondentes da direita?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q45" value="inner" />
+                  INNER JOIN
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q45"
+                    value="left"
+                    data-correct="true"
+                  />
+                  LEFT JOIN
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q45" value="right" />
+                  RIGHT JOIN
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q45" value="full" />
+                  FULL JOIN
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q45"></div>
+            </div>
+          </div>
+
+          <!-- Questão 46 -->
+          <div class="question-card">
+            <h4>Questão 46: Como criar constraint que apaga em cascata?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q46" value="on_delete_restrict" />
+                  FOREIGN KEY (...) REFERENCES ... ON DELETE RESTRICT
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q46" value="on_delete_setnull" />
+                  FOREIGN KEY (...) REFERENCES ... ON DELETE SET NULL
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q46"
+                    value="on_delete_cascade"
+                    data-correct="true"
+                  />
+                  FOREIGN KEY (...) REFERENCES ... ON DELETE CASCADE
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q46" value="on_delete_noaction" />
+                  FOREIGN KEY (...) REFERENCES ... ON DELETE NO ACTION
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q46"></div>
+            </div>
+          </div>
+
+          <!-- Questão 47 -->
+          <div class="question-card">
+            <h4>
+              Questão 47: Qual é o relacionamento entre "produtos" e "cidades"?
+            </h4>
+            <p class="mb-3">
+              <strong>Contexto:</strong> Uma tabela "produtos" armazena
+              informações sobre produtos vendidos (id, nome, preco). Uma tabela
+              "cidades" armazena informações sobre cidades (id, nome, estado).
+              Qual é o tipo de relacionamento entre essas duas tabelas?
+            </p>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input type="radio" name="q47" value="um_para_um" />
+                  Um para Um (1:1) - Um produto pertence a uma cidade
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q47" value="um_para_muitos" />
+                  Um para Muitos (1:N) - Uma cidade tem vários produtos
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q47" value="muitos_para_muitos" />
+                  Muitos para Muitos (N:M) - Sem tabela de junção
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q47"
+                    value="sem_relacionamento"
+                    data-correct="true"
+                  />
+                  Nenhum relacionamento - São dados independentes
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q47"></div>
+            </div>
+          </div>
+
+          <!-- Questão 48 -->
+          <div class="question-card">
+            <h4>
+              Questão 48: Como truncar (esvaziar) uma tabela mantendo estrutura?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q48"
+                    value="truncate"
+                    data-correct="true"
+                  />
+                  TRUNCATE TABLE tabela;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q48" value="drop" />
+                  DROP TABLE tabela;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q48" value="delete_no_where" />
+                  DELETE FROM tabela;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q48" value="clear_table" />
+                  CLEAR TABLE tabela;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q48"></div>
+            </div>
+          </div>
+
+          <!-- Questão 49 -->
+          <div class="question-card">
+            <h4>Questão 49: Como buscar valores distintos e ordenados?</h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q49"
+                    value="distinct_order"
+                    data-correct="true"
+                  />
+                  SELECT DISTINCT cidade FROM clientes ORDER BY cidade;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q49" value="order_after" />
+                  SELECT cidade FROM clientes ORDER BY cidade DISTINCT;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q49" value="group_order" />
+                  SELECT cidade FROM clientes GROUP BY cidade ORDER BY cidade;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q49" value="sort_distinct" />
+                  SELECT DISTINCT ORDER BY cidade FROM clientes;
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q49"></div>
+            </div>
+          </div>
+
+          <!-- Questão 50 -->
+          <div class="question-card">
+            <h4>
+              Questão 50: Como juntar duas tabelas por coluna "cliente_id"
+              (sintaxe geral)?
+            </h4>
+            <div class="options">
+              <div class="option">
+                <label>
+                  <input
+                    type="radio"
+                    name="q50"
+                    value="join_on"
+                    data-correct="true"
+                  />
+                  SELECT * FROM clientes c JOIN pedidos p ON c.id =
+                  p.cliente_id;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q50" value="where_join" />
+                  SELECT * FROM clientes c, pedidos p WHERE c.id = p.cliente_id;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q50" value="left_join" />
+                  SELECT * FROM clientes LEFT JOIN pedidos;
+                </label>
+              </div>
+              <div class="option">
+                <label>
+                  <input type="radio" name="q50" value="full_join" />
+                  SELECT * FROM clientes FULL JOIN pedidos USING(cliente_id);
+                </label>
+              </div>
+              <div class="feedback" id="feedback-q50"></div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button type="reset" class="btn btn-secondary me-2">
+              Limpar respostas
+            </button>
+            <button type="button" id="btn-result" class="btn btn-primary">
+              Ver resultado final
+            </button>
+          </div>
+        </form>
+
+        <div id="result-area" style="display: none" class="mt-5"></div>
+
+        <hr />
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <a href="./index.html" class="btn btn-outline-secondary">
+            ← Voltar ao Início
+          </a>
+          <a href="./aulas.html" class="btn btn-outline-secondary">
+            ← Voltar às aulas por data
+          </a>
+        </div>
+      </main>
+    </div>
+
+    <script src="./assets/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      (function () {
+        const TOTAL_QUESTOES = 50;
+        const STORAGE_KEY = "quiz_responses";
+        const EMAIL_KEY = "parquinho_email";
+
+        const emailInput = document.getElementById("email-quiz");
+        const form = document.getElementById("quiz-form");
+        const scoreDisplay = document.getElementById("score");
+        const progressBar = document.getElementById("progress-bar");
+        const resultArea = document.getElementById("result-area");
+        const btnResult = document.getElementById("btn-result");
+
+        function safe(fn) {
+          return (...args) => {
+            try {
+              return fn(...args);
+            } catch (e) {
+              console.error(e);
+            }
+          };
+        }
+
+        // --- Email ---
+        function loadEmail() {
+          const saved = localStorage.getItem(EMAIL_KEY);
+          if (saved) emailInput.value = saved;
+        }
+
+        function saveEmail() {
+          const email = emailInput.value.trim();
+          if (email) localStorage.setItem(EMAIL_KEY, email);
+        }
+
+        // --- Embaralhar ---
+        function shuffle(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+        }
+
+        // Embaralhar alternativas dentro de cada .options
+        function shuffleAllQuestions() {
+          const allOptionContainers = document.querySelectorAll(".options");
+
+          allOptionContainers.forEach((container) => {
+            const options = Array.from(container.children);
+            shuffle(options);
+            options.forEach((opt) => container.appendChild(opt));
+          });
+        }
+
+        // --- Respostas no localStorage ---
+        function loadResponses() {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (!saved) return;
+
+          try {
+            const responses = JSON.parse(saved);
+            Object.keys(responses).forEach((key) => {
+              const radio = document.querySelector(
+                `input[name="${key}"][value="${responses[key]}"]`
+              );
+              if (radio) radio.checked = true;
+            });
+          } catch (e) {
+            console.error("Erro ao parsear respostas:", e);
+          }
+        }
+
+        function saveResponse(name, value) {
+          const existing = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "{}"
+          );
+          existing[name] = value;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+        }
+
+        // --- Score ---
+        function calculateScore() {
+          let correct = 0;
+          for (let i = 1; i <= TOTAL_QUESTOES; i++) {
+            const checked = document.querySelector(
+              `input[name="q${i}"]:checked`
+            );
+            if (checked && checked.dataset.correct === "true") {
+              correct++;
+            }
+          }
+          return correct;
+        }
+
+        function updateScore() {
+          const correct = calculateScore();
+          scoreDisplay.textContent = `${correct}/${TOTAL_QUESTOES}`;
+          const pct = (correct / TOTAL_QUESTOES) * 100;
+
+          progressBar.style.width = pct + "%";
+          progressBar.setAttribute("aria-valuenow", Math.round(pct));
+        }
+
+        // --- Listeners das questões ---
+        function setupQuestionListeners() {
+          for (let i = 1; i <= TOTAL_QUESTOES; i++) {
+            const radios = document.querySelectorAll(`input[name="q${i}"]`);
+
+            radios.forEach((radio) => {
+              radio.addEventListener("change", () => {
+                // salva
+                saveResponse(`q${i}`, radio.value);
+
+                // feedback
+                const feedbackDiv = document.getElementById(`feedback-q${i}`);
+                const optionDiv = radio.closest(".option");
+
+                // remove marcas antigas da questão
+                optionDiv.parentElement
+                  .querySelectorAll(".option")
+                  .forEach((op) => op.classList.remove("correct", "incorrect"));
+
+                if (radio.dataset.correct === "true") {
+                  optionDiv.classList.add("correct");
+                  feedbackDiv.className = "feedback show success";
+                  feedbackDiv.innerHTML =
+                    "<strong>✓ Correto!</strong> Parabéns!";
+                } else {
+                  optionDiv.classList.add("incorrect");
+                  feedbackDiv.className = "feedback show error";
+                  feedbackDiv.innerHTML =
+                    "<strong>✗ Incorreto!</strong> Continue tentando.";
+                }
+
+                updateScore();
+              });
+            });
+          }
+        }
+
+        // --- Resultado final ---
+        function showFinalResult() {
+          const correct = calculateScore();
+          const pct = (correct / TOTAL_QUESTOES) * 100;
+
+          let msg = "";
+          if (pct === 100) msg = "🎉 Perfeito! Você domina SQL!";
+          else if (pct >= 90) msg = "👏 Excelente! Domínio muito alto!";
+          else if (pct >= 75) msg = "✓ Muito bom! Continue!";
+          else if (pct >= 50) msg = "⚠️ Bom, mas precisa reforçar.";
+          else msg = "💪 Continue estudando!";
+
+          const email = emailInput.value || "Anônimo";
+
+          resultArea.innerHTML = `
+      <div class="card border-primary">
+        <div class="card-body">
+          <h3 class="card-title">Resultado Final</h3>
+          <p><strong>Aluno:</strong> ${email}</p>
+          <p><strong>Pontuação:</strong> ${correct}/${TOTAL_QUESTOES} (${pct.toFixed(
+            1
+          )}%)</p>
+          <p><strong>Resultado:</strong> ${msg}</p>
+        </div>
+      </div>
+    `;
+
+          resultArea.style.display = "block";
+          resultArea.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        // --- Reset ---
+        form.addEventListener("reset", () => {
+          localStorage.removeItem(STORAGE_KEY);
+          resultArea.innerHTML = "";
+          resultArea.style.display = "none";
+
+          document.querySelectorAll(".feedback").forEach((f) => {
+            f.className = "feedback";
+            f.innerHTML = "";
+          });
+
+          updateScore();
+        });
+
+        // Botão de resultado
+        btnResult.addEventListener("click", safe(showFinalResult));
+
+        emailInput.addEventListener("blur", saveEmail);
+
+        // Inicialização
+        document.addEventListener(
+          "DOMContentLoaded",
+          safe(() => {
+            loadEmail();
+            shuffleAllQuestions();
+            loadResponses();
+            setupQuestionListeners();
+            updateScore();
+          })
+        );
+      })();
+    </script>
+  </body>
+  localStorage.removeItem("quiz_responses")
+</html>

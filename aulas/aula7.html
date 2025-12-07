@@ -24,6 +24,28 @@
       <main class="content">
         <h1>Aula 7 - Cálculos e manipulação de strings</h1>
 
+        <h2>Consultas SELECT distintas</h2>
+        <p>
+          Ao adicionar DISTINCT no seu select, registros duplicados são
+          unificados:
+        </p>
+        <pre><code class="language-sql">
+-- Insira dois alunos com o mesmo nome execute o seguinte comando:
+
+SELECT DISTINCT
+    nome,
+from alunos;
+
+/* Ao insrir um aluno o campo cpf é obrigattório e unico, 
+ * se adicionarmos o cpf, mesmo com o distinct teremos os dois alunos:
+ */
+ 
+SELECT DISTINCT
+    nome,
+    cpf
+from alunos;
+        </code></pre>
+
         <h2>Consultas SELECT com data e hora</h2>
         <p>Funções para trabalhar com datas e timestamps:</p>
         <pre><code class="language-sql">
