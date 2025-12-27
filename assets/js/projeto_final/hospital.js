@@ -1,6 +1,6 @@
 (function () {
   const STORAGE_KEY = "parquinho_email";
-  const API_URL = "https://micha6555.c44.integrator.host/api/sql";
+  const API_URL = "localhost:3000/api/sql";
 
   const emailInput = document.getElementById("email");
 
