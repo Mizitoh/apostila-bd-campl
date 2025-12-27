@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Cadastro - Hospital</title>
+    <link rel="icon" type="image/png" href="./../assets/imagens/caderno.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./../assets/css/style.css" />
+  </head>
+  <body>
+    <main class="content-fullwidth">
+      <!-- Campo de E-mail do Aluno -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Identificação do Aluno</h5>
+          <div class="col-md-6">
+            <label for="email" class="form-label">Seu e-mail</label>
+            <input
+              id="email"
+              class="form-control"
+              type="email"
+              placeholder="seu@exemplo.com"
+              required
+            />
+            <div class="form-text">O e-mail será salvo no localStorage.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs de Navegação -->
+      <ul class="nav nav-tabs mb-4" id="cadastroTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="medico-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#medico"
+            type="button"
+          >
+            Médico
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="especialidade-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#especialidade"
+            type="button"
+          >
+            Especialidade
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="medico-especialidade-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#medico-especialidade"
+            type="button"
+          >
+            Médico-Especialidade
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="paciente-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#paciente"
+            type="button"
+          >
+            Paciente
+          </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="consulta-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#consulta"
+            type="button"
+          >
+            Consulta
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="ficha-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#ficha"
+            type="button"
+          >
+            Ficha Paciente
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="relatorio-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#relatorio"
+            type="button"
+          >
+            Relatório Completo
+          </button>
+        </li>
+      </ul>
+
+      <!-- Conteúdo das Tabs -->
+      <div class="tab-content" id="cadastroTabsContent">
+        <!-- TAB MÉDICO -->
+        <div class="tab-pane fade show active" id="medico" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cadastro de Médico</h5>
+              <form id="medico-form">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="medico-nome" class="form-label">Nome *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="medico-nome"
+                      maxlength="100"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="medico-crm" class="form-label">CRM *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="medico-crm"
+                      maxlength="20"
+                      placeholder="Ex: CRM/SP 123456"
+                      required
+                    />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="medico-btn">
+                  Salvar Médico
+                </button>
+              </form>
+              <div id="medico-response" class="mt-3"></div>
+              <div id="medico-list" class="mt-3"></div>
+              <!-- ADICIONAR -->
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB ESPECIALIDADE -->
+        <div class="tab-pane fade" id="especialidade" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cadastro de Especialidade</h5>
+              <form id="especialidade-form">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="especialidade-nome" class="form-label"
+                      >Nome da Especialidade *</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="especialidade-nome"
+                      maxlength="80"
+                      placeholder="Ex: Cardiologia"
+                      required
+                    />
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="especialidade-btn"
+                >
+                  Salvar Especialidade
+                </button>
+              </form>
+              <div id="especialidade-response" class="mt-3"></div>
+              <div id="especialidade-list" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB MÉDICO-ESPECIALIDADE -->
+        <div class="tab-pane fade" id="medico-especialidade" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Vincular Médico a Especialidade</h5>
+              <form id="medico-especialidade-form">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="me-id-medico" class="form-label">
+                      ID do Médico *
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="me-id-medico"
+                      min="1"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="me-id-especialidade" class="form-label">
+                      ID da Especialidade *
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="me-id-especialidade"
+                      min="1"
+                      required
+                    />
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="medico-especialidade-btn"
+                >
+                  Vincular
+                </button>
+              </form>
+              <div id="medico-especialidade-response" class="mt-3"></div>
+              <div id="medico-especialidade-list" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB PACIENTE -->
+        <div class="tab-pane fade" id="paciente" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cadastro de Paciente</h5>
+              <form id="paciente-form">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="paciente-nome" class="form-label">Nome *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="paciente-nome"
+                      maxlength="100"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="paciente-data-nascimento" class="form-label">
+                      Data de Nascimento
+                    </label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="paciente-data-nascimento"
+                    />
+                    <div class="form-text">
+                      A data deve ser anterior a hoje.
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="paciente-btn">
+                  Salvar Paciente
+                </button>
+              </form>
+              <div id="paciente-response" class="mt-3"></div>
+              <div id="paciente-list" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB CONSULTA -->
+        <div class="tab-pane fade" id="consulta" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cadastro de Consulta</h5>
+              <form id="consulta-form">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="consulta-id-medico" class="form-label">
+                      ID do Médico *
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="consulta-id-medico"
+                      min="1"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="consulta-id-paciente" class="form-label">
+                      ID do Paciente *
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="consulta-id-paciente"
+                      min="1"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="consulta-data" class="form-label">
+                      Data e Hora da Consulta *
+                    </label>
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      id="consulta-data"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <label for="consulta-observacoes" class="form-label">
+                      Observações
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="consulta-observacoes"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="consulta-btn">
+                  Salvar Consulta
+                </button>
+              </form>
+              <div id="consulta-response" class="mt-3"></div>
+              <div id="consulta-list" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB FICHA PACIENTE -->
+        <div class="tab-pane fade" id="ficha" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cadastro de Ficha do Paciente</h5>
+              <form id="ficha-form">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="ficha-id-paciente" class="form-label">
+                      ID do Paciente *
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="ficha-id-paciente"
+                      min="1"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="ficha-tipo-sanguineo" class="form-label">
+                      Tipo Sanguíneo
+                    </label>
+                    <select class="form-control" id="ficha-tipo-sanguineo">
+                      <option value="">Selecione...</option>
+                      <option value="A+">A+</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B-">B-</option>
+                      <option value="AB+">AB+</option>
+                      <option value="AB-">AB-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="ficha-possui-convenio" class="form-label">
+                      Possui Convênio? *
+                    </label>
+                    <select
+                      class="form-control"
+                      id="ficha-possui-convenio"
+                      required
+                    >
+                      <option value="">Selecione...</option>
+                      <option value="true">Sim</option>
+                      <option value="false">Não</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="ficha-btn">
+                  Salvar Ficha
+                </button>
+              </form>
+              <div id="ficha-response" class="mt-3"></div>
+              <div id="ficha-list" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+        <!-- TAB RELATÓRIO COMPLETO -->
+        <div class="tab-pane fade" id="relatorio" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Relatório Completo de Consultas</h5>
+              <p class="text-muted">
+                Visualização completa com dados de pacientes, médicos,
+                especialidades e consultas
+              </p>
+              <button
+                type="button"
+                class="btn btn-primary mb-3"
+                id="relatorio-refresh-btn"
+              >
+                <i class="bi bi-arrow-clockwise"></i> Atualizar Relatório
+              </button>
+              <div id="relatorio-list" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Menu</h2>
+      <div class="mt-4">
+        <a href="./../index.html" class="btn btn-primary"
+          >Voltar para Apostila →</a
+        >
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./../assets/js/projeto_final/hospital.js"></script>
+  </body>
+</html>

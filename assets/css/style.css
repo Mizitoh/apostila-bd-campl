@@ -339,3 +339,111 @@ body {
   font-weight: bold;
   margin-bottom: 15px;
 }
+
+/* css projeto Final hospital */
+/* Conteúdo fullwidth (sem sidebar) */
+.content-fullwidth {
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  width: 100%;
+}
+
+.content-fullwidth h1 {
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.content-fullwidth h2 {
+  color: var(--text);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.content-fullwidth p {
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  font-size: 1.05rem;
+}
+
+.content-fullwidth .btn {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}
+
+.content-fullwidth a:not(.btn) {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.content-fullwidth a:not(.btn):hover {
+  text-decoration: underline;
+}
+
+/* Tabelas no conteúdo fullwidth */
+.content-fullwidth .table {
+  --bs-table-color: var(--text);
+  --bs-table-bg: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.content-fullwidth .table thead {
+  --bs-table-bg: var(--sidebar-bg);
+}
+
+.content-fullwidth .table th {
+  color: var(--text);
+  border-bottom: 2px solid var(--accent);
+  font-weight: 700;
+}
+
+.content-fullwidth .table td,
+.content-fullwidth .table th {
+  color: var(--text) !important;
+  border-color: var(--border);
+  vertical-align: middle;
+}
+
+/* Garantir que elementos dentro das células também usem a cor correta */
+.content-fullwidth .table td small,
+.content-fullwidth .table td em,
+.content-fullwidth .table td strong {
+  color: var(--text) !important;
+}
+
+/* Corrigir o text-muted do Bootstrap para tema escuro */
+.content-fullwidth .table .text-muted {
+  color: var(--text) !important;
+  opacity: 0.7;
+}
+
+.content-fullwidth .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: var(--sidebar-bg);
+}
+
+.content-fullwidth .table {
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.08);
+  --bs-table-hover-color: var(--text);
+}
+
+/* Badges precisam manter suas cores */
+.content-fullwidth .table .badge {
+  color: #fff !important;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .content-fullwidth {
+    padding: 2rem 1rem;
+  }
+
+  .content-fullwidth h1 {
+    font-size: 2rem;
+  }
+}

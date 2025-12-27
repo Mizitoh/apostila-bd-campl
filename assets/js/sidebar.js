@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <li><a href="${prefix}aulas/aula5.html">5️⃣ PK, FK e Padronização do banco</a></li>
           <li><a href="${prefix}aulas/aula6.html">6️⃣ Leitura de dados</a></li>
           <li><a href="${prefix}aulas/aula7.html">7️⃣ Select com manipulações de strings e cálculos</a></li>
+          <li><a href="${prefix}projeto_final/hospital.html">🏥 Projeto Final - Hospital</a></li>
         </ul>
       </nav>
     </aside>
