@@ -27,14 +27,13 @@ document.addEventListener("DOMContentLoaded", function () {
           <li><a href="${prefix}aulas/aula5.html">5️⃣ PK, FK e Padronização do banco</a></li>
           <li><a href="${prefix}aulas/aula6.html">6️⃣ Leitura de dados</a></li>
           <li><a href="${prefix}aulas/aula7.html">7️⃣ Select com manipulações de strings e cálculos</a></li>
+          <li><a href="${prefix}aulas/aula8.html">8️⃣ Backups</a></li>
+          <li><a href="${prefix}aulas/aula9.html">9️⃣ Restore e Projeto final</a></li>
           <li><a href="${prefix}projeto_final/hospital.html">🏥 Projeto Final - Hospital</a></li>
         </ul>
       </nav>
     </aside>
   `;
-
-  // <li><a href="${prefix}aulas/aula8.html">8️⃣ Backups</a></li>
-  // <li><a href="${prefix}aulas/aula9.html">9️⃣ Projeto final</a></li>
 
   // Encontra o container e insere o sidebar
   const container = document.querySelector(".container");

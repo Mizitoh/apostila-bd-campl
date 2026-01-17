@@ -232,11 +232,75 @@ SELECT
     SQRT(16) as raiz_quadrada
 FROM alunos LIMIT 1;
         </code></pre>
+
+        <h2>O que são Funções de Banco de Dados?</h2>
+        <p>
+          Funções são blocos de código que executam operações específicas nos
+          seus dados. Elas recebem valores de entrada (parâmetros) e retornam um
+          resultado. Aqui estão as principais:
+        </p>
+
+        <h3>Anatomia de uma Função</h3>
+        <pre><code class="language-sql">
+-- Estrutura geral:
+NOME_FUNCAO( parâmetro1, parâmetro2, ... )
+
+-- Exemplo com a função SUM:
+SUM( coluna_numerica )
+
+-- Exemplo com a função AVG:
+AVG( coluna_numerica )
+        </code></pre>
+
+        <h3>Funções de Agregação: SUM e AVG</h3>
+        <p>
+          <strong>SUM</strong> soma todos os valores de uma coluna.
+          <strong>AVG</strong> calcula a média (valor total dividido pela
+          quantidade).
+        </p>
+        <pre><code class="language-sql">
+-- Exemplo 1: SUM - Soma total de notas em um curso
+SELECT 
+    c.nome as curso,
+    SUM(m.nota) as total_notas
+FROM cursos c
+JOIN matriculas m ON m.curso_id = c.id
+GROUP BY c.id, c.nome;
+
+-- O que acontece por trás:
+-- 1. O banco encontra todas as notas do curso
+-- 2. Soma cada uma: nota1 + nota2 + nota3 + ...
+-- 3. Retorna o resultado final
+
+-- Exemplo 2: AVG - Média de notas em um curso
+SELECT 
+    c.nome as curso,
+    AVG(m.nota) as media_notas
+FROM cursos c
+JOIN matriculas m ON m.curso_id = c.id
+GROUP BY c.id, c.nome;
+
+-- O que acontece por trás:
+-- 1. O banco encontra todas as notas do curso
+-- 2. Soma cada uma e divide pela quantidade: (nota1 + nota2 + nota3) / 3
+-- 3. Retorna a média
+
+-- Exemplo 3: Usar ambas juntas
+SELECT 
+    c.nome as curso,
+    COUNT(m.id) as total_alunos,
+    SUM(m.nota) as soma_total,
+    AVG(m.nota) as media_da_turma
+FROM cursos c
+LEFT JOIN matriculas m ON m.curso_id = c.id
+GROUP BY c.id, c.nome;
+        </code></pre>
+
         <hr />
 
         <h2>Menu</h2>
         <div class="mt-4">
-          <!-- <a href="./aula8.html" class="btn btn-primary">Próxima aula →</a> -->
+          <a href="./aula8.html" class="btn btn-primary">Próxima aula →</a>
           <a href="./../index.html" class="btn btn-outline-secondary"
             >← Voltar ao Início</a
           >

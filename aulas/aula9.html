@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 8 - Cálculos e manipulação de string</title>
+    <link rel="icon" type="image/png" href="./../assets/imagens/caderno.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Aula 9 - RESTORE - Recuperando backups</h1>
+
+        <h2>O que é RESTORE?</h2>
+        <p>
+          <code>RESTORE</code> é o processo de recuperar dados a partir de um
+          backup. É literalmente o oposto de BACKUP: enquanto backup salva seus
+          dados, restore os devolve para o banco de dados.
+        </p>
+        <p>
+          Quando você faz um restore, você está restaurando o banco de dados (ou
+          uma tabela) para um estado anterior, recuperando todos os dados,
+          estruturas, índices e configurações que existiam no momento em que o
+          backup foi criado.
+        </p>
+
+        <hr />
+
+        <h2>Quando usar RESTORE?</h2>
+        <ul>
+          <li>
+            <strong>Após uma perda de dados:</strong> Alguém deletou dados
+            importantes acidentalmente
+          </li>
+          <li>
+            <strong>Depois de um ataque:</strong> Ransomware ou hacker corrompeu
+            o banco
+          </li>
+          <li>
+            <strong>Erro em UPDATE/DELETE:</strong> Um comando SQL errado afetou
+            muitos registros
+          </li>
+          <li>
+            <strong>Recuperação de desastre:</strong> O servidor inteiro falhou
+            ou foi perdido
+          </li>
+          <li>
+            <strong>Teste de dados:</strong> Você quer testar em um ambiente de
+            teste sem riscar os dados reais
+          </li>
+          <li>
+            <strong>Migração de ambientes:</strong> Restaurar um backup em um
+            servidor diferente
+          </li>
+          <li>
+            <strong>Auditoria:</strong> Verificar como os dados estavam em um
+            momento específico do passado
+          </li>
+        </ul>
+
+        <hr />
+
+        <h2>Tipos de RESTORE</h2>
+
+        <h3>1. Restore completo do banco</h3>
+        <p>
+          Restaura o banco inteiro a partir de um backup. Todos os dados voltam
+          ao estado em que estavam quando o backup foi feito.
+        </p>
+        <ul>
+          <li>✅ Recupera tudo (tabelas, índices, constraints, triggers)</li>
+          <li>⚠️ Sobrescreve dados atuais (perder dados depois do backup)</li>
+          <li>⏱️ Pode levar tempo em bancos grandes</li>
+        </ul>
+
+        <h3>2. Restore de tabela específica</h3>
+        <p>
+          Restaura apenas uma tabela de um backup. Útil quando apenas uma tabela
+          foi corrompida ou deletada.
+        </p>
+        <ul>
+          <li>✅ Não afeta outras tabelas</li>
+          <li>✅ Mais rápido que restore completo</li>
+          <li>⚠️ Requer que a tabela já exista ou seja criada primeiro</li>
+        </ul>
+
+        <h3>3. Restore ponto-no-tempo (Point in Time Recovery)</h3>
+        <p>
+          Restaura o banco para um momento específico (ex: "como estava em 10 de
+          janeiro às 14:30"). Útil para recuperar de erros recentes sem perder
+          tudo depois do erro.
+        </p>
+        <ul>
+          <li>✅ Recupera apenas até um momento específico</li>
+          <li>✅ Não perde mudanças depois do ponto de restauração</li>
+          <li>⚠️ Requer logs de transação preservados</li>
+        </ul>
+
+        <h3>4. Restore seletivo</h3>
+        <p>
+          Restaura apenas certos dados de um backup (ex: restaurar apenas
+          registros de um cliente específico de uma tabela). Geralmente feito
+          com SQL INSERT combinado com backups de tabela.
+        </p>
+
+        <hr />
+
+        <h2>Checklist antes de fazer RESTORE</h2>
+        <p>Sempre siga estes passos para evitar problemas:</p>
+        <ul>
+          <li>
+            ✅ <strong>Verifique a data do backup:</strong> Confirme que é o
+            backup certo
+          </li>
+          <li>
+            ✅ <strong>Teste em ambiente de desenvolvimento:</strong> Não
+            restaure direto em produção
+          </li>
+          <li>
+            ✅ <strong>Avise seus usuários:</strong> O banco ficará indisponível
+            durante o restore
+          </li>
+          <li>
+            ✅ <strong>Tenha um plano B:</strong> Se der errado, você tem outro
+            backup?
+          </li>
+          <li>
+            ✅ <strong>Verifique permissões:</strong> Você tem permissão para
+            restaurar?
+          </li>
+          <li>
+            ✅ <strong>Libere espaço em disco:</strong> Certifique-se que há
+            espaço suficiente
+          </li>
+          <li>
+            ✅ <strong>Faça backup do estado atual:</strong> Antes de
+            sobrescrever, salve o estado atual
+          </li>
+        </ul>
+
+        <hr />
+
+        <h2>O que você precisa saber sobre RESTORE</h2>
+
+        <h3>Tempo de restauração</h3>
+        <p>
+          O tempo para restaurar depende de vários fatores. Um backup de 1GB
+          pode levar de alguns segundos a vários minutos para restaurar,
+          dependendo de:
+        </p>
+        <ul>
+          <li>Tamanho do backup</li>
+          <li>Velocidade do disco</li>
+          <li>Complexidade das estruturas (muitos índices = mais tempo)</li>
+          <li>Potência do servidor</li>
+        </ul>
+
+        <h3>Conflitos de constraints</h3>
+        <p>
+          Ao restaurar uma tabela em um banco onde ela já existe, pode haver
+          conflitos se houver chaves estrangeiras ou identificadores únicos.
+          Geralmente é necessário:
+        </p>
+        <ul>
+          <li>Deletar dados antigos da tabela</li>
+          <li>Desabilitar constraints temporariamente</li>
+          <li>Reabilitar constraints após o restore</li>
+        </ul>
+
+        <h3>Espaço em disco</h3>
+        <p>
+          Um restore precisa de espaço em disco livre pelo menos do tamanho do
+          backup. Se o disco está cheio, o restore falhará no meio do processo!
+        </p>
+
+        <h3>Validação após restore</h3>
+        <p>Sempre valide o restore:</p>
+        <ul>
+          <li>Contagem de registros (deve ser igual ao backup)</li>
+          <li>Integridade referencial (sem orfandades)</li>
+          <li>Testes de negócio (as operações críticas funcionam?)</li>
+        </ul>
+
+        <hr />
+
+        <h2>Diferença entre RESTORE e restaurar com SQL</h2>
+        <table class="table table-bordered mt-3">
+          <thead>
+            <tr>
+              <th>Aspecto</th>
+              <th>RESTORE via DBeaver</th>
+              <th>INSERT FROM SELECT (backup tabela)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Velocidade</td>
+              <td>Muito rápido (arquivo binário)</td>
+              <td>Mais lento (processa SQL)</td>
+            </tr>
+            <tr>
+              <td>Restaura estrutura</td>
+              <td>✅ Tabelas, índices, constraints</td>
+              <td>❌ Apenas dados</td>
+            </tr>
+            <tr>
+              <td>Banco completo</td>
+              <td>✅ Possível</td>
+              <td>❌ Apenas tabelas individuais</td>
+            </tr>
+            <tr>
+              <td>Facilidade</td>
+              <td>Interface gráfica</td>
+              <td>Precisa escrever SQL</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="alert alert-info mt-4" role="alert">
+          💡 <strong>Dica:</strong> Use RESTORE para recuperação completa de
+          desastres. Use SQL (INSERT FROM SELECT) para recuperar dados
+          específicos de um backup de tabela.
+        </div>
+
+        <hr />
+
+        <h2>Restaurando backup com Dbeaver</h2>
+
+        <p>
+          Crie um banco novo, depois clique com o batão direito sobre ele e vá
+          em restore:
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/restoredbeaver1.png"
+            alt="Passo 1 restore Dbeaver"
+          />
+        </div>
+
+        <p>
+          Selecione o arquivo de backup, clique em iniciar e aguarde a
+          finalização. Ao terminar, feche a janela:
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/restoredbeaver2.png"
+            alt="Passo 2 restore Dbeaver"
+          />
+        </div>
+
+        <hr />
+
+        <h3>Conclusão</h3>
+
+        <p>
+          Finalizamos nosso curso de CRUD com banco de dados. Agora você já
+          consegue entregar o projeto final que está na apostila e foi combinado
+          em sala de aula. Parabéns!
+        </p>
+        <p>
+          Lembre-se que banco de dados é um assunto extenso e tem muito mais pra
+          ler e saber. Até a próxima!
+        </p>
+        <hr />
+
+        <h2>Menu</h2>
+        <div class="mt-4">
+          <a href="./../index.html" class="btn btn-outline-secondary"
+            >← Voltar ao Início</a
+          >
+          <a href="./../aulas.html" class="btn btn-outline-secondary"
+            >← Voltar às aulas por data</a
+          >
+        </div>
+      </main>
+    </div>
+
+    <script src="./../assets/js/sidebar.js"></script>
+    <script src="./../assets/js/table-of-contents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

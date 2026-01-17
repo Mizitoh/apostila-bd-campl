@@ -22,14 +22,338 @@
   <body>
     <div class="container">
       <main class="content">
-        <h1>Aula 8 - Backups</h1>
-        delete, truncate e backups de banco de dados
+        <h1>Aula 8 - DELETE, TRUNCATE e Backups</h1>
+
+        <h2>DELETE - Removendo registros específicos</h2>
+        <p>
+          O comando <code>DELETE</code> remove registros específicos de uma
+          tabela. Diferente do <code>TRUNCATE</code>, ele permite usar a
+          cláusula <code>WHERE</code> para remover apenas registros que atendem
+          a certas condições.
+        </p>
+
+        <h3>Sintaxe básica</h3>
+        <pre><code class="language-sql">
+DELETE FROM nome_tabela
+WHERE condição;
+        </code></pre>
+
+        <h3>Exemplos práticos</h3>
+        <pre><code class="language-sql">
+-- Exemplo 1: Remover um aluno específico
+DELETE FROM alunos
+WHERE id = 5;
+
+-- Exemplo 2: Remover alunos de um determinado sexo
+DELETE FROM alunos
+WHERE sexo_id = 3;
+
+-- Exemplo 3: Remover matrículas com nota menor que 7
+DELETE FROM matriculas
+WHERE nota < 7;
+
+-- Exemplo 4: Remover telefones de um aluno específico
+DELETE FROM telefones
+WHERE id_aluno = 2;
+
+-- CUIDADO! Sem WHERE, deleta todos os registros
+DELETE FROM alunos; -- Isso vai deletar TODOS os alunos!
+
+-- Melhor prática: Usar DELETE com WHERE e ser específico
+DELETE FROM enderecos
+WHERE id_aluno = 1 AND cidade = 'São Paulo';
+        </code></pre>
+
+        <div class="alert alert-warning mt-3" role="alert">
+          ⚠️ <strong>Cuidado!</strong> DELETE sem WHERE é perigoso. Sempre
+          especifique a condição para remover apenas o que é necessário. Se usar
+          DELETE sem WHERE, todos os registros serão removidos!
+        </div>
+
+        <hr />
+
+        <h2>TRUNCATE - Removendo todos os registros rapidamente</h2>
+        <p>
+          O comando <code>TRUNCATE</code> remove <strong>todos</strong> os
+          registros de uma tabela rapidamente. É muito mais rápido que DELETE
+          quando você quer esvaziar a tabela completamente.
+        </p>
+
+        <h3>Diferenças principais entre DELETE e TRUNCATE</h3>
+        <table class="table table-bordered mt-3">
+          <thead>
+            <tr>
+              <th>Aspecto</th>
+              <th>DELETE</th>
+              <th>TRUNCATE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cláusula WHERE</td>
+              <td>✅ Usa WHERE para registros específicos</td>
+              <td>❌ Remove todos sempre</td>
+            </tr>
+            <tr>
+              <td>Velocidade</td>
+              <td>Mais lento</td>
+              <td>Muito mais rápido</td>
+            </tr>
+            <tr>
+              <td>Triggers</td>
+              <td>Ativa triggers</td>
+              <td>Não ativa triggers</td>
+            </tr>
+            <tr>
+              <td>Auto-increment</td>
+              <td>Mantém o contador</td>
+              <td>Reseta o contador (depende do SGBD)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Sintaxe e exemplos</h3>
+        <pre><code class="language-sql">
+-- Sintaxe
+TRUNCATE TABLE nome_tabela;
+
+-- Exemplo 1: Esvaziar a tabela de matrículas
+TRUNCATE TABLE matriculas;
+
+-- Exemplo 2: Esvaziar a tabela de endereços
+TRUNCATE TABLE enderecos;
+
+-- Exemplo 3: Esvaziar a tabela de telefones
+TRUNCATE TABLE telefones;
+
+-- O TRUNCATE é muito útil para:
+-- - Limpar dados de teste depois de testes
+-- - Resetar uma tabela rapidamente
+-- - Remover dados sem logar cada remoção individual
+        </code></pre>
+
+        <div class="alert alert-danger mt-3" role="alert">
+          🔴 <strong>Atenção!</strong> TRUNCATE remove TODOS os registros e
+          <strong>não pode ser desfeito facilmente</strong>. Sempre faça backup
+          antes de usar TRUNCATE em dados importantes!
+        </div>
+
+        <hr />
+
+        <h2>BACKUP de Tabela - Criando cópias de segurança</h2>
+        <p>
+          Um backup de tabela cria uma cópia completa de uma tabela com todos os
+          seus dados. Isso é útil para manter dados históricos ou como medida de
+          segurança antes de operações arriscadas.
+        </p>
+
+        <h3>Criando uma cópia de backup de uma tabela</h3>
+        <pre><code class="language-sql">
+-- Sintaxe básica
+CREATE TABLE nome_tabela_backup AS
+SELECT * FROM nome_tabela;
+
+-- Exemplo 1: Backup da tabela de alunos antes de operações perigosas
+CREATE TABLE alunos_backup AS
+SELECT * FROM alunos;
+
+-- Exemplo 2: Backup da tabela de matrículas
+CREATE TABLE matriculas_backup AS
+SELECT * FROM matriculas;
+
+-- Exemplo 3: Backup da tabela de telefones
+CREATE TABLE telefones_backup AS
+SELECT * FROM telefones;
+
+-- Exemplo 4: Backup com filtro (apenas registros específicos)
+CREATE TABLE matriculas_2024_backup AS
+SELECT * FROM matriculas
+WHERE EXTRACT(YEAR FROM data_matricula) = 2024;
+
+-- Verificar o backup
+SELECT COUNT(*) FROM alunos_backup;
+
+-- Restaurar dados de um backup (se necessário)
+-- Opção 1: Copiar dados do backup para a tabela original
+INSERT INTO alunos
+SELECT * FROM alunos_backup
+WHERE id NOT IN (SELECT id FROM alunos);
+
+-- Opção 2: Restaurar completamente deletando dados atuais e inserindo do backup
+DELETE FROM alunos;
+INSERT INTO alunos
+SELECT * FROM alunos_backup;
+        </code></pre>
+
+        <h3>Boas práticas para backup de tabela</h3>
+        <ul>
+          <li>
+            Crie backups <strong>antes de operações perigosas</strong> (DELETE
+            massivo, TRUNCATE, UPDATE grande)
+          </li>
+          <li>
+            Nomeie os backups de forma clara:
+            <code>tabela_backup_YYYYMMDD</code>
+          </li>
+          <li>
+            Crie backups de tabelas críticas <strong>regularmente</strong>
+          </li>
+          <li>Documente o motivo do backup para futuras referências</li>
+          <li>Limpe backups antigos para economizar espaço em disco</li>
+        </ul>
+
+        <pre><code class="language-sql">
+-- Exemplo de boas práticas: Backup com data
+CREATE TABLE alunos_backup_20250116 AS
+SELECT * FROM alunos;
+
+-- Backup antes de um DELETE grande
+CREATE TABLE matriculas_backup_antes_limpeza AS
+SELECT * FROM matriculas;
+
+DELETE FROM matriculas WHERE nota < 6;
+
+-- Agora você pode restaurar se necessário
+        </code></pre>
+
+        <hr />
+
+        <h2>Importância do BACKUP de Banco de Dados</h2>
+        <p>
+          Um backup do banco de dados é uma
+          <strong>cópia completa e integral</strong> de todo o banco, incluindo
+          todas as tabelas, índices, constraints, triggers e dados. É
+          fundamental para garantir a segurança e disponibilidade dos seus
+          dados.
+        </p>
+
+        <h3>Por que fazer backup do banco de dados?</h3>
+        <ul>
+          <li>
+            <strong>Proteção contra perda de dados:</strong> Discos rígidos
+            falham, ataques acontecem, erros ocorrem
+          </li>
+          <li>
+            <strong>Recuperação de desastres:</strong> Se o banco for corrompido
+            ou destruído, você pode restaurar
+          </li>
+          <li>
+            <strong>Conformidade legal:</strong> Muitas indústrias exigem
+            backups regulares por lei
+          </li>
+          <li>
+            <strong>Proteção contra ataques:</strong> Ransomware e hackers podem
+            deletar ou criptografar dados
+          </li>
+          <li>
+            <strong>Capacidade de reverter mudanças:</strong> Se um erro crítico
+            for cometido, você pode voltar a um ponto anterior
+          </li>
+          <li>
+            <strong>Migração de dados:</strong> Facilita mover dados entre
+            servidores ou ambientes
+          </li>
+          <li>
+            <strong>Testes seguros:</strong> Você pode usar backups para testar
+            sem riscar os dados reais
+          </li>
+        </ul>
+
+        <h3>Estratégia de backup recomendada</h3>
+        <ul>
+          <li>
+            <strong>Backup diário:</strong> Executar todos os dias para dados
+            críticos
+          </li>
+          <li>
+            <strong>Backup semanal:</strong> Backup completo do banco uma vez
+            por semana
+          </li>
+          <li>
+            <strong>Backup mensalizado:</strong> Armazenar backups completos do
+            final de cada mês
+          </li>
+          <li>
+            <strong>Armazenamento distribuído:</strong> Guardar backups em
+            locais diferentes (não apenas no mesmo servidor)
+          </li>
+          <li>
+            <strong>Testar restauração:</strong> Periodicamente, teste se seus
+            backups funcionam realmente
+          </li>
+        </ul>
+
+        <div class="alert alert-info mt-4" role="alert">
+          💡 <strong>Backup no DBeaver:</strong>
+          No DBeaver, você pode fazer backup do banco inteiro clicando com botão
+          direito no banco (dentro de "Databases") e selecionando "Backup
+          Database". Você também pode agendar backups automáticos nas
+          configurações do DBeaver.
+        </div>
+
+        <p>
+          Selecione no DBeaver o banco que deseja fazer backup, clique com o
+          batão direito sobre ele, vá em ferramentas, depois backup:
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/caminhodbeaverbckp.png"
+            alt="Passo 1 bkp Dbeaver"
+          />
+        </div>
+
+        <p>Selecione Todos e clique em próximo:</p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/acao1dbeaverbkp.png"
+            alt="Passo 2 bkp DBeaver"
+          />
+        </div>
+
+        <p>
+          Escolha o caminho onde vai ser salvo o arquivo de backup, nomeie o
+          backup e clique em iniciar. Quando terminar, feche a janela.
+        </p>
+
+        <div class="image-wrapper">
+          <img
+            src="./../assets/imagens/nomedbeaverbkp.png"
+            alt="Passo 3 bkp Dbeaver"
+          />
+        </div>
+
+        <div class="alert alert-info mt-4" role="alert">
+          💡 <strong>Importante</strong>
+          Sempre coloque a extenção .backup no fim do nome do seu backup.
+        </div>
+
+        <br />
+
+        <h3>O custo de não ter backup</h3>
+        <p>
+          Considere os cenários abaixo e o impacto financeiro de perder dados:
+        </p>
+        <ul>
+          <li>Perda de confiança dos clientes</li>
+          <li>Parada de sistemas e serviços</li>
+          <li>Custos de recuperação de dados (às vezes impossível)</li>
+          <li>Multas por não cumprir regulamentações</li>
+          <li>Dano à reputação da empresa</li>
+          <li>Tempo desperdiçado reconstruindo dados perdidos</li>
+        </ul>
+
+        <div class="alert alert-danger mt-4" role="alert">
+          🔴 <strong>Regra de Ouro:</strong> Um backup que não foi testado não é
+          um backup real. Sempre teste sua capacidade de restaurar um backup!
+        </div>
 
         <hr />
 
         <h2>Menu</h2>
         <div class="mt-4">
-          <!-- <a href="./aula9.html" class="btn btn-primary">Próxima aula →</a> -->
+          <a href="./aula9.html" class="btn btn-primary">Próxima aula →</a>
           <a href="./../index.html" class="btn btn-outline-secondary"
             >← Voltar ao Início</a
           >
