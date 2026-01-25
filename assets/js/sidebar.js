@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
           <li><a href="${prefix}parquinho.html">🔥 Parquinho 🛝</a></li>
           <li><a href="${prefix}cola.html">🎓🤫 Colinha</a></li>
           <li><a href="${prefix}exercicios.html">⛹️‍♀️🏋️‍♂️ Exercícios</a></li>
-          <li><a href="${prefix}projetofinal.html">🏥 Projeto Final Turma 1</a></li>
           <li><a href="${prefix}aulas/aula1.html">1️⃣ Introdução a Banco de Dados</a></li>
           <li><a href="${prefix}aulas/aula2.html">2️⃣ Primeiros passos no PostgreSQL</a></li>
           <li><a href="${prefix}aulas/aula3.html">3️⃣ SQL - Primeiros comandos e modelagem</a></li>
@@ -29,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <li><a href="${prefix}aulas/aula7.html">7️⃣ Select com manipulações de strings e cálculos</a></li>
           <li><a href="${prefix}aulas/aula8.html">8️⃣ Backups</a></li>
           <li><a href="${prefix}aulas/aula9.html">9️⃣ Restore e Projeto final</a></li>
+          <li><a href="${prefix}projetofinal.html">🏥 Projeto Final Turma 1</a></li>
           <li><a href="${prefix}projeto_final/hospital.html">🏥 Projeto Final - Hospital</a></li>
         </ul>
       </nav>
