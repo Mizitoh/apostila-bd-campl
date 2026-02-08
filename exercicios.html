@@ -24,6 +24,7 @@
       <main class="content">
         <h1>Exercícios!</h1>
 
+        <!--
         <h2>Modelagem de dados</h2>
 
         <div class="mb-5">
@@ -91,6 +92,86 @@ nota_curso2 DECIMAL(4,2)
             💡 É o mesmo exercício da aula:
             <a href="./aulas/aula3.html">"SQL - Primeiros comandos"</a>.
           </blockquote>
+        </div>
+        <hr />
+        -->
+
+        <h2>Exercício: Modelagem de Dados - Cozinha de Casa</h2>
+
+        <div class="mb-5">
+          <p>
+            <strong>Contexto:</strong><br />
+            Você foi desafiado a criar um banco de dados para organizar as
+            informações de uma cozinha residencial. Deve pensar sobre quais
+            informações precisam ser armazenadas de forma separada e organizada
+            para evitar redundância e inconsistência nos dados.
+          </p>
+
+          <p>
+            Pense em quais são as principais
+            <strong>categorias de informações</strong> que você teria em uma
+            cozinha. Você pode pensar em: ingredientes, equipamentos,
+            utensílios, receitas, ou qualquer outra coisa que faça sentido. A
+            pergunta é: <strong>quantas tabelas você realmente precisa?</strong>
+            Quais informações devem estar separadas?
+          </p>
+
+          <h3>Tarefa:</h3>
+          <ol>
+            <li>
+              <strong>Pense e identifique as tabelas</strong> que você acha que
+              são necessárias para organizar os dados da sua cozinha. Não há um
+              número certo - você decide!
+            </li>
+            <li>
+              Para cada tabela que você criou, defina os
+              <strong>campos (colunas)</strong>
+              que ela deve ter:
+              <ul>
+                <li>Qual é o identificador único (ID - chave primária)?</li>
+                <li>Que outras informações precisam ser armazenadas?</li>
+                <li>Qual é o tipo de dado de cada campo?</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Desenhe as tabelas em uma folha sulfite</strong>
+              mostrando: os nomes das colunas, seus tipos de dados (INT,
+              VARCHAR, DECIMAL, etc.) e indique qual é a chave primária (ID
+              SERIAL PRIMARY KEY).
+            </li>
+          </ol>
+
+          <h4>Exemplo de como desenhar:</h4>
+          <pre>
+┌────────────────────┐
+│       Exemplo      │
+├────────────────────┤
+│ tipo| nome do dado |    
+└────────────────────┘
+
+┌──────────────────────────────────────────┐
+│            Nome da Tabela                │
+├──────────────────────────────────────────┤
+│ id (INT) - PRIMARY KEY                   │
+│ campo_1 (VARCHAR)                        │
+│ campo_2 (DECIMAL)                        │
+└──────────────────────────────────────────┘
+          </pre>
+
+          <blockquote>
+            <strong>💡 Dica:</strong> Pense em como você organizaria as coisas
+            em diferentes gavetas e armários da cozinha. Cada local serve para
+            armazenar um tipo específico de coisa - é assim que deve ser com as
+            tabelas! Quantas "gavetas" (tabelas) você realmente precisa?
+          </blockquote>
+
+          <h4>Data de Entrega:</h4>
+          <p>
+            Entregue o desenho das tabelas em uma folha sulfite até a próxima
+            aula. <strong>Importante:</strong> Se optar por fazer o desenho
+            digitalmente, print o resultado e mande no WhatsApp privado do
+            professor.
+          </p>
         </div>
         <hr />
 
