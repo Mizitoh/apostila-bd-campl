@@ -113,10 +113,10 @@
         <div class="alert alert-success p-2 mb-2" role="alert">
           <strong>Sucesso</strong> — comando executado.
           <div><small>Email: ${json.email || ""} | Schema: ${
-        json.schema || ""
-      } | Command: ${json.command || ""} | RowCount: ${
-        json.rowCount ?? 0
-      }</small></div>
+            json.schema || ""
+          } | Command: ${json.command || ""} | RowCount: ${
+            json.rowCount ?? 0
+          }</small></div>
         </div>
       `;
       if (Array.isArray(json.rows)) renderRowsTable(json.rows);
@@ -181,7 +181,7 @@
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved && emailInput) emailInput.value = saved;
       updatePreview();
-    })
+    }),
   );
 
   if (emailInput) {
@@ -191,7 +191,7 @@
         const v = emailInput.value.trim();
         if (v) localStorage.setItem(STORAGE_KEY, v);
         else localStorage.removeItem(STORAGE_KEY);
-      })
+      }),
     );
   }
 
@@ -213,7 +213,7 @@
         }
         updatePreview();
         clearResponseAreas();
-      })
+      }),
     );
   }
 
@@ -225,6 +225,14 @@
         const email = emailInput?.value?.trim();
         const sql = sqlTextarea?.value?.trim();
         if (!email || !sql) return;
+
+        // Validar se SQL contém "public."
+        if (sql.toLowerCase().includes("public.")) {
+          if (responseSummary) {
+            responseSummary.innerHTML = `<div class="alert alert-warning p-2">⚠️ Erro: Não é permitido usar "public." no SQL. Remove o "public." e tente novamente.</div>`;
+          }
+          return;
+        }
 
         runBtn.disabled = true;
         runBtn.textContent = "Executando...";
@@ -242,7 +250,7 @@
           runBtn.disabled = false;
           runBtn.textContent = "Executar";
         }
-      })
+      }),
     );
   }
 
