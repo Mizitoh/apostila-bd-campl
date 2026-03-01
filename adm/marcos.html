@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 3 - Linguagens de Banco de Dados (SQL)</title>
+    <link rel="icon" type="image/png" href="./../assets/imagens/caderno.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="content">
+        <h1>Exercício específico Marcos</h1>
+
+        <h2>Faça os seguintes selects</h2>
+        <br />
+        <p>
+          1 - Junte as tabelas <i>fornecedor</i> e <i>loja</i> e traga os
+          seguintes dados: nome da loja, nome do fornecedor (social e fantasia)
+          e cnpj do fornecedor (se houver)
+        </p>
+        <br />
+        <p>
+          2 - Junte <i>produto</i> com <i>produtoautomacao</i>,
+          <i>tipoembalagem</i>, <i>produtocomplemento</i>, <i>cest</i>,
+          <i>tipopiscofins</i>, <i>produtoaliquota</i>, <i>aliquota</i> e
+          <i>mercadologico</i> (esse é problematico, pesquise a clausula
+          <i>'WITH'</i> para montar). Traga ao menos um dado de cada tabela e as
+          descrições dos níveis do mercadologico.
+        </p>
+        <br />
+        <p>
+          3 - Localize as tabelas que tem a coluna <i>id_loja</i>, usando o
+          comando de metadados abaixo:
+        </p>
+        <pre><code class="sql">SELECT
+	*
+FROM 
+	information_schema.columns c
+WHERE
+	c.table_catalog = 'nome_do_banco_de_dados' -- geralmente vr
+	AND table_schema LIKE 'nome_do_esquema%' -- existem vários esquemas, 
+	AND TABLE_NAME LIKE '%%'                 -- como public, implantacao, etc...
+	AND column_name LIKE '%id_loja%'
+ORDER BY
+	1,2,3,4</code></pre>
+        <br />
+        <p>
+          4 - Procure pelo esquema <i>implantacao</i>, tente analisar a tabela
+          <i>codant_produto</i> e se conseguir entender junte ela com produto e
+          produto complemento. Traga código antigo do produto, código novo (id),
+          descrição do produto preço antigo e atual.
+        </p>
+        <pre><code class="sql">
+-- Selects em schemas não foram ensinados em sala de aula. EX:
+select * from implantacao.codant_produto</code></pre>
+      </main>
+    </div>
+
+    <script src="./../assets/js/sidebar.js"></script>
+    <script src="./../assets/js/table-of-contents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
