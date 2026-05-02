@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
         <ul>
           <li><a href="${prefix}index.html">📘 Início</a></li>
           <li><a href="${prefix}aulas.html">📚 Aulas por data</a></li>
-          <li><a href="${prefix}parquinho.html">🔥 Parquinho 🛝</a></li>
           <li><a href="${prefix}cola.html">🎓🤫 Colinha</a></li>          
           <li><a href="${prefix}exercicios.html">⛹️‍♀️🏋️‍♂️ Exercícios</a></li>
           <li><a href="${prefix}aulas/aula1.html">1️⃣ Introdução a Banco de Dados</a></li>
@@ -32,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </aside>
   `;
   /*
+  "<li><a href="${prefix}parquinho.html">🔥 Parquinho 🛝</a></li>
   </li><a href="${prefix}projetofinal2.html">💪 Projeto Final Turma 2</a></li>
   <li><a href="${prefix}projeto_final/academia.html">💪 Projeto Final - Academia</a></li>
   <li><a href="${prefix}projetofinal.html">🏥 Projeto Final Turma 1</a></li>
