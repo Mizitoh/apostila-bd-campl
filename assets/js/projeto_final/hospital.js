@@ -3,8 +3,6 @@
   const API_URL = "https://micha6555.c44.integrator.host/api/sql";
 
   const emailInput = document.getElementById("email");
-
-  // Função para enviar SQL para a API
   async function sendSQL(email, sql) {
     try {
       const res = await fetch(API_URL, {
@@ -26,8 +24,6 @@
       return { success: false, error: error.message };
     }
   }
-
-  // Função para exibir resposta
   function showResponse(responseElement, json, successMessage) {
     if (json.success) {
       responseElement.innerHTML = `
@@ -36,8 +32,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
       `;
-
-      // Auto-remover após 3 segundos
       setTimeout(() => {
         const alert = responseElement.querySelector(".alert");
         if (alert) {
@@ -54,8 +48,6 @@
       `;
     }
   }
-
-  // Função para criar tabela de resultados
   function createTable(columns, rows) {
     if (!rows || rows.length === 0) {
       return '<div class="alert alert-info">Nenhum registro encontrado.</div>';
@@ -63,37 +55,25 @@
 
     let html =
       '<div class="table-responsive mt-3"><table class="table table-striped table-hover">';
-
-    // Cabeçalho
     html += '<thead class="table-dark"><tr>';
     columns.forEach((col) => {
       html += `<th>${col}</th>`;
     });
     html += "</tr></thead>";
-
-    // Corpo
     html += "<tbody>";
     rows.forEach((row) => {
       html += "<tr>";
       columns.forEach((col) => {
         let value = row[col];
-
-        // Verificar se é nulo/undefined primeiro
         if (value === null || value === undefined) {
           html += `<td>-</td>`;
           return;
         }
-
-        // Formatar booleanos
         if (typeof value === "boolean") {
           html += `<td>${value ? "Sim" : "Não"}</td>`;
           return;
         }
-
-        // Converter para string para verificações
         const valueStr = String(value);
-
-        // Formatar timestamps (data_consulta)
         if (col === "data_consulta" && valueStr.includes("T")) {
           try {
             const date = new Date(value);
@@ -103,12 +83,9 @@
           }
           return;
         }
-
-        // Formatar datas (data_nascimento, etc)
         if (col.includes("data") || col.includes("nascimento")) {
           try {
             const date = new Date(value);
-            // Verificar se é uma data válida
             if (!isNaN(date.getTime())) {
               html += `<td>${date.toLocaleDateString("pt-BR")}</td>`;
             } else {
@@ -119,8 +96,6 @@
           }
           return;
         }
-
-        // Valor padrão
         html += `<td>${value}</td>`;
       });
       html += "</tr>";
@@ -129,8 +104,6 @@
 
     return html;
   }
-
-  // Função para carregar listagem
   async function loadList(table, listElement) {
     const email = emailInput.value.trim();
     if (!email) return;
@@ -162,20 +135,14 @@
       listElement.innerHTML = `<div class="alert alert-danger mt-4">Erro ao carregar: ${error.message}</div>`;
     }
   }
-
-  // Função para escapar strings SQL (prevenir SQL injection básico)
   function escapeSql(str) {
     if (str === null || str === undefined) return "NULL";
     return str.toString().replace(/'/g, "''");
   }
-
-  // Carregar e-mail do localStorage
   document.addEventListener("DOMContentLoaded", () => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       emailInput.value = saved;
-
-      // Carregar listagens iniciais se o e-mail já estiver preenchido
       setTimeout(() => {
         loadList("medico", document.getElementById("medico-list"));
         loadList("paciente", document.getElementById("paciente-list"));
@@ -189,18 +156,13 @@
           "medico_especialidade",
           document.getElementById("medico-especialidade-list")
         );
-        // loadRelatorioCompleto(); // Descomente se quiser carregar automaticamente
       }, 500);
     }
   });
-
-  // Salvar e-mail no localStorage
   emailInput.addEventListener("input", () => {
     const v = emailInput.value.trim();
     if (v) localStorage.setItem(STORAGE_KEY, v);
   });
-
-  // FORM MÉDICO
   const medicoForm = document.getElementById("medico-form");
   const medicoBtn = document.getElementById("medico-btn");
   const medicoResponse = document.getElementById("medico-response");
@@ -238,13 +200,9 @@
       medicoBtn.textContent = "Salvar Médico";
     }
   });
-
-  // Carregar listagem ao abrir a tab
   document.getElementById("medico-tab").addEventListener("shown.bs.tab", () => {
     loadList("medico", medicoList);
   });
-
-  // FORM PACIENTE
   const pacienteForm = document.getElementById("paciente-form");
   const pacienteBtn = document.getElementById("paciente-btn");
   const pacienteResponse = document.getElementById("paciente-response");
@@ -297,8 +255,6 @@
     .addEventListener("shown.bs.tab", () => {
       loadList("paciente", pacienteList);
     });
-
-  // FORM CONSULTA
   const consultaForm = document.getElementById("consulta-form");
   const consultaBtn = document.getElementById("consulta-btn");
   const consultaResponse = document.getElementById("consulta-response");
@@ -319,8 +275,6 @@
     const observacoes = document
       .getElementById("consulta-observacoes")
       .value.trim();
-
-    // Converter datetime-local para formato PostgreSQL
     const dataFormatada = dataConsulta.replace("T", " ");
 
     let sql;
@@ -356,15 +310,11 @@
       consultaBtn.textContent = "Salvar Consulta";
     }
   });
-
-  // REMOVIDO A DUPLICAÇÃO - apenas um listener
   document
     .getElementById("consulta-tab")
     .addEventListener("shown.bs.tab", () => {
       loadList("consulta", consultaList);
     });
-
-  // FORM FICHA PACIENTE
   const fichaForm = document.getElementById("ficha-form");
   const fichaBtn = document.getElementById("ficha-btn");
   const fichaResponse = document.getElementById("ficha-response");
@@ -414,8 +364,6 @@
   document.getElementById("ficha-tab").addEventListener("shown.bs.tab", () => {
     loadList("ficha_paciente", fichaList);
   });
-
-  // FORM ESPECIALIDADE
   const especialidadeForm = document.getElementById("especialidade-form");
   const especialidadeBtn = document.getElementById("especialidade-btn");
   const especialidadeResponse = document.getElementById(
@@ -464,8 +412,6 @@
     .addEventListener("shown.bs.tab", () => {
       loadList("especialidade", especialidadeList);
     });
-
-  // FORM MÉDICO-ESPECIALIDADE
   const medicoEspecialidadeForm = document.getElementById(
     "medico-especialidade-form"
   );
@@ -522,8 +468,6 @@
     .addEventListener("shown.bs.tab", () => {
       loadList("medico_especialidade", medicoEspecialidadeList);
     });
-
-  // RELATÓRIO COMPLETO
   const relatorioList = document.getElementById("relatorio-list");
   const relatorioRefreshBtn = document.getElementById("relatorio-refresh-btn");
 
@@ -579,7 +523,6 @@
       const json = await sendSQL(email, sql);
 
       if (json.success && json.rows && json.rows.length > 0) {
-        // Criar tabela personalizada com cores e formatação especial
         let html = `
         <div class="alert alert-info">
           <strong>${json.rows.length}</strong> consulta(s) encontrada(s)
@@ -603,7 +546,6 @@
       `;
 
         json.rows.forEach((row) => {
-          // Calcular idade
           let idade = "-";
           if (row.data_nascimento) {
             const nascimento = new Date(row.data_nascimento);
@@ -620,8 +562,6 @@
             }
             idade = age + " anos";
           }
-
-          // Formatar data da consulta
           let dataConsultaFormatada = "-";
           if (row.data_consulta) {
             const dataConsulta = new Date(row.data_consulta);
@@ -633,16 +573,12 @@
               minute: "2-digit",
             });
           }
-
-          // Badge para convênio
           const convenioClass =
             row.tem_convenio === "Sim"
               ? "bg-success"
               : row.tem_convenio === "Não"
               ? "bg-warning"
               : "bg-secondary";
-
-          // Badge para tipo sanguíneo
           const tipoSanguineoClass =
             row.tipo_sanguineo !== "Não informado"
               ? "bg-danger"
@@ -703,11 +639,7 @@
         '<i class="bi bi-arrow-clockwise"></i> Atualizar Relatório';
     }
   }
-
-  // Carregar relatório ao clicar no botão
   relatorioRefreshBtn.addEventListener("click", loadRelatorioCompleto);
-
-  // Carregar relatório ao abrir a tab
   document
     .getElementById("relatorio-tab")
     .addEventListener("shown.bs.tab", () => {

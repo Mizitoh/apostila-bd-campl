@@ -1,4 +1,3 @@
-// assets/js/sidebar.js
 document.addEventListener("DOMContentLoaded", function () {
   let isInSubfolder = window.location.pathname.includes("/aulas/");
   const isInSubfolderAdm = window.location.pathname.includes("/adm/");
@@ -28,24 +27,22 @@ document.addEventListener("DOMContentLoaded", function () {
           <li><a href="${prefix}aulas/aula7.html">7️⃣ Select com manipulações de strings e cálculos</a></li>
           <li><a href="${prefix}aulas/aula8.html">8️⃣ Backups</a></li>
           <li><a href="${prefix}aulas/aula9.html">9️⃣ Restore e Projeto final</a>
-          </li><li><a href="${prefix}projetofinal2.html">💪 Projeto Final Turma 2</a></li>
-          <li><a href="${prefix}projeto_final/academia.html">💪 Projeto Final - Academia</a></li>
-          <li><a href="${prefix}projetofinal.html">🏥 Projeto Final Turma 1</a></li>
-          <li><a href="${prefix}projeto_final/hospital.html">🏥 Projeto Final - Hospital</a></li>
         </ul>
       </nav>
     </aside>
   `;
-
-  // Encontra o container e insere o sidebar
+  /*
+  </li><a href="${prefix}projetofinal2.html">💪 Projeto Final Turma 2</a></li>
+  <li><a href="${prefix}projeto_final/academia.html">💪 Projeto Final - Academia</a></li>
+  <li><a href="${prefix}projetofinal.html">🏥 Projeto Final Turma 1</a></li>
+  <li><a href="${prefix}projeto_final/hospital.html">🏥 Projeto Final - Hospital</a></li>
+  */
   const container = document.querySelector(".container");
   if (container) {
     container.insertAdjacentHTML("afterbegin", sidebarHTML);
     highlightCurrentPage();
   }
 });
-
-// Destaca a página atual no menu
 function highlightCurrentPage() {
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
   const links = document.querySelectorAll(".sidebar a");

@@ -17,7 +17,6 @@
       try {
         return fn(...args);
       } catch (e) {
-        /* ignore */
       }
     };
   }
@@ -29,8 +28,6 @@
       t = setTimeout(() => fn(...args), wait);
     };
   }
-
-  // Highlight helper com fallback para highlightAuto
   function highlightElement(el, preferLang = "sql") {
     if (!el) return;
     if (window.hljs) {
@@ -43,7 +40,6 @@
           el.innerHTML = result.value;
         }
       } catch (e) {
-        // silent
       }
     }
   }
@@ -96,18 +92,12 @@
     if (rawJson) rawJson.textContent = "";
     if (rowsTableWrapper) rowsTableWrapper.innerHTML = "";
   }
-
-  // mostra resultado detalhado (sucesso/erro)
   function showResponse(json) {
     if (!responseSummary) return;
-
-    // raw JSON display
     if (rawJson) {
       rawJson.textContent = JSON.stringify(json, null, 2);
       highlightElement(rawJson, "json");
     }
-
-    // sucesso
     if (json && json.success === true) {
       responseSummary.innerHTML = `
         <div class="alert alert-success p-2 mb-2" role="alert">
@@ -122,8 +112,6 @@
       if (Array.isArray(json.rows)) renderRowsTable(json.rows);
       return;
     }
-
-    // erro ou sucesso=false
     const err = json || {};
     const msg = err.error || err.message || "Erro desconhecido";
     const detail = err.detail
@@ -141,12 +129,8 @@
         <div><small>Revise seu comando, se tiver dúvidas, olhe na Colinha.</small></div>
       </div>
     `;
-
-    // se houver rows mesmo em erro, ainda mostra (opcional)
     if (Array.isArray(err.rows) && err.rows.length) renderRowsTable(err.rows);
   }
-
-  // envia X-Aluno no header além do body
   async function sendSQL(email, sql) {
     const res = await fetch(API_URL, {
       method: "POST",
@@ -157,24 +141,19 @@
       body: JSON.stringify({ email, sql }),
     });
     if (!res.ok) {
-      // tenta ler corpo com JSON de erro do servidor
       let body = null;
       try {
         body = await res.json();
       } catch (e) {
-        /* ignore */
       }
       const statusText = `${res.status} ${res.statusText}`;
       if (body) {
-        // normaliza para objeto com success:false se necessário
         return { success: false, ...body, _httpStatus: statusText };
       }
       throw new Error(statusText);
     }
     return await res.json();
   }
-
-  // eventos
   document.addEventListener(
     "DOMContentLoaded",
     safe(() => {
@@ -225,8 +204,6 @@
         const email = emailInput?.value?.trim();
         const sql = sqlTextarea?.value?.trim();
         if (!email || !sql) return;
-
-        // Validar se SQL contém "public."
         if (sql.toLowerCase().includes("public.")) {
           if (responseSummary) {
             responseSummary.innerHTML = `<div class="alert alert-warning p-2">⚠️ Erro: Não é permitido usar "public." no SQL. Remove o "public." e tente novamente.</div>`;
@@ -253,8 +230,6 @@
       }),
     );
   }
-
-  // Transforma textarea em editor CodeMirror com highlight
   const sqlTextareaEl = document.getElementById("sql");
 
   const editor = CodeMirror.fromTextArea(sqlTextareaEl, {
@@ -266,8 +241,6 @@
     matchBrackets: true,
     autofocus: true,
   });
-
-  // Quando o usuário digita, atualiza o preview (se quiser)
   editor.on("change", () => {
     sqlTextareaEl.value = editor.getValue();
   });
